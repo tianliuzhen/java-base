@@ -2,6 +2,7 @@ package com.aaa.javabase.designpattern.factory.simplefactory;
 
 import com.aaa.javabase.designpattern.factory.simplefactory.SimpleFactory;
 import com.aaa.javabase.designpattern.factory.simplefactory.order.OrderPizza;
+import com.aaa.javabase.designpattern.factory.simplefactory.order.OrderPizza2;
 import com.sun.org.apache.xpath.internal.operations.Or;
 
 /**
@@ -15,7 +16,8 @@ public class PizzaStore {
     public static void main(String[] args) {
         //new OrderPizza();
         //使用简单工厂模式
-        new OrderPizza(new SimpleFactory());
+//        new OrderPizza(new SimpleFactory());
+        new OrderPizza2();
         System.out.println("退出程序");
     }
 }

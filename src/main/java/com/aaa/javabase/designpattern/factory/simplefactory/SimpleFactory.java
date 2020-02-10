@@ -13,7 +13,7 @@ import com.aaa.javabase.designpattern.factory.simplefactory.pizza.Pizza;
  */
 public class SimpleFactory {
     // 根据 orderType 返回对应的pizza对象
-    public Pizza createPizza(String ordertype){
+    public static Pizza createPizza(String ordertype){
         Pizza pizza = null;
         System.out.println("使用简单工厂模式");
         if (ordertype.equals("greek")) {
