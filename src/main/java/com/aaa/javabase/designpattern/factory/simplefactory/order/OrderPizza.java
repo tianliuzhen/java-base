@@ -43,14 +43,15 @@ public class OrderPizza {
     }
     */
 
+    // 定义简单工厂对象
+    SimpleFactory simpleFactory;
+    Pizza pizza = null;
+
     //构造器
     public OrderPizza(SimpleFactory simpleFactory) {
         setFactory(simpleFactory);
     }
 
-    // 定义简单工厂对象
-    SimpleFactory simpleFactory;
-    Pizza pizza = null;
     public void setFactory(SimpleFactory simpleFactory) {
         String orderType = "";
         this.simpleFactory = simpleFactory;
