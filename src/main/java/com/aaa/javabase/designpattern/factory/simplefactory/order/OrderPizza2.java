@@ -1,7 +1,6 @@
 package com.aaa.javabase.designpattern.factory.simplefactory.order;
 
 
-import com.aaa.javabase.designpattern.factory.simplefactory.SimpleFactory;
 import com.aaa.javabase.designpattern.factory.simplefactory.pizza.Pizza;
 
 import java.io.BufferedReader;

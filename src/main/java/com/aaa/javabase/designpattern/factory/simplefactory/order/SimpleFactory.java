@@ -1,4 +1,4 @@
-package com.aaa.javabase.designpattern.factory.simplefactory;
+package com.aaa.javabase.designpattern.factory.simplefactory.order;
 
 import com.aaa.javabase.designpattern.factory.simplefactory.pizza.ChessPizz;
 import com.aaa.javabase.designpattern.factory.simplefactory.pizza.GreekPizz;

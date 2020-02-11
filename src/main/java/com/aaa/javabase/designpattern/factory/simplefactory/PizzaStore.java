@@ -1,9 +1,6 @@
 package com.aaa.javabase.designpattern.factory.simplefactory;
 
-import com.aaa.javabase.designpattern.factory.simplefactory.SimpleFactory;
-import com.aaa.javabase.designpattern.factory.simplefactory.order.OrderPizza;
 import com.aaa.javabase.designpattern.factory.simplefactory.order.OrderPizza2;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 /**
  * description: 相当于客户端，发出订购
