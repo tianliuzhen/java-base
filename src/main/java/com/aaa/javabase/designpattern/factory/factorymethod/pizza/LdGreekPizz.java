@@ -10,7 +10,7 @@ package com.aaa.javabase.designpattern.factory.factorymethod.pizza;
 public class LdGreekPizz extends Pizza {
     @Override
     public void prepare() {
-        System.out.println("伦敦希腊披萨");
+        setName("伦敦希腊披萨");
         System.out.println("给希腊披萨准备原材料");
     }
 }

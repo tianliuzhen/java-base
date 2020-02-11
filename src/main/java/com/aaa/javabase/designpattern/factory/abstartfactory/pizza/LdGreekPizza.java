@@ -1,4 +1,4 @@
-package com.aaa.javabase.designpattern.factory.factorymethod.pizza;
+package com.aaa.javabase.designpattern.factory.abstartfactory.pizza;
 
 /**
  * description: 描述
@@ -7,10 +7,10 @@ package com.aaa.javabase.designpattern.factory.factorymethod.pizza;
  * @version 1.0
  * @date 2020/2/10
  */
-public class BjGreekPizz extends Pizza {
+public class LdGreekPizza extends Pizza {
     @Override
     public void prepare() {
-        setName("北京希腊披萨");
+        setName("伦敦希腊披萨");
         System.out.println("给希腊披萨准备原材料");
     }
 }
