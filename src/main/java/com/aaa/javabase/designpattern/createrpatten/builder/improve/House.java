@@ -35,4 +35,13 @@ public class House {
     public void setRoofed(String roofed) {
         this.roofed = roofed;
     }
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "baise='" + baise + '\'' +
+                ", wall='" + wall + '\'' +
+                ", roofed='" + roofed + '\'' +
+                '}';
+    }
 }

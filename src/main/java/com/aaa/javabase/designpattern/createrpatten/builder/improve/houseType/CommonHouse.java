@@ -1,5 +1,6 @@
 package com.aaa.javabase.designpattern.createrpatten.builder.improve.houseType;
 
+import com.aaa.javabase.designpattern.createrpatten.builder.improve.House;
 import com.aaa.javabase.designpattern.createrpatten.builder.improve.HouseBuilder;
 
 /**
@@ -10,18 +11,30 @@ import com.aaa.javabase.designpattern.createrpatten.builder.improve.HouseBuilder
  * @date 2020/2/15
  */
 public class CommonHouse extends HouseBuilder {
+
+    private House house;
+
+    public CommonHouse() {
+        house = new House();
+    }
+
     @Override
     public void buildBasic() {
-        System.out.println("给普通房子打地基5m");
+        house.setBaise("给普通房子打地基5m");
     }
 
     @Override
     public void buildWalls() {
-        System.out.println("给普通方式砌墙10cm");
+        house.setWall("给普通方式砌墙10cm");
     }
 
     @Override
     public void roofed() {
-        System.out.println("给普通方式封顶");
+        house.setRoofed("给普通方式封顶");
+    }
+
+    @Override
+    public House buildHouse() {
+        return house;
     }
 }

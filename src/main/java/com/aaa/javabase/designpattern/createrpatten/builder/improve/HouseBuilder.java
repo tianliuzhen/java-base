@@ -8,7 +8,6 @@ package com.aaa.javabase.designpattern.createrpatten.builder.improve;
  * @date 2020/2/15
  */
 public abstract   class HouseBuilder {
-    protected  House house = new House();
     //建造流程
     //打地基
     public abstract void buildBasic();
@@ -16,9 +15,6 @@ public abstract   class HouseBuilder {
     public abstract void buildWalls();
     //封顶
     public abstract void roofed();
-
     // 建造房子好，将产品（房子）返回
-    public House buildHouse() {
-        return house;
-    }
+    public abstract House buildHouse() ;
 }
