@@ -11,4 +11,9 @@ public class Tom extends Employee {
     public Tom(String name, String address, int number) {
         super(name, address, number);
     }
+
+    @Override
+    public double computePay() {
+        return 0;
+    }
 }
