@@ -23,7 +23,15 @@ public class Main {
                        new ThreadPoolExecutor.DiscardPolicy());
             for (int i = 0; i < 10; i++) {
                 //将线程放入到线程池里面
+                //提交方式1
                  executor.submit(new Handler("Hello" + i));
+                //提交方式2
+//                executor.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                });
             }
             // Java线程池的完整构造函数
 
