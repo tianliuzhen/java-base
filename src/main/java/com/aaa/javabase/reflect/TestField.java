@@ -15,8 +15,29 @@ import java.lang.reflect.Field;
 public class TestField {
     public static void main(String[] args) throws Exception {
         // 成员变量
-        TestField();
+//        TestField();
+        TestField2();
     }
+    public static void TestField2() throws Exception {
+
+        Class clazz = Class.forName("com.aaa.javabase.reflect.domain.Person");
+        Object obj = clazz.newInstance();//通过反射创建对象
+
+        // 调用getDeclaredField("name") 取得name属性对应的Field对象
+                Field f = clazz.getDeclaredField("name");
+
+        // 取消属性的访问权限控制，即使private属性也可以进行访问。
+                f.setAccessible(true);
+        // 调用get()方法取得对应属性值。
+                System.out.println(f.get(obj));  //相当于obj.getName();
+        // 调用set()方法给对应属性赋值。
+                f.set(obj, "lkl");  //相当于obj.setName("lkl");
+        // 调用get()方法取得对应属性修改后的值。
+                System.out.println(f.get(obj));
+    }
+
+
+
 
     public static void TestField() throws Exception {
         //0、获取Person的class 对象
