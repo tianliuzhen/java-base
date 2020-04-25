@@ -1,7 +1,6 @@
 package com.aaa.javabase.pattern.designpattern.demo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * description: 描述
@@ -12,25 +11,26 @@ import java.util.List;
  */
 public class testList {
     public static void main(String[] args) {
-        List<Integer> strings = new ArrayList<>();
-        strings.add(1);
-        strings.add(2);
-        strings.add(5);
-        strings.add(5);
-        strings.add(3);
-        strings.add(3);
-        //不重复的数字
-        List<Integer> strings2 = new ArrayList<>();
-        //重复的数字
-        List<Integer> strings3 = new ArrayList<>();
-        for (Integer string : strings) {
-            if(!strings2.contains(string)){
-                strings2.add(string);
-            }else {
-                strings3.add(string);
+        int arr[]={1,2,3,1,2,4,6,87,4,3,8,9,3,2,46,7};
+        Map<Integer, Integer> map=new HashMap<Integer, Integer>();
+        for (int i=0;i<arr.length;i++){
+            if(map.get(arr[i])!=null){
+                map.put(arr[i], map.get(arr[i])+1);
+            }else{
+                map.put(arr[i], 1);
             }
+
         }
-        System.out.println(strings2);
-        System.out.println(strings3);
+        //得到map中所有的键
+        Set<Integer> keyset=map.keySet();
+        //创建set集合的迭代器
+        Iterator<Integer> it=keyset.iterator();
+
+        while (it.hasNext()) {
+            Integer key=it.next();
+            Integer value=map.get(key);
+            System.out.print(key+"共有"+value+"次    ");
+        }
     }
+
 }
