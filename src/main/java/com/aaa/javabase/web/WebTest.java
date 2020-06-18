@@ -1,9 +1,8 @@
 package com.aaa.javabase.web;
 
-import com.aaa.javabase.pattern.behaviorpattern.strategy.InspectionSolver;
-import com.aaa.javabase.pattern.behaviorpattern.strategy.InspectionSolverChooser;
-import com.aaa.javabase.pattern.behaviorpattern.strategy.constant.InspectionConstant;
-import com.aaa.javabase.pattern.behaviorpattern.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
+import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
+import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

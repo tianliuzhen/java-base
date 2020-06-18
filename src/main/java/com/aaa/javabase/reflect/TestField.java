@@ -1,6 +1,5 @@
 package com.aaa.javabase.reflect;
 
-import com.aaa.javabase.pattern.designpattern.demo.Test;
 import com.aaa.javabase.reflect.domain.Person;
 
 import java.lang.reflect.Field;
