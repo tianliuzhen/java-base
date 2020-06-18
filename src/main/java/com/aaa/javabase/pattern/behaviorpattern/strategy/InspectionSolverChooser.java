@@ -32,6 +32,7 @@ public class InspectionSolverChooser implements ApplicationContextAware {
         Map<String, InspectionSolver> solverMap  = context.getBeansOfType(InspectionSolver.class);
         for (InspectionSolver value : solverMap .values()) {
             chooseMap.put(value.supports(), value);
+             log.info( "任务 {} 处理器 {}注册成功", new Object[]{value.supports(), value});
         }
     }
 
