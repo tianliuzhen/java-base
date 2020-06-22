@@ -3,9 +3,11 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import io.github.yedaxia.apidocs.Docs;
+import io.github.yedaxia.apidocs.DocsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author liuzhen.tian
@@ -32,4 +34,16 @@ public class WebTest {
 
 
     }
+
+    /**
+     * 用户列表
+     * @param listForm
+     */
+    @RequestMapping(path = "list", method = {RequestMethod.GET,  RequestMethod.POST}  )
+    public String list(@RequestParam(required=true) String listForm){
+        return "str";
+    }
+
+
+
 }
