@@ -1,0 +1,58 @@
+参考：https://www.jianshu.com/p/1dec08d290c1
+
+一、spring 常用扩展组件记录：
+
+   BeanNameAware、BeanFactoryAware、ApplicationContextAware
+
+   InitializingBean
+				InitializingBean接口为bean提供了初始化方法的方式，它只包括afterPropertiesSet方法，凡是继承该接口的类，在初始化bean之前的时候都会执行该方法。
+
+
+   ApplicationContextAware
+   				****Aware都是在初始化阶段之前调用的！******
+				当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean。换句话说，就是这个类可以直接获取spring配置文件中，所有有引用到的bean对象。
+
+
+   BeanFactoryPostProcessor
+				bean工厂的bean属性处理容器，说通俗一些就是可以管理我们的bean工厂内所有的beandefinition（未实例化）数据，可以随心所欲的修改属性。
+
+   InstantiationAwareBeanPostProcessor
+				InstantiationAwareBeanPostProcessor是BeanPostProcessor的子接口，
+				可以在Bean生命周期的另外两个时期提供扩展的回调接口，即实例化Bean之前（调用postProcessBeforeInstantiation方法）和实例化Bean之后（调用postProcessAfterInstantiation方法）。
+
+   InstantiationAwareBeanPostProcessor
+   				这两兄弟可能是Spring扩展中最重要的两个接口！InstantiationAwareBeanPostProcessor作用于实例化阶段的前后，BeanPostProcessor作用于初始化阶段的前后。正好和第一、第三个生命周期阶段对应。
+   				参考：https://www.jianshu.com/p/1dec08d290c1
+
+   BeanPostProcessor
+   				***针对所有Spring上下文中所有的bean***
+				BeanPostProcessor接口作用是：如果我们需要在Spring容器完成Bean的实例化、配置和其他的初始化前后添加一些自己的逻辑处理，我们就可以定义一个或者多个BeanPostProcessor接口的实现，然后注册到容器中。
+				    postProcessAfterInitialization
+				    postProcessBeforeInitialization
+
+
+
+二、说的spring容器中bean的初始化和实例化也不得不说类的加载机制。
+
+	 类加载->连接(验证，准备，解析)->初始化->使用->销毁
+
+    	其中类加载又涉及到双亲委派机制：这个这里也不做讨论
+
+	　　特别需要指出的是，类的实例化与类的初始化是两个完全不同的概念：
+
+		类的实例化是指创建一个类的实例(对象)的过程；
+		类的初始化是指为类中各个类成员(被static修饰的成员变量)赋初始值的过程，是类生命周期中的一个阶段。
+
+三、误区三
+         	实现实例化接口的 所有的注解或者类的顺序。
+            Spring的接口InitializingBean、BeanPostProcessor以及注解@PostConstruct、bean的init-method的执行先后顺序
+	    	参考:https://blog.csdn.net/qq_20545159
+
+			执行顺序：	BeanPostProcessor（postProcessBeforeInitialization）
+			                      > @PostConstruct > InitializingBean > init-method >
+			                                  BeanPostProcessor（postProcessAfterInitialization）
+四、误区四
+      可扩展的 bean 配置器分为两种，一种针对全局bean、一种针对单个bean
+
+
+五、spring Bean 生命周期
