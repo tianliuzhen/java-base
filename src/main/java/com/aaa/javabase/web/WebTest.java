@@ -3,8 +3,7 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
-import io.github.yedaxia.apidocs.Docs;
-import io.github.yedaxia.apidocs.DocsConfig;
+import com.aaa.javabase.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class WebTest {
     @Autowired
     private InspectionSolverChooser inspectionSolverChooser;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @GetMapping(value = "/inspectionSolver")
     public void test(){
@@ -45,5 +47,9 @@ public class WebTest {
     }
 
 
+    @GetMapping(value = "/getGoodsServiceGoodsNames")
+    public void getGoodsServiceGoodsNames(){
+        System.out.println(goodsService.getGoodsName());
+    }
 
 }

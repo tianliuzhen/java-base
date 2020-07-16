@@ -6,16 +6,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author liuzhen.tian
- * @version 1.0    2020/7/14 21:03
+ * @version 1.0    2020/7/16 21:17
  */
+@Data
 @Component
 @Slf4j
-@Data
-public class OrderService {
+public class GoodsService {
+    private String goodsName="goods";
 
-    private String name;
-
-    public OrderService() {
-        log.info("OrderService begin ...");
+    public GoodsService() {
+        log.info("GoodsService begin ...");
     }
 }
