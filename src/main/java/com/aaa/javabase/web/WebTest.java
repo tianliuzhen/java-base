@@ -1,5 +1,6 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.config.BaseMain;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
@@ -7,6 +8,9 @@ import com.aaa.javabase.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author liuzhen.tian
@@ -52,4 +56,18 @@ public class WebTest {
         System.out.println(goodsService.getGoodsName());
     }
 
+    /**
+     * 测试返回两种时间格式
+     * Date
+     * DateTime
+     * @return
+     */
+    @GetMapping("/objectResponseDate")
+    public Object response(){
+        BaseMain baseMain = new BaseMain();
+        baseMain.setDate(new Date());
+        baseMain.setLocalDateTime(LocalDateTime.now());
+
+        return baseMain;
+    }
 }
