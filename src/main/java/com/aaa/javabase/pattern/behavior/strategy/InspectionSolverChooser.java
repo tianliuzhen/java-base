@@ -28,7 +28,7 @@ public class InspectionSolverChooser implements ApplicationContextAware {
     }
 
     @PostConstruct
-    public void register() {
+    private void register() {
         Map<String, InspectionSolver> solverMap  = context.getBeansOfType(InspectionSolver.class);
         for (InspectionSolver value : solverMap .values()) {
             chooseMap.put(value.supports(), value);
