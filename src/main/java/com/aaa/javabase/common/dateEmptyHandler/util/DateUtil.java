@@ -1,7 +1,7 @@
-package com.aaa.javabase.common.util;
+package com.aaa.javabase.common.dateEmptyHandler.util;
 
 
-import com.aaa.javabase.common.domain.PeriodType;
+import com.aaa.javabase.common.dateEmptyHandler.domain.PeriodType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

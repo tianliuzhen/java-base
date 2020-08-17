@@ -1,13 +1,12 @@
-package com.aaa.javabase.common;
+package com.aaa.javabase.common.dateEmptyHandler;
 
 
-import com.aaa.javabase.common.domain.DataItem;
-import com.aaa.javabase.common.domain.ParameterItem;
-import com.aaa.javabase.common.domain.PeriodType;
-import com.aaa.javabase.common.util.DateUtil;
+import com.aaa.javabase.common.dateEmptyHandler.domain.DataItem;
+import com.aaa.javabase.common.dateEmptyHandler.domain.ParameterItem;
+import com.aaa.javabase.common.dateEmptyHandler.domain.PeriodType;
+import com.aaa.javabase.common.dateEmptyHandler.util.DateUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

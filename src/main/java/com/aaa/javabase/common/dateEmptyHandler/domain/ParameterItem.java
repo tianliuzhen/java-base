@@ -1,4 +1,4 @@
-package com.aaa.javabase.common.domain;
+package com.aaa.javabase.common.dateEmptyHandler.domain;
 
 import lombok.Data;
 

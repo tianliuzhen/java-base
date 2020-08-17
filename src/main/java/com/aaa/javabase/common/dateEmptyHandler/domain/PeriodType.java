@@ -1,7 +1,7 @@
 /**
  * Alipay.com Inc. Copyright (c) 2004-2020 All Rights Reserved.
  */
-package com.aaa.javabase.common.domain;
+package com.aaa.javabase.common.dateEmptyHandler.domain;
 
 import lombok.Getter;
 
