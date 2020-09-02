@@ -15,7 +15,7 @@ public class MyThread2 implements Runnable  {
     public void run() {
         method2();
     }
-    public static synchronized void method2() {
+    public  synchronized void method2() {
             System.out.println(Thread.currentThread().getName());
             try {
                 Thread.sleep(2000);
