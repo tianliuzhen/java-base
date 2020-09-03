@@ -1,14 +1,14 @@
 package com.aaa.javabase.multithreading.classlock;
 
 /**
- * description: 描述
+ * description: 对象锁
  *
  * @author 田留振(liuzhen.tian @ haoxiaec.com)
  * @version 1.0
  * @date 2020/4/25
  */
-public class MyThread2 implements Runnable  {
-    public MyThread2() {
+public class ObjectLockThread implements Runnable  {
+    public ObjectLockThread() {
     }
 
     @Override

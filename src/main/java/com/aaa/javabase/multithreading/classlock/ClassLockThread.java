@@ -1,13 +1,13 @@
 package com.aaa.javabase.multithreading.classlock;
 
 /**
- * description: 描述
+ * description: 类锁
  *
  * @author 田留振(liuzhen.tian @ haoxiaec.com)
  * @version 1.0
  * @date 2020/4/25
  */
-public class MyThread {
+public class ClassLockThread implements Runnable {
     //测试类锁
     private static String obj = "";
     public void method1() {
@@ -19,5 +19,10 @@ public class MyThread {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void run() {
+        method1();
     }
 }
