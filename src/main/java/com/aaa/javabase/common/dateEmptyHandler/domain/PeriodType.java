@@ -14,6 +14,7 @@ public enum PeriodType {
     HOUR("HOUR"),
     DAY("DAY"),
     MONTH("MONTH"),
+    YEAR("YEAR"),
     ;
 
     private String code;

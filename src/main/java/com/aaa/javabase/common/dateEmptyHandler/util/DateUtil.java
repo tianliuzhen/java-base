@@ -16,6 +16,7 @@ import java.util.Date;
  * @date 2020/5/28
  */
 public class DateUtil {
+    public static final String YYYY = "yyyy";
     public static final String YYYY_MM = "yyyy-MM";
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYY_MM_DD_HH_DD = "yyyy-MM-dd HH:mm";
@@ -25,6 +26,8 @@ public class DateUtil {
 
     public static Date dateTransfer(Date date, PeriodType periodType) {
         switch (periodType) {
+            case YEAR:
+                return transferToTarget(date, YYYY);
             case DAY:
                 return transferToTarget(date, YYYY_MM_DD);
             case MONTH:
@@ -54,6 +57,9 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         switch (periodType){
+            case YEAR:
+                c.add(Calendar.YEAR, interval);
+                break;
             case DAY:
                 c.add(Calendar.DATE, interval);
                 break;
@@ -79,6 +85,16 @@ public class DateUtil {
         int month = endC.get(Calendar.MONTH) - startC.get(Calendar.MONTH);
 
         return Math.abs(year + month);
+    }
+
+    public static int yearInterval(Date end, Date start) {
+        Calendar endC = Calendar.getInstance();
+        endC.setTime(end);
+        Calendar startC = Calendar.getInstance();
+        startC.setTime(start);
+        int year = (endC.get(Calendar.YEAR) - startC.get(Calendar.YEAR));
+
+        return Math.abs(year);
     }
 
     public static int dayInterval(Date end, Date start) {

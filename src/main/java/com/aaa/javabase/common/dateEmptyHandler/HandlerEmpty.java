@@ -6,6 +6,7 @@ import com.aaa.javabase.common.dateEmptyHandler.domain.ParameterItem;
 import com.aaa.javabase.common.dateEmptyHandler.domain.PeriodType;
 import com.aaa.javabase.common.dateEmptyHandler.util.DateUtil;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +66,8 @@ public class HandlerEmpty {
 
     private Date nextDateKey(Date previous, PeriodType periodType) {
         switch (periodType) {
+            case YEAR:
+                return DateUtil.addByPeriodType(previous, 1, PeriodType.YEAR);
             case DAY:
                 return DateUtil.addByPeriodType(previous, 1,PeriodType.DAY);
             case MONTH:
