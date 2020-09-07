@@ -17,17 +17,17 @@ import java.util.List;
 public class TestMain {
     public static void main(String[] args) {
 
-        // testDays();
+        testDays();
         // testMonths();
         // TODO: 2020/5/28  列表分页问题
-        testYear();
+        // testYear();
 
     }
 
     private static void testDays() {
         ParameterItem pitems = new ParameterItem();
-        pitems.setFrom(new Date(1588043311 * 1000L));// 2020-04-28 11:08:31
-        pitems.setTo(new Date(1588216111 * 1000L)); // 2020-04-30 11:08:31
+        pitems.setFrom(new Date(1588043321 * 1000L));// 2020-04-28 11:08:31
+        pitems.setTo(new Date(1588216161 * 1000L)); // 2020-04-30 11:08:31
         pitems.setPeriodType(PeriodType.DAY);
         /**
          * 这样查的是 eg：  【 04-28 ，04-30） ，不包含 04-30 ，
@@ -36,7 +36,8 @@ public class TestMain {
          *                 2、或者 修改 emptyCompletion  里的    while (realList.size() < limit && (head.before(end) || head.equals(end)))
          *                 为  while (realList.size() <= limit && (head.before(end) || head.equals(end)))
          */
-        pitems.setLimit(DateUtil.dayInterval(pitems.getFrom(), pitems.getTo())+1);
+        int limit = DateUtil.dayInterval(pitems.getFrom(), pitems.getTo());
+        pitems.setLimit(limit + 1);
         HandlerEmpty handlerEmpty = new HandlerEmpty();
         List<DataItem> dataItemList = new ArrayList<>();
         // 2020-04-29 11:08:31
@@ -66,8 +67,8 @@ public class TestMain {
 
     private static void testYear() {
         ParameterItem pitems = new ParameterItem();
-        pitems.setFrom(new Date(1267672111 * 1000L)); // 2020-03-04 11:08:31
-        pitems.setTo(new Date(1591240111 * 1000L)); // 2020-06-04 11:08:31
+        pitems.setFrom(new Date(1267672111 * 1000L)); // 2010-03-04 11:08:31
+        pitems.setTo(new Date(1906772911 * 1000L)); // 2030-06-04 11:08:31
         pitems.setPeriodType(PeriodType.YEAR);
         pitems.setLimit(DateUtil.yearInterval(pitems.getFrom(),pitems.getTo()));
         HandlerEmpty handlerEmpty = new HandlerEmpty();
