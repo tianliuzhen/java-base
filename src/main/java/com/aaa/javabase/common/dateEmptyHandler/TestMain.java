@@ -38,7 +38,8 @@ public class TestMain {
          */
         pitems.setLimit(DateUtil.dayInterval(pitems.getFrom(), pitems.getTo())+1);
         HandlerEmpty handlerEmpty = new HandlerEmpty();
-        List<DataItem> dataItemList = new ArrayList<>();           // 2020-04-29 11:08:31
+        List<DataItem> dataItemList = new ArrayList<>();
+        // 2020-04-29 11:08:31
         dataItemList.add(new DataItem(1L, DateUtil.dateTransfer(new Date(1588129711 * 1000L),PeriodType.DAY), 9L, 9L, 9L));
         List<DataItem> dataItems = handlerEmpty.emptyCompletion(pitems, dataItemList);
         System.out.println(dataItems);
@@ -46,8 +47,8 @@ public class TestMain {
 
     private static void testMonths() {
         ParameterItem pitems = new ParameterItem();
-        pitems.setFrom(new Date(1583291311000L)); // 2020-03-04 11:08:31
-        pitems.setTo(new Date(1591240111000L)); // 2020-06-04 11:08:31
+        pitems.setFrom(new Date(1583291311 * 1000L)); // 2020-03-04 11:08:31
+        pitems.setTo(new Date(1591240111 * 1000L)); // 2020-06-04 11:08:31
         pitems.setPeriodType(PeriodType.MONTH);
         pitems.setLimit(DateUtil.monthInterval(pitems.getFrom(),pitems.getTo()));
         // 如果需要当前月 limit + 1 即可
@@ -56,7 +57,8 @@ public class TestMain {
         }
         HandlerEmpty handlerEmpty = new HandlerEmpty();
         List<DataItem> dataItemList = new ArrayList<>();
-        dataItemList.add(new DataItem(1L,DateUtil.dateTransfer( new Date(1588262400000L),PeriodType.MONTH), 9L, 9L, 9L));
+        //2020-05-01 00:00:00
+        dataItemList.add(new DataItem(1L, DateUtil.dateTransfer(new Date(1588262400 * 1000L), PeriodType.MONTH), 9L, 9L, 9L));
         List<DataItem> dataItems = handlerEmpty.emptyCompletion(pitems, dataItemList);
         System.out.println(dataItems);
 
@@ -70,7 +72,8 @@ public class TestMain {
         pitems.setLimit(DateUtil.yearInterval(pitems.getFrom(),pitems.getTo()));
         HandlerEmpty handlerEmpty = new HandlerEmpty();
         List<DataItem> dataItemList = new ArrayList<>();
-        dataItemList.add(new DataItem(1L,DateUtil.dateTransfer( new Date(1588262400000L),PeriodType.MONTH), 9L, 9L, 9L));
+        //2020-05-01 00:00:00
+        dataItemList.add(new DataItem(1L, DateUtil.dateTransfer(new Date(1588262400 * 1000L), PeriodType.YEAR), 9L, 9L, 9L));
         List<DataItem> dataItems = handlerEmpty.emptyCompletion(pitems, dataItemList);
         System.out.println(dataItems);
 
