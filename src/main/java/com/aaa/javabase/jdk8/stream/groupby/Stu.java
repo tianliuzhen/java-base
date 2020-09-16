@@ -1,4 +1,4 @@
-package com.aaa.javabase.stream.groupby;
+package com.aaa.javabase.jdk8.stream.groupby;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
