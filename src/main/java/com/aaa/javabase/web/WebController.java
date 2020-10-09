@@ -17,7 +17,7 @@ import java.util.Date;
  * @version $ Id: WebTest.java, v 0.1 2020/6/18 11:02 liuzhen.tian Exp $
  */
 @RestController
-public class WebTest {
+public class WebController {
     @Autowired
     private InspectionSolverChooser inspectionSolverChooser;
 
