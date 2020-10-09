@@ -1,7 +1,11 @@
-package com.aaa.javabase.web;
+package com.aaa.javabase.clone;
 
+import com.aaa.javabase.domain.Demo;
+import com.aaa.javabase.domain.DemoInternal;
 import com.aaa.javabase.domain.NumsDTO;
 import com.aaa.javabase.util.CloneUtil;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,18 +15,26 @@ import java.util.List;
  * @author liuzhen.tian
  * @version 1.0 CloneTest.java  2020/10/9 15:44
  */
-public class CloneTest {
-    public static void main(String a[]) throws IOException, ClassNotFoundException {
+@SpringBootTest
+public class SerializeCloneTest {
 
-        // arrayListClone()
-        // cloneUtilObject();
-        cloneUtilList();
+    public static void main(String[] args) {
+        Demo demo = new Demo("b","c",new DemoInternal("e","f"));
+        Demo demo1 = demo;
+        Demo clone = demo.clone();
+        clone.setName("b-2");
+        System.out.println("demo = " + demo);
+        System.out.println("demo1 = " + demo1);
+        System.out.println("clone = " + clone);
+
     }
+
 
     /**
      * 集合克隆
      */
-    private static void  cloneUtilList() throws IOException, ClassNotFoundException {
+    @Test
+    public  void  cloneUtilList() throws IOException, ClassNotFoundException {
         ArrayList<NumsDTO> old = new ArrayList<>();
         old.add(new NumsDTO(1, 1));
         old.add(new NumsDTO(2, 2));
@@ -37,7 +49,8 @@ public class CloneTest {
     /**
      * 对象克隆
      */
-    private static void  cloneUtilObject() throws Exception {
+    @Test
+    public  void  cloneUtilObject() throws Exception {
         NumsDTO old = new NumsDTO(1, 1);
             NumsDTO clone = CloneUtil.deepCopyObj(old);
             clone.setMaxNum(2);
@@ -49,7 +62,8 @@ public class CloneTest {
     /**
      * arrayList 默认克隆
      */
-    private static void arrayListClone() {
+    @Test
+    public  void arrayListClone() {
         List<NumsDTO> al = new ArrayList<NumsDTO>();
 
         //Adding elements to the ArrayList
@@ -62,6 +76,7 @@ public class CloneTest {
 
         //add and remove on original ArrayList
         al.add(new NumsDTO(3,3));
+        al.get(0).setResult(11);
         System.out.println("---------------------");
 
         //Display of both ArrayLists after add & remove
@@ -69,5 +84,9 @@ public class CloneTest {
         System.out.println("Cloned ArrayList:"+al2);
     }
 
+
+    /**
+     * 嵌套对象测试
+     */
 
 }
