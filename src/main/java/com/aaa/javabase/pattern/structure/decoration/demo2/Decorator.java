@@ -20,6 +20,7 @@ public class Decorator extends Drink {
     //带入的主题的价格，如果是已包装过的，就变成了递归了，就迭代的计算所有价格，以级最终的单品价格
     @Override
     public float cost() {
+        // 注意:  drink 这里运用的多态，drink.cost() 有两个实现类  Coffee、Decorator
         float cost = drink.cost();
         System.out.println(super.getPrice());
         System.out.println(cost);

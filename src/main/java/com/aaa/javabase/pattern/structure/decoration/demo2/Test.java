@@ -26,9 +26,27 @@ public class Test {
         // System.out.println("order2.getDescription() = " + order2.getDescription());
         // System.out.println("order2.cost() = " + order2.cost());
 
+
+        /**
+         * 这里递归的算法有点绕...  这里 debug 已经绕晕了
+         *   new Milk(new Chocolate(new Decaf()));
+         *        1       2          3
+         *   解析：执行顺序 1=》2=》3 ，先调用 new Milk 再调用 new Chocolate 最后调用 new Decaf
+         *        这里的问题是 从第一步开始就已经进入递归，再加上cost() 是个多态方法...
+         *
+         * 譬如这里  order3.cost() 调用的是 Decorator.cost()
+         *         1. 是调用的  new Milk() 的  float cost = drink.cost();
+         *                                  此时根据 多态的运行机制会再次执行 Decorator.cost()
+         *         2.  接着递归到  调用 new Chocolate() 的 new Decaf() 的 cost方法 （Coffee.cost()）
+         *
+         *         3.  执行完毕之后 再次返回来 继续走 步骤 1. 后面的  float cost = drink.cost();  后面的步骤
+         *
+         */
         // case 3: 浓缩*1 巧克力*1  牛奶*1
-        Milk order3 = new  Milk(new Chocolate(new Decaf()));
+        Milk order3 = new Milk(new Chocolate(new Decaf()));
         System.out.println("order3.cost() = " + order3.cost());
         System.out.println("order3.getDescription() = " + order3.getDescription());
+
+        // case 4: ...
     }
 }
