@@ -3,6 +3,9 @@ package com.aaa.javabase.util;
 import com.aaa.javabase.domain.NumsDTO;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,15 +27,25 @@ public class CloneUtil {
         return (T) ois.readObject();
     }
     // list 克隆
-    public static <T> List<T> deepCopyList(List<T> src) throws IOException, ClassNotFoundException {
+    public static <T> T deepCopyList(Collection<?> src) throws IOException, ClassNotFoundException {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(byteOut);
         out.writeObject(src);
         ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
         ObjectInputStream in = new ObjectInputStream(byteIn);
         @SuppressWarnings("unchecked")
-        List<T> dest = (List<T>) in.readObject();
-        return dest;
+        Collection<T> dest = (Collection<T>) in.readObject();
+        return (T) dest;
     }
 
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        List<Integer> list = Arrays.asList(1,2,3);
+        List<Integer> list1 = list;
+        List<Integer> list2 = deepCopyList(list);
+        // 浅克隆
+        System.out.println(list == list1);
+        // 深克隆
+        System.out.println(list == list2);
+
+    }
 }
