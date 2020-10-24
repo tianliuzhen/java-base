@@ -19,15 +19,9 @@ public class TestThreadLocal {
 
     public static void main(String[] args) {
         //启动三个线程
-        for (int i = 0; i <3; i++) {
-            Thread t = new Thread() {
-                @Override
-                public void run() {
-                    add10ByThreadLocal();
-                }
-            };
-            t.start();
-        }
+            for (int i = 0; i <3; i++) {
+                new Thread(TestThreadLocal::add10ByThreadLocal).start();
+            }
     }
 
     /**
