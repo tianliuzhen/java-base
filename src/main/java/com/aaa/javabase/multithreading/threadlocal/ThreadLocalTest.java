@@ -1,6 +1,10 @@
 package com.aaa.javabase.multithreading.threadlocal;
 
 /**
+ * ThreadLocal 缺陷：
+ *   父子线程之间无法实现共享变量实例传递。
+ *   可通过 inheritableThreadLocal 解决
+ *
  * @author liuzhen.tian
  * @version 1.0 ThreadLocalTest.java  2020/10/24 22:46
  */

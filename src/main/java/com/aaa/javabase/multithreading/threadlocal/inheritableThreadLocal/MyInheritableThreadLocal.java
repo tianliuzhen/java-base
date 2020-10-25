@@ -3,7 +3,6 @@ package com.aaa.javabase.multithreading.threadlocal.inheritableThreadLocal;
 
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.Map;
 
 /**
  * @author liuzhen.tian
@@ -11,8 +10,8 @@ import java.util.Map;
  */
 public class MyInheritableThreadLocal<T> extends InheritableThreadLocal<T> {
     protected T childValue(T parentValue) {
-        String s = JSONObject.toJSONString((Map<String, ? extends Object>) parentValue);
-        return (T)JSONObject.parseObject(s,parentValue.getClass());
+        String s = JSONObject.toJSONString(parentValue);
+        return (T) JSONObject.parseObject(s,parentValue.getClass());
     }
 }
 

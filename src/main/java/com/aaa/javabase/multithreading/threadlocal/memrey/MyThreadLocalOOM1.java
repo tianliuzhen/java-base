@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class MyThreadLocalOOM1 {
     public static final Integer SIZE = 500;
     static ThreadPoolExecutor executor = new ThreadPoolExecutor(
-            510, 5, 1,
+            5, 5, 1,
             TimeUnit.MINUTES, new LinkedBlockingDeque<>());
 
     static class LocalVariable {//总共有5M
@@ -29,7 +29,7 @@ public class MyThreadLocalOOM1 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
-            executor.shutdown();
+            // executor.shutdown();
         }
     }
 }
