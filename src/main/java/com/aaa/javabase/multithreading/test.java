@@ -9,19 +9,24 @@ package com.aaa.javabase.multithreading;
  */
 public class test {
     public static void main(String[] args) {
-        int cpuNums = Runtime.getRuntime().availableProcessors();  //获取当前
+        // 获取当前cpu 核数
+        int cpuNums = Runtime.getRuntime().availableProcessors();
         System.out.println(cpuNums);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Runnable run");
+                System.out.println("床前明月光");
             }
-        } ) {
-            @Override
-            public void run() {
-//                super.run(); //添加这一行
-                System.out.println("Thread run");
-            }
-        }.start();
+        },"床前明月光" ).start();
+
+        new Thread(() -> {
+            System.out.println("疑是地上霜");
+
+        },"疑是地上霜").start();
+
+        System.out.println("举头望明月");
+        System.out.println("低头思故乡");
+
     }
 }

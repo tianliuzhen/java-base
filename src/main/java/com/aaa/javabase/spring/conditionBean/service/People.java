@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * description: 描述
  *
@@ -12,7 +14,6 @@ import lombok.NoArgsConstructor;
  * @date 2020/4/7
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class People {
     /**
@@ -27,4 +28,12 @@ public class People {
      *  城市信息
      */
     private City city;
+
+    private List list;
+
+    public People(String name, Integer age, City city) {
+        this.name = name;
+        this.age = age;
+        this.city = city;
+    }
 }
