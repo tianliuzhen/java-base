@@ -76,8 +76,6 @@ public class WebController {
     @PostMapping ("/testInt")
     public People testInt() {
         People people = new People();
-        people.setAge(11);
-        people.setName(null);
         return people;
 
     }

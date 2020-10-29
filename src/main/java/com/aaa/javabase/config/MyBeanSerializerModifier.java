@@ -23,7 +23,8 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
     //  数组类型
     private JsonSerializer _nullArrayJsonSerializer = new MyNullArrayJsonSerializer();
     // 字符串等类型
-    private JsonSerializer _nullJsonSerializer = new MyNullJsonSerializer();
+    private JsonSerializer _nullStringSerializer = new MyNullStringSerializer();
+    private JsonSerializer _nullObjectSerializer = new MyNullObjectSerializer();
 
     @Override
     public List<BeanPropertyWriter> changeProperties(SerializationConfig config, BeanDescription beanDesc,
@@ -35,8 +36,10 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
             if (isArrayType(writer)) {
                 //给writer注册一个自己的nullSerializer
                 writer.assignNullSerializer(this._nullArrayJsonSerializer);
-            } else {
-                writer.assignNullSerializer(this._nullJsonSerializer);
+            } else if(isStringType(writer)) {
+                writer.assignNullSerializer(this._nullStringSerializer);
+            }else {
+                writer.assignNullSerializer(this._nullObjectSerializer);
             }
         }
         return beanProperties;
@@ -44,8 +47,16 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
 
     //判断是什么类型
     protected boolean isArrayType(BeanPropertyWriter writer) {
-        Class clazz = writer.getPropertyType();
+        Class clazz =  writer.getType().getRawClass();
         return clazz.isArray() || clazz.equals(List.class) || clazz.equals(Set.class);
+    }
+
+    /**
+     * 是否是String
+     */
+    private boolean isStringType(BeanPropertyWriter writer) {
+        Class<?> clazz = writer.getType().getRawClass();
+        return CharSequence.class.isAssignableFrom(clazz) || clazz == String.class;
     }
     class MyNullArrayJsonSerializer extends JsonSerializer {
 
@@ -57,12 +68,23 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
             }
         }
     }
-    class MyNullJsonSerializer extends JsonSerializer{
+    class MyNullStringSerializer extends JsonSerializer{
 
         @Override
-        public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-                throws IOException, JsonProcessingException {
+        public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+                throws IOException {
             jsonGenerator.writeString("");
+        }
+    }
+
+    class MyNullObjectSerializer extends JsonSerializer{
+
+        @Override
+        public void serialize(Object value, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+                throws IOException {
+            if (value ==null) {
+                jsonGenerator.writeNull();
+            }
         }
     }
 }

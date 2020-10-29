@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * description: 描述
@@ -30,6 +32,10 @@ public class People {
     private City city;
 
     private List list;
+
+    private Set set;
+
+    private Map map;
 
     public People(String name, Integer age, City city) {
         this.name = name;
