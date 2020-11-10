@@ -7,7 +7,6 @@ import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -73,7 +72,7 @@ public class WebController {
     }
 
 
-    @PostMapping ("/testInt")
+    @GetMapping ("/testInt")
     public People testInt() {
         People people = new People();
         return people;
