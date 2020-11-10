@@ -1,10 +1,10 @@
 package com.aaa.javabase.pattern.behavior.chain;
 
-import com.aaa.javabase.pattern.behavior.chain.type.Mt2101ReceiptHandler;
-import com.aaa.javabase.pattern.behavior.chain.type.Mt8104ReceiptHandler;
+import com.aaa.javabase.util.ReflectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 处理者容器
@@ -15,10 +15,23 @@ public class ReceiptHandlerContainer {
 
     private ReceiptHandlerContainer(){}
 
+    /**
+     * 使用反射获取接口的实现类，或者利用spring 来实现
+     * 【src/main/java/com/aaa/javabase/pattern/behavior/strategy/InspectionSolverChooser.java】
+     */
     public static List<IReceiptHandler> getReceiptHandlerList(){
         List<IReceiptHandler> receiptHandlerList = new ArrayList<>();
-        receiptHandlerList.add(new Mt2101ReceiptHandler());
-        receiptHandlerList.add(new Mt8104ReceiptHandler());
+        //获取IReceiptHandler接口的实现类
+        Set<Class<?>> classList = ReflectionUtil.getClassSetBySuper(IReceiptHandler.class);
+        if (classList != null && classList.size() > 0) {
+            for (Class<?> clazz : classList) {
+                try {
+                    receiptHandlerList.add((IReceiptHandler)clazz.newInstance());
+                } catch ( Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return receiptHandlerList;
     }
 
