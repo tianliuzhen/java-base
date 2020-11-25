@@ -6,6 +6,7 @@ import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
+import com.aaa.javabase.spring.injection.construction.Abean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,9 @@ public class WebController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private Abean abean;
 
     @GetMapping(value = "/inspectionSolver")
     public void test(){
@@ -77,5 +81,10 @@ public class WebController {
         People people = new People();
         return people;
 
+    }
+
+    @GetMapping ("/testBean")
+    public void testBean() {
+        abean.get();
     }
 }
