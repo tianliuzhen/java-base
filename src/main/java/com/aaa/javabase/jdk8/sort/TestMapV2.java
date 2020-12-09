@@ -32,7 +32,15 @@ public class TestMapV2 {
 
         List<Map.Entry<String, Student>> list = new ArrayList(entrySet);
 
-        //  可以使用简化版，但下面这个好理解   Collections.sort(list, Comparator.comparingInt(o -> o.getValue().getAge()));
+        //  使用lombok 简化
+      /**
+       * // 升序
+       *   Collections.sort(list, Comparator.comparingInt(o -> o.getValue().getAge()));
+       *   或者    Collections.sort(list, (o1, o2) -> o1.getValue().getAge()- o2.getValue().getAge());
+       * // 降序
+       *   Collections.sort(list, (o1, o2) -> o2.getValue().getAge()- o1.getValue().getAge());
+       *
+       */
         Collections.sort(list, new Comparator<Map.Entry<String, Student>>() {
             @Override
             public int compare(Map.Entry<String, Student> o1, Map.Entry<String, Student> o2) {
