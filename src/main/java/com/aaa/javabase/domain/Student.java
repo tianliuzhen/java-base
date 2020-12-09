@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student implements Cloneable, Serializable {
+public class Student implements Cloneable, Serializable, Comparable<Student> {
     private String name="";
     private Integer age=0;
 
@@ -24,5 +24,10 @@ public class Student implements Cloneable, Serializable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        return this.age > o.age ? 1 : 0;
     }
 }
