@@ -1,5 +1,7 @@
-package com.aaa.javabase.jdk8.sort;
+package com.aaa.javabase.jdk8.sort.list;
 
+
+import com.aaa.javabase.jdk8.sort.MonthDataDto;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,8 +12,13 @@ import java.util.stream.Collectors;
  * @author liuzhen.tian
  * @version 1.0 TestListSort.java  2020/12/9 16:17
  */
-public class TestListSort {
+public class TestStreamListSort {
     public static void main(String[] args) {
+        obj();
+
+    }
+
+    private static void obj() {
         /**
          * 针对 String 类型字段排序的话，可能导致 排序错乱
          */
@@ -35,6 +42,5 @@ public class TestListSort {
         /**
          * 解决方案，尽量把排序字段转成 整型或者浮点类型
          */
-
     }
 }

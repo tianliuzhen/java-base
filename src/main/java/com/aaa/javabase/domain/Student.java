@@ -28,6 +28,8 @@ public class Student implements Cloneable, Serializable, Comparable<Student> {
 
     @Override
     public int compareTo(Student o) {
-        return this.age > o.age ? 1 : 0;
+        //默认是升序
+        //降序的话，反过来操作就好了  o.getAge().compareTo(this.age.getAge());
+        return this.age.compareTo(o.getAge());
     }
 }

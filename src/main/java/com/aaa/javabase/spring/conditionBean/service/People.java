@@ -1,6 +1,5 @@
 package com.aaa.javabase.spring.conditionBean.service;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +17,8 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class People {
+
+    private People people;
     /**
      * 姓名
      */
