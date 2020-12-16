@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student implements Cloneable, Serializable {
+public class Student implements Cloneable, Serializable, Comparable<Student> {
     private String name="";
     private Integer age=0;
 
@@ -24,5 +24,12 @@ public class Student implements Cloneable, Serializable {
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        //默认是升序
+        //降序的话，反过来操作就好了  o.getAge().compareTo(this.age.getAge());
+        return this.age.compareTo(o.getAge());
     }
 }

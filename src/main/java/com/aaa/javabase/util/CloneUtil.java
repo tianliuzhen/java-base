@@ -1,12 +1,10 @@
 package com.aaa.javabase.util;
 
-import com.aaa.javabase.domain.NumsDTO;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liuzhen.tian
@@ -36,6 +34,26 @@ public class CloneUtil {
         @SuppressWarnings("unchecked")
         Collection<T> dest = (Collection<T>) in.readObject();
         return (T) dest;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Map deepCloneMap(Map obj) {
+        T clonedObj = null;
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(obj);
+            oos.close();
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            clonedObj = (T) ois.readObject();
+            ois.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (Map) clonedObj;
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
