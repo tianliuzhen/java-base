@@ -10,10 +10,12 @@ package com.aaa.javabase.multithreading.callable;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 public class CallableAndFuture {
     public static void main(String[] args) {
+        Executors.newSingleThreadExecutor();
         Callable<Integer> callable = new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {

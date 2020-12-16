@@ -29,13 +29,14 @@ class Handler implements Runnable {
     }
     @Override
     public void run() {
-        System.out.println( name +" Start. Time = "+new Date());
+        // System.out.println( name +" Start. Time = "+new Date());
         processCommand();
-        System.out.println( name +" End. Time = "+new Date());
+        // System.out.println( name +" End. Time = "+new Date());
     }
     private void processCommand() {
         try {
-            Thread.sleep(1000);
+            System.out.println("当前线程名："+Thread.currentThread().getName());
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

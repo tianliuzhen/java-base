@@ -2,6 +2,7 @@ package com.aaa.javabase.multithreading.threadpool;
 
 import java.util.Date;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * description: 描述
@@ -13,18 +14,25 @@ import java.util.concurrent.*;
 public class Main {
 
     public static void main(String[] args) {
+        Executors.newFixedThreadPool(1);
         try {
             System.out.println("Main Thread------: Starting at: "+ new Date());
             //创建线程池
-            BlockingQueue<Runnable> queue = new ArrayBlockingQueue<>(512);
-               ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 10,
-                       200, TimeUnit.MILLISECONDS,
-                       queue,
+               ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                       3,
+                       10,
+                       200,
+                       TimeUnit.MILLISECONDS,
+                       new ArrayBlockingQueue<>(512),
+                       new MyThreadFactory("--MyThreadFactory--"),
                        new ThreadPoolExecutor.DiscardPolicy());
             for (int i = 0; i < 10; i++) {
                 //将线程放入到线程池里面
                 //提交方式1
-                 executor.submit(new Handler("Hello" + i));
+                Future<?> future = executor.submit(new Handler("Hello" + i));
+                System.out.println("future.isDone() = "+future.isDone());//判断任务是否已经完成，如果完成则返回true
+                System.out.println("future.get() = " + future.get());
+                System.out.println("future.isDone() = "+future.isDone());//判断任务是否已经完成，如果没完成则返回false，
                 //提交方式2
 //                executor.execute(new Runnable() {
 //                    @Override
@@ -48,32 +56,47 @@ public class Main {
 
         }
     }
+  static class MyThreadFactory implements ThreadFactory{
 
-}
+      private final String groupName;
+      private AtomicInteger nextId = new AtomicInteger(1);
 
-class ThreadDemo extends Thread {
+      public MyThreadFactory(String groupName) {
+          this.groupName = "ThreadFactoryMain -" + groupName + "-worker-";
+      }
 
-    private String threadName;
+      @Override
+      public Thread newThread(Runnable r) {
+          String threadName = groupName + nextId.incrementAndGet();
+          Thread thread = new Thread(null,r,threadName,0);
+          return thread;
+      }
+  }
 
-    ThreadDemo(String name) {
-        threadName = name;
-        System.out.println("Creating " + threadName);
-    }
+    static class ThreadDemo extends Thread {
 
-    @Override
-    public void run() {
-        System.out.println("Running " + threadName);
-        try {
-            for (int i = 1; i > 0; i--) {
-                System.out.println("线程: " + threadName + ", " + i);
-                // 让线程睡眠一会
-                Thread.sleep(50);
-            }
-        } catch (InterruptedException e) {
-            System.out.println("线程： " + threadName + " interrupted.");
+        private String threadName;
+
+        ThreadDemo(String name) {
+            threadName = name;
+            System.out.println("Creating " + threadName);
         }
-        System.out.println("线程：" + threadName + " exiting.");
-    }
 
+        @Override
+        public void run() {
+            System.out.println("Running " + threadName);
+            try {
+                for (int i = 1; i > 0; i--) {
+                    System.out.println("线程: " + threadName + ", " + i);
+                    // 让线程睡眠一会
+                    Thread.sleep(50);
+                }
+            } catch (InterruptedException e) {
+                System.out.println("线程： " + threadName + " interrupted.");
+            }
+            System.out.println("线程：" + threadName + " exiting.");
+        }
+
+    }
 
 }
