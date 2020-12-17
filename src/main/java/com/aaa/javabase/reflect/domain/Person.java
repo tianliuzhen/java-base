@@ -1,5 +1,9 @@
 package com.aaa.javabase.reflect.domain;
 
+import lombok.EqualsAndHashCode;
+
+import java.util.Objects;
+
 /**
  * description: 描述
  *
@@ -77,5 +81,23 @@ public class Person {
     }
     void m4(){
         System.out.println("m4...方法");
+    }
+
+    // @Override
+    // public boolean equals(Object o) {
+    //     if (this == o) return true;
+    //     if (o == null || getClass() != o.getClass()) return false;
+    //     Person person = (Person) o;
+    //     return age == person.age &&
+    //             Objects.equals(name, person.name) &&
+    //             Objects.equals(a, person.a) &&
+    //             Objects.equals(b, person.b) &&
+    //             Objects.equals(c, person.c) &&
+    //             Objects.equals(d, person.d);
+    // }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, a, b, c, d);
     }
 }

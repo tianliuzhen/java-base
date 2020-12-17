@@ -1,5 +1,10 @@
 package com.aaa.javabase.multithreading.threadpool;
 
+import com.aaa.javabase.reflect.domain.Person;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
 
@@ -9,13 +14,17 @@ import java.util.concurrent.*;
  */
 public class Test {
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newCachedThreadPool();
-        for(int i=0; i<5; i++) {
-            Callable<String> c = new Task();
-            MyFutureTask ft = new MyFutureTask(c);
-            executor.submit(ft);
-        }
-        executor.shutdown();
+        List<Person> list = new ArrayList<>();
+        Person person = new Person("tom",1);
+        Person person2 = new Person("tom",1);
+        System.out.println(person.hashCode()  +"=="+person2.hashCode());
+        System.out.println(person.equals(person2));
+
+        Integer num = 127;
+        Integer num2 = 127;
+        System.out.println(num == num2);
+
+
     }
 
 }
