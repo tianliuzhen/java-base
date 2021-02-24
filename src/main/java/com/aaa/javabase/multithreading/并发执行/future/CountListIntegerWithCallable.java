@@ -11,6 +11,9 @@ import java.util.concurrent.*;
  */
 public class CountListIntegerWithCallable {
     public static void main(String[] args) {
+
+        long begin = System.currentTimeMillis();
+
         int threadNum = 10;
 
         ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
@@ -27,7 +30,7 @@ public class CountListIntegerWithCallable {
         List<Callable<Long>> callableList = new LinkedList<Callable<Long>>();
 
         for (int i = 0; i < threadNum; ++i) {
-            List<Integer> subList = new LinkedList<Integer>();
+            List<Integer> subList;
             if (i == threadNum - 1) {//最后一个线程处理剩下所有任务
                 subList = list.subList(i * len, list.size());
             } else {
@@ -49,9 +52,17 @@ public class CountListIntegerWithCallable {
         try {
 //            这个不用自己控制等待，invokeAll执行给定的任务，当所有任务完成时，返回保持任务状态和结果的 Future 列表
             List<Future<Long>> futureList = executorService.invokeAll(callableList);
+
+
+
             for (Future<Long> future : futureList) {
                 System.out.println(future.get());
             }
+            long end = System.currentTimeMillis();
+            System.out.println("执行时间：" + (end - begin) / 1000.0);
+            System.out.println("end...");
+
+
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (Exception e) {
