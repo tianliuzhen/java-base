@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.countdownlatch;
+package com.aaa.javabase.multithreading.并发执行.countdownlatch;
 
 /**
  * 参考：https://blog.csdn.net/anshilv/article/details/52398602

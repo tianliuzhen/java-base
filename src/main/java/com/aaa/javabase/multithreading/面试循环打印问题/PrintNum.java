@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.面试;
+package com.aaa.javabase.multithreading.面试循环打印问题;
 
 /**
  * @author liuzhen.tian

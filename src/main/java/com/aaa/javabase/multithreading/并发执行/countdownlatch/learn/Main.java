@@ -1,9 +1,9 @@
-package com.aaa.javabase.multithreading.countdownlatch.learn;
+package com.aaa.javabase.multithreading.并发执行.countdownlatch.learn;
 
 
-import com.aaa.javabase.multithreading.countdownlatch.learn.thread.RemoteBankThread;
-import com.aaa.javabase.multithreading.countdownlatch.learn.thread.RemoteLoanThread;
-import com.aaa.javabase.multithreading.countdownlatch.learn.thread.RemotePassportThread;
+import com.aaa.javabase.multithreading.并发执行.countdownlatch.learn.thread.RemoteBankThread;
+import com.aaa.javabase.multithreading.并发执行.countdownlatch.learn.thread.RemoteLoanThread;
+import com.aaa.javabase.multithreading.并发执行.countdownlatch.learn.thread.RemotePassportThread;
 
 import java.util.ArrayList;
 import java.util.List;

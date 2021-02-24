@@ -1,7 +1,7 @@
-package com.aaa.javabase.multithreading.countdownlatch.learn;
+package com.aaa.javabase.multithreading.并发执行.countdownlatch.learn;
 
 
-import com.aaa.javabase.multithreading.countdownlatch.learn.thread.BaseCheckThread;
+import com.aaa.javabase.multithreading.并发执行.countdownlatch.learn.thread.BaseCheckThread;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;

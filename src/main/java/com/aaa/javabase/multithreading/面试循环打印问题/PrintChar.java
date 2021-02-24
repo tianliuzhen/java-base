@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.面试;
+package com.aaa.javabase.multithreading.面试循环打印问题;
 
 /**
  * 创建两个线程，其中一个输出ABCD~Z，另外一个输出abcd~z。输出格式要求：Aa Bb Cc Dd

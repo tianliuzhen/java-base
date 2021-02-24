@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.countdownlatch;
+package com.aaa.javabase.multithreading.并发执行.cyclicBarrier;
 
 /**
  * @author liuzhen.tian
@@ -21,8 +21,6 @@ import java.util.concurrent.Executors;
  * @date 2019/6/3 0:18
  */
 public class CyclicBarrierExc {
-
-    //private static final Logger LOGGER = LoggerFactory.getLogger(CyclicBarrierExc.class);
 
     public static void main(String[] args) {
         //数组大小
