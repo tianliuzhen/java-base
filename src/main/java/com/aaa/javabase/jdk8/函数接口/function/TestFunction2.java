@@ -1,4 +1,4 @@
-package com.aaa.javabase.jdk8.function;
+package com.aaa.javabase.jdk8.函数接口.function;
 
 import java.util.function.Function;
 
@@ -6,7 +6,7 @@ import java.util.function.Function;
  * @author liuzhen.tian
  * @version 1.0 Test.java  2020/8/8 16:44
  */
-public class Test {
+public class TestFunction2 {
     public static void main(String[] args) {
         Function<Integer, Integer> test1 = i -> i + 1;
         Function<Integer, Integer> test2 = i -> i * 2;

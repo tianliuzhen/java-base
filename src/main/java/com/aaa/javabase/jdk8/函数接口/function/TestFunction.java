@@ -1,4 +1,4 @@
-package com.aaa.javabase.jdk8.function;
+package com.aaa.javabase.jdk8.函数接口.function;
 
 import java.util.function.Function;
 
@@ -7,7 +7,7 @@ import java.util.function.Function;
  * @author liuzhen.tian
  * @version 1.0 TestConvertDto.java  2020/8/8 16:56
  */
-public class TestConvertDto {
+public class TestFunction {
 
     public static void main(String[] args) {
         Dto1 dto1 = new Dto1();

@@ -1,4 +1,4 @@
-package com.aaa.javabase.jdk8.function;
+package com.aaa.javabase.jdk8.函数接口.function;
 
 import lombok.Data;
 
