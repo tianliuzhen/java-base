@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author liuzhen.tian
  * @version 1.0 TestOptional.java  2020/12/8 15:37
  */
-public class TestOptional {
+public class TestOrElseAndOrElseGet {
     public static void main(String[] args) {
         /**
          * 总的来说。感觉

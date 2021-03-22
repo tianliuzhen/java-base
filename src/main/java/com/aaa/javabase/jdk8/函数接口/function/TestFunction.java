@@ -17,10 +17,22 @@ public class TestFunction {
     }
 
     /**
+     * 写法1
      * Dto1 入参
      * Dto2 出参
      */
     public static Function<Dto1, Dto2> dto1Dto2Function = (Dto1 dto1) -> {
+        Dto2 dto2 = new Dto2();
+        dto2.setName2(dto1.getName1());
+        return dto2;
+    };
+
+    /**
+     * 写法2
+     * Dto1 入参
+     * Dto2 出参
+     */
+    public static Function<Dto1, Dto2> dto2Dto2Function = dto1 -> {
         Dto2 dto2 = new Dto2();
         dto2.setName2(dto1.getName1());
         return dto2;

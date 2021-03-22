@@ -22,7 +22,7 @@ public class TestGradeAndStudent {
     public void test(){
     // 统计所有班级里所有同学的年龄分布
     // 方法一，(不推荐)不够直观
-        List<Grade> gradeList = getGrade();
+        List<Grade> gradeList = Grade.getGrade();
         List<List<Student>> collect = gradeList.stream().map(Grade::getStudent).collect(Collectors.toList());
      // 方法一，推荐
         List<Integer> collect1 = gradeList.stream().flatMap(grade -> grade.getStudent().stream())
@@ -31,19 +31,6 @@ public class TestGradeAndStudent {
         collect1.forEach(System.out::println);
 
     }
-    public List<Grade> getGrade(){
-        List<Grade> grades = new ArrayList<>();
-        for (int i = 1; i < 3; i++) {
-            grades.add(new Grade((long) i, i + "班", getStudent(i)));
-        }
-        return grades;
-    }
-    public List<Student> getStudent(int gradeId){
-        List<Student> students = new ArrayList<>();
-        for (int i = (gradeId-1) * 10; i < (10 * gradeId); i++) {
-            students.add(new Student("同学" + i, i + 20));
-        }
-        return students;
-    }
+
 
 }
