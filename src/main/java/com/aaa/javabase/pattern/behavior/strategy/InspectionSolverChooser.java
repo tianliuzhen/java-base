@@ -1,5 +1,6 @@
 package com.aaa.javabase.pattern.behavior.strategy;
 
+import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,14 @@ public class InspectionSolverChooser implements ApplicationContextAware {
 
     @PostConstruct
     private void register() {
-        registerChooser(chooseMap, InspectionSolver.class, InspectionSolver::supports);
+        // 注册商品任务选择器
+        // 方式一、 通过 supports方法注册
+        // registerChooser(chooseMap, InspectionSolver.class, InspectionSolver::supports);
+        // 方式二、 通过 注解 ChooserName 注册
+        registerChooser(chooseMap, InspectionSolver.class,
+                value -> value.getClass().getAnnotation(ChooserName.class).value());
+
+        // ... 注册其他任务选择器
     }
 
     /**
