@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
  * @version 1.0 BlackPersion.java  2020/12/11 15:22
  */
 @Component
-@Order(1)
-public class BlackPerson implements CommandLineRunner {
+@Order
+public class WhitePerson implements CommandLineRunner {
     @Override
     public void run(String... args)  {
-        System.out.println("--@Order(1)--BlackPerson----");
+        System.out.println("--@Order--BlackPerson----");
     }
 }

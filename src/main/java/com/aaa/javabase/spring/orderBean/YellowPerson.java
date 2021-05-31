@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class YellowPerson implements CommandLineRunner {
     @Override
     public void run(String... args) {
-        System.out.println("----YellowPersion----");
+        System.out.println("--@Order(2)--YellowPersion----");
     }
 }

@@ -8,6 +8,7 @@ public class HuaWei extends Compute {
 
     private String name="HuaWei";
 
+    @Override
     void print(){
         System.out.println("this is HuaWei ...");
     }

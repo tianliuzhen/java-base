@@ -26,8 +26,8 @@ public class TestOrElseAndOrElseGet {
          *  其实比较坑，orElse 虽然总会执行，但是只有当容器为空时，才会返回值。
          */
 
-        testOrElse();
-        // testOrElseGet();
+        // testOrElse();
+        testOrElseGet();
     }
 
     private static void testOrElse() {
