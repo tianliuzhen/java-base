@@ -1,0 +1,30 @@
+https://www.cnblogs.com/wyq178/p/11415877.html
+https://blog.csdn.net/weixin_44181671/article/details/108630950
+
+1、bean的加载工厂
+    BeanFactory是个bean 工厂类接口，是负责生产和管理bean的工厂，是IOC容器最底层和基础的接口，
+    spring用它来管理和装配普通bean的IOC容器,它有多种实现，
+    比如AnnotationConfigApplicationContext、XmlWebApplicationContext等。
+
+2、bean的加载过程
+    AbstractBeanFactory.Class
+    **********获取bean的入口
+    org.springframework.context.support.AbstractApplicationContext.getBean(java.lang.String)
+    ||
+    org.springframework.beans.factory.support.AbstractBeanFactory.getBean(java.lang.String)
+    ||
+    org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean (:187)
+    ||
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(java.lang.String, org.springframework.beans.factory.support.RootBeanDefinition, java.lang.Object[])
+    ||
+    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean
+        1、:340(实例化bean)
+            :371 循环依赖暴露前期引用bean [通过 this.addSingletonFactory ，设置第三级缓存singletonFactories ]
+
+        2、:379(populateBean 填充bean)
+        
+        3、:380(initializeBean 初始化bean)
+
+
+
+
