@@ -38,25 +38,29 @@ import lombok.NoArgsConstructor;
 public class Device {
 
     /**
-     * 楼层
-     */
-    private String building;
-
-    /**
      * 单元
      */
     private String unit;
 
     /**
+     * 楼层
+     */
+    private String floorNo;
+
+    /**
      * 房间号
      */
-    private String roomNo;
-
+    private String devDoor;
 
     /**
      * 设备号
      */
     private String devSn;
+
+    /**
+     * 设备名
+     */
+    private String devName;
 
 
 }
