@@ -22,7 +22,7 @@ public class InheritableThreadLocalTest2 {
 
         executorService.submit(() -> {
             System.out.println("子线程读取本地变量：" + threadLocal.get());
-            threadLocal.get().setAge(55L);
+            // threadLocal.get().setAge(55L);
             System.out.println("子线程读取本地变量：" + threadLocal.get());
 
         });
