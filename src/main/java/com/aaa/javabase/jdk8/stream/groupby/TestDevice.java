@@ -37,14 +37,14 @@ public class TestDevice {
 
     private static void handle(List<Device> deviceList) {
         // 最终返回结果
-        Map<String, Map<String, List<Device>>> res = new HashMap<>();
+        Map<String, Map<String, List<Device>>> res = new TreeMap<>();
 
         // 1、获取第一层 key：幢
         Map<String, List<Device>> collect = deviceList.stream()
                 .collect(Collectors.groupingBy(Device::getBuilding));
         collect.forEach((key, val) -> {
             System.out.println("幢：" + key + " 单元：" + val);
-            Map<String, List<Device>> keyMap = new HashMap<>();
+            Map<String, List<Device>> keyMap = new TreeMap<>();
             res.put(key, keyMap);
             val.forEach(e -> {
                 keyMap.put(e.getUnit(), new ArrayList<>());
