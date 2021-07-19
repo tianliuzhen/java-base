@@ -1,6 +1,6 @@
 package com.aaa.javabase.web;
 
-import com.aaa.javabase.config.BaseMain;
+import com.aaa.javabase.domain.BaseMain;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
@@ -66,7 +66,7 @@ public class WebController {
      * DateTime
      * @return
      */
-    @GetMapping("/objectResponseDate")
+    @PostMapping("/objectResponseDate")
     public Object response(){
         BaseMain baseMain = new BaseMain();
         baseMain.setDate(new Date());
@@ -74,6 +74,7 @@ public class WebController {
 
         return baseMain;
     }
+
 
 
     @GetMapping ("/testInt")

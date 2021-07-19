@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,6 @@ public class TestDevice {
         Map<String, List<Device>> collect = deviceList.stream()
                 .collect(Collectors.groupingBy(Device::getUnit));
         collect.forEach((key, val) -> {
-            System.out.println("幢：" + key + " 单元：" + val);
             Map<String, List<Device>> keyMap = new TreeMap<>();
             res.put(key, keyMap);
             val.forEach(e -> {
@@ -66,12 +66,12 @@ public class TestDevice {
         // 3、转List
         List<DeviceTreeMenu> resList = res.entrySet().stream().map(e ->
                 new DeviceTreeMenu(
-                        "",
                         e.getKey(),
+                        e.getKey() + "单元",
                         e.getValue()
                                 .entrySet()
                                 .stream()
-                                .map(k -> new DeviceTreeMenu("", k.getKey(), getDeviceTreeMenu(k.getValue())))
+                                .map(k -> new DeviceTreeMenu(k.getKey(), k.getKey() + "楼", getDeviceTreeMenu(k.getValue())))
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
 
@@ -89,12 +89,12 @@ public class TestDevice {
 
     private static List<Device> build() {
         List<Device> list = Lists.newArrayList();
-        list.add(new Device("1幢", "1单元", "101", "1", "设备1"));
-        list.add(new Device("1幢", "1单元", "102", "2", "设备2"));
-        list.add(new Device("1幢", "2单元", "201", "3", "设备3"));
-        list.add(new Device("1幢", "3单元", "301", "4", "设备4"));
-        list.add(new Device("2幢", "1单元", "101", "5", "设备5"));
-        list.add(new Device("2幢", "2单元", "201", "6", "设备6"));
+        list.add(new Device("1", "1", "101", "1", "设备1"));
+        list.add(new Device("1", "1", "102", "2", "设备2"));
+        list.add(new Device("1", "2", "201", "3", "设备3"));
+        list.add(new Device("1", "3", "301", "4", "设备4"));
+        list.add(new Device("2", "1", "101", "5", "设备5"));
+        list.add(new Device("2", "2", "201", "6", "设备6"));
         return list;
     }
 
