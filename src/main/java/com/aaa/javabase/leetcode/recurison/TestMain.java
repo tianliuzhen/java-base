@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSON;
 import org.assertj.core.util.Lists;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,7 +39,45 @@ public class TestMain {
         // 5、根据节点id获取兄弟所有节点
         List<TestNode> brotherNodesById = getBrotherNodesById(testNodes, 9);
 
-        System.out.println(123);
+
+        // 6、根据当前节点id，获取及所有的父级兄弟节点的所有父节点
+        List<TestNode> parentBrotherAllNodesById = getParentBrotherAllNodesById(testNodes, 1);
+
+        System.out.println();
+
+    }
+
+    /**
+     * 根据当前节点id，获取及所有的父级兄弟节点的所有父节点
+     *
+     * @param testNodes
+     * @param id
+     */
+    private static List<TestNode> getParentBrotherAllNodesById(List<TestNode> testNodes, int id) {
+        List<TestNode> result = Lists.newArrayList();
+        TestNode testNode = null;
+        // 1、获取当前节点id父节点的父节点
+        List<TestNode> parentNodes = getParentNodesById(testNodes, id);
+
+        // 小于3表示当前父节点是顶级节点
+        if (parentNodes.size() < 3) {
+            return Collections.singletonList(parentNodes.get(parentNodes.size() - 1));
+        }
+
+        testNode = parentNodes.get(2);
+
+        // 2、获取父节点的父节点所有兄弟节点
+        List<TestNode> children = testNode.getChildren();
+        for (TestNode child : children) {
+            List<TestNode> parentNodesById = getParentNodesById(testNodes, child.getId());
+            if (parentNodesById.size() < 2) {
+                continue;
+            }
+            result.addAll(parentNodesById.subList(0, parentNodesById.size() - 1));
+
+        }
+
+        return result;
 
     }
 
@@ -76,7 +116,7 @@ public class TestMain {
                 }
             }
         }
-        return null;
+        return Lists.newArrayList();
     }
 
     /**
@@ -140,43 +180,69 @@ public class TestMain {
 
     private static List<TestNode> mockData() {
         String json = "[\n" +
-                "         {\n" +
-                "          \"id\":1,\n" +
-                "          \"label\":\"一级 1\",\n" +
-                "          \"children\":[{\n" +
-                "            \"id\":4,\n" +
-                "            \"label\":\"二级 1-1\",\n" +
-                "            \"children\":[{\n" +
-                "              \"id\":9,\n" +
-                "              \"label\":\"三级 1-1-1\"\n" +
-                "            }, {\n" +
-                "              \"id\":10,\n" +
-                "              \"label\":\"三级 1-1-2\"\n" +
-                "            }]\n" +
-                "          }]\n" +
-                "        }, \n" +
-                "        {\n" +
-                "          \"id\":2,\n" +
-                "          \"label\":\"一级 2\",\n" +
-                "          \"children\":[{\n" +
-                "            \"id\":5,\n" +
-                "            \"label\":\"二级 2-1\"\n" +
-                "          },{\n" +
-                "            \"id\":6,\n" +
-                "            \"label\":\"二级 2-2\"\n" +
-                "          }]\n" +
-                "        }, \n" +
-                "        {\n" +
-                "          \"id\":3,\n" +
-                "          \"label\":\"一级 3\",\n" +
-                "          \"children\":[{\n" +
-                "            \"id\":7,\n" +
-                "            \"label\":\"二级 3-1\"\n" +
-                "          }, {\n" +
-                "            \"id\":8,\n" +
-                "            \"label\":\"二级 3-2\"\n" +
-                "          }]\n" +
-                "        }]";
+                "    {\n" +
+                "        \"id\":1,\n" +
+                "        \"label\":\"一级 1\",\n" +
+                "        \"children\":[\n" +
+                "            {\n" +
+                "                \"id\":4,\n" +
+                "                \"label\":\"二级 1-1\",\n" +
+                "                \"children\":[\n" +
+                "                    {\n" +
+                "                        \"id\":9,\n" +
+                "                        \"label\":\"三级 1-1-1\"\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"id\":10,\n" +
+                "                        \"label\":\"三级 1-1-2\"\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\":41,\n" +
+                "                \"label\":\"二级 1-2\",\n" +
+                "                \"children\":[\n" +
+                "                    {\n" +
+                "                        \"id\":91,\n" +
+                "                        \"label\":\"三级 1-2-1\"\n" +
+                "                    },\n" +
+                "                    {\n" +
+                "                        \"id\":101,\n" +
+                "                        \"label\":\"三级 1-2-2\"\n" +
+                "                    }\n" +
+                "                ]\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"id\":2,\n" +
+                "        \"label\":\"一级 2\",\n" +
+                "        \"children\":[\n" +
+                "            {\n" +
+                "                \"id\":5,\n" +
+                "                \"label\":\"二级 2-1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\":6,\n" +
+                "                \"label\":\"二级 2-2\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"id\":3,\n" +
+                "        \"label\":\"一级 3\",\n" +
+                "        \"children\":[\n" +
+                "            {\n" +
+                "                \"id\":7,\n" +
+                "                \"label\":\"二级 3-1\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"id\":8,\n" +
+                "                \"label\":\"二级 3-2\"\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    }\n" +
+                "]";
 
         return JSON.parseArray(json, TestNode.class);
     }
