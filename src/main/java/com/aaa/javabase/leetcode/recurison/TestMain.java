@@ -19,13 +19,13 @@ public class TestMain {
     public static void main(String[] args) {
         List<TestNode> testNodes = mockData();
 
-        // 1、获取节点id的所有父节点集合
+        // 1、获取节点id的所有父节点集合(包含当前节点id)
         List<TestNode> parentId = getParentNodesById(testNodes, 6);
 
         // 2、获取节点id获取某个节点
         TestNode nodesById = getNodesById(testNodes, 9);
 
-        // 4、获取节点id获取某个节点
+        // 4、获取节点id获取该节点下的所有节点
         // 4.1、先获取某个节点对象
         List<TestNode> nodeResult = Lists.newArrayList();
         getNodesById2(testNodes, 1, nodeResult);
@@ -33,6 +33,9 @@ public class TestMain {
         List<TestNode> result = Lists.newArrayList();
         result.add(nodeResult.get(0));
         getChildrenNodesById(nodeResult.get(0), result);
+
+        // 5、根据节点id获取兄弟所有节点
+        List<TestNode> brotherNodesById = getBrotherNodesById(testNodes, 9);
 
         System.out.println(123);
 
@@ -111,6 +114,27 @@ public class TestMain {
             }
         }
 
+
+    }
+
+    /**
+     * 5、根据ID获取所有子节点的所有兄弟节点
+     *
+     * @param testNodes 节点集合
+     * @param id        节点id
+     * @return TestNode
+     */
+    private static List<TestNode> getBrotherNodesById(List<TestNode> testNodes, long id) {
+        // 非顶级节点：获取节点父节点对象里的children
+        List<TestNode> parentNodes = getParentNodesById(testNodes, id);
+        if (parentNodes.size() >= 2) {
+            return parentNodes.get(1).getChildren();
+        }
+
+        // 顶级节点：第一级是自己，从原始数组中遍历第一层即可
+        parentNodes.clear();
+        parentNodes.addAll(testNodes);
+        return parentNodes;
 
     }
 
