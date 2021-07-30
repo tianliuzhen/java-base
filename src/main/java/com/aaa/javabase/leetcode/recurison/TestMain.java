@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSON;
 import org.assertj.core.util.Lists;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class TestMain {
         List<TestNode> testNodes = mockData();
 
         // 1、获取节点id的所有父节点集合(包含当前节点id)
-        List<TestNode> parentId = getParentNodesById(testNodes, 6);
+        List<TestNode> parentId = getParentNodesById(testNodes, 101);
 
         // 2、获取节点id获取某个节点
         TestNode nodesById = getNodesById(testNodes, 9);
@@ -43,9 +42,11 @@ public class TestMain {
         // 6、根据当前节点id，获取及所有的父级兄弟节点的所有父节点
         List<TestNode> parentBrotherAllNodesById = getParentBrotherAllNodesById(testNodes, 1);
 
-        System.out.println();
+        // 7、根据节点id获取当前节点
+        TestNode testNode = getNodesById3(testNodes, 8);
 
     }
+
 
     /**
      * 根据当前节点id，获取及所有的父级兄弟节点的所有父节点
@@ -120,7 +121,7 @@ public class TestMain {
     }
 
     /**
-     * 2、根据ID获取该节点的对象
+     * 2、根据ID获取该节点的对象 -- 写法1
      *
      * @param testNodes 节点集合
      * @param id        节点id
@@ -136,7 +137,7 @@ public class TestMain {
     }
 
     /**
-     * 3、根据ID获取所有子节点的对象，首先把该节点的对象找出来，上面getNodesById（）这个方法
+     * 3、根据ID获取该节点的对象 -- 写法2
      *
      * @param testNodes 节点集合
      * @param id        节点id
@@ -155,6 +156,28 @@ public class TestMain {
         }
 
 
+    }
+
+    /**
+     * 3、根据ID获取该节点的对象 -- 写法3
+     * @param testNodes 节点集合
+     * @param id 节点id
+     * @return TestNode
+     */
+    private static TestNode getNodesById3(List<TestNode> testNodes, long id) {
+        for (TestNode testNode : testNodes) {
+            // 匹配到节点
+            if (testNode.getId().equals(id)) {
+                return testNode;
+            }
+            if (!CollectionUtils.isEmpty(testNode.getChildren())) {
+                TestNode node = getNodesById3(testNode.getChildren(), id);
+                if (node != null) {
+                    return node;
+                }
+            }
+        }
+        return null;
     }
 
     /**
