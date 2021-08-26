@@ -3,7 +3,7 @@ package com.aaa.javabase.jdk8.自定义函数;
 import java.util.Set;
 
 /**
- * 自定义函数接口 SetFunction
+ * 自定义函数接口 SetFunction：一个入参，一个返回值
  *
  * @author liuzhen.tian
  * @version 1.0 SetFuction.java  2021/8/26 21:06
