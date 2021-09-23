@@ -27,8 +27,13 @@ public class TestDemo1 {
         List<CompletableFuture<String>> res2 = listDomain.stream()
                 .map(domain -> CompletableFuture.supplyAsync(() -> getDataByDomain(domain)))
                 .collect(Collectors.toList());
+
+        // 无参
         CompletableFuture.allOf(res2.toArray(new CompletableFuture[res2.size()]))
                 .join();
+
+        // 有参
+        // List<String> res3 = res2.stream().map(CompletableFuture::join).collect(Collectors.toList());
     }
 
     public static String getDataByDomain(String domain) {
