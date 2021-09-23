@@ -13,4 +13,9 @@ import lombok.Getter;
 @Builder(toBuilder = true)
 public class OrderEvent {
     private String msg;
+
+    public static void main(String[] args) {
+        boolean[] bs = {};
+
+    }
 }

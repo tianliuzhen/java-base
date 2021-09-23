@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
  * @version 1.0 SupplyAsyncText.java  2021/2/24 20:05
  */
 @Slf4j
-public class SupplyAsyncText {
+public class ThenCombineText {
 
     /**
      * 普通的方法同步执行
@@ -37,7 +37,7 @@ public class SupplyAsyncText {
     @Test
     public void testCanLogOff() {
         // case 设定：如果 userId > 100 则在某一个环节抛错
-        int userId = 1212;
+        int userId = 1;
         // 异步 每一个执行1s 异步并行：结果是执行应该 < 5s
         long begin2 = System.currentTimeMillis();
         String result =

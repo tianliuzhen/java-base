@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.并发执行.completableFuture;
+package com.aaa.javabase.multithreading.并发执行.completableFuture.methods;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
