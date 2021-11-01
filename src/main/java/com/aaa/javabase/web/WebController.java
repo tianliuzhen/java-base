@@ -1,6 +1,9 @@
 package com.aaa.javabase.web;
 
 import com.aaa.javabase.domain.BaseMain;
+import com.aaa.javabase.pattern.behavior.state.demo2.OrderState;
+import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateContext;
+import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateMap;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
@@ -28,35 +31,52 @@ public class WebController {
     @Autowired
     private Abean abean;
 
+    @Autowired
+    private OrderStateMap orderStateMap;
+
+    @GetMapping(value = "/orderState")
+    public void orderState() {
+        // 1、获取具体的订单状态对象
+        OrderState orderState = orderStateMap.get("shipped-order");
+
+        // 2、使用上下文切换不同的形态
+        OrderStateContext orderStateContext = new OrderStateContext();
+        orderStateContext.setOrderState(orderState);
+
+        // 3、执行具体的方法
+        orderStateContext.doAction("123456");
+
+    }
+
+
     @GetMapping(value = "/inspectionSolver")
-    public void test(){
+    public void test() {
         //准备数据
         InspectionEnum taskType = InspectionEnum.INSPECTION_TASK_TYPE_BATCH_REPLACE_ORDER_GOODS;
         Long orderId = 123L;
         Long userId = 1L;
         // 获取任务类型对应的 solver
         InspectionSolver solver = inspectionSolverChooser.choose(taskType);
-        if (solver==null) {
+        if (solver == null) {
             throw new RuntimeException("任务类型无法处理");
         }
         // 调用不同的solve的方法进行处理
-        solver.slove(orderId,userId);
-
-
+        solver.slove(orderId, userId);
     }
 
     /**
      * 用户列表
+     *
      * @param listForm
      */
-    @RequestMapping(path = "list", method = {RequestMethod.GET,  RequestMethod.POST}  )
-    public String list(@RequestParam(required=true) String listForm){
+    @RequestMapping(path = "list", method = {RequestMethod.GET, RequestMethod.POST})
+    public String list(@RequestParam(required = true) String listForm) {
         return "str";
     }
 
 
     @GetMapping(value = "/getGoodsServiceGoodsNames")
-    public void getGoodsServiceGoodsNames(){
+    public void getGoodsServiceGoodsNames() {
         System.out.println(goodsService.getGoodsName());
     }
 
@@ -64,10 +84,11 @@ public class WebController {
      * 测试返回两种时间格式
      * Date
      * DateTime
+     *
      * @return
      */
     @PostMapping("/objectResponseDate")
-    public Object response(){
+    public Object response() {
         BaseMain baseMain = new BaseMain();
         baseMain.setDate(new Date());
         baseMain.setLocalDateTime(LocalDateTime.now());
@@ -76,15 +97,14 @@ public class WebController {
     }
 
 
-
-    @GetMapping ("/testInt")
+    @GetMapping("/testInt")
     public People testInt() {
         People people = new People();
         return people;
 
     }
 
-    @GetMapping ("/testBean")
+    @GetMapping("/testBean")
     public void testBean() {
         abean.get();
     }
