@@ -1,6 +1,7 @@
-package com.aaa.javabase.pattern.behavior.chain;
+package com.aaa.javabase.pattern.behavior.chain.demo1.type;
 
-import com.aaa.javabase.pattern.behavior.chain.model.Receipt;
+import com.aaa.javabase.pattern.behavior.chain.demo1.IReceiptHandleChain;
+import com.aaa.javabase.pattern.behavior.chain.demo1.model.Receipt;
 
 /**
  * 抽象回执处理者接口

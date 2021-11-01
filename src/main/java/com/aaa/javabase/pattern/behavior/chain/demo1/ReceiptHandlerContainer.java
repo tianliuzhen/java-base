@@ -1,5 +1,6 @@
-package com.aaa.javabase.pattern.behavior.chain;
+package com.aaa.javabase.pattern.behavior.chain.demo1;
 
+import com.aaa.javabase.pattern.behavior.chain.demo1.type.IReceiptHandler;
 import com.aaa.javabase.util.ReflectionUtil;
 
 import java.util.ArrayList;

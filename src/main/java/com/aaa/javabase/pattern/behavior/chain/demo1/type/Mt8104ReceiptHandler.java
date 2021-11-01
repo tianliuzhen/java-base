@@ -1,8 +1,7 @@
-package com.aaa.javabase.pattern.behavior.chain.type;
+package com.aaa.javabase.pattern.behavior.chain.demo1.type;
 
-import com.aaa.javabase.pattern.behavior.chain.IReceiptHandleChain;
-import com.aaa.javabase.pattern.behavior.chain.IReceiptHandler;
-import com.aaa.javabase.pattern.behavior.chain.model.Receipt;
+import com.aaa.javabase.pattern.behavior.chain.demo1.IReceiptHandleChain;
+import com.aaa.javabase.pattern.behavior.chain.demo1.model.Receipt;
 import org.apache.commons.lang3.StringUtils;
 
 /**

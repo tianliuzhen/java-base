@@ -1,6 +1,6 @@
-package com.aaa.javabase.pattern.behavior.chain;
+package com.aaa.javabase.pattern.behavior.chain.demo1;
 
-import com.aaa.javabase.pattern.behavior.chain.model.Receipt;
+import com.aaa.javabase.pattern.behavior.chain.demo1.model.Receipt;
 
 /**
  * 责任链接口

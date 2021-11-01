@@ -1,4 +1,4 @@
-package com.aaa.javabase.pattern.behavior.chain.model;
+package com.aaa.javabase.pattern.behavior.chain.demo1.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
