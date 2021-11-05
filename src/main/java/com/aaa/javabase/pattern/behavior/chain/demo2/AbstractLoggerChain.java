@@ -4,6 +4,8 @@ import com.aaa.javabase.pattern.behavior.chain.demo2.impl.PrintLogger;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 纯责任链模式
+ * <p>
  * 抽象的日志类
  *
  * @author liuzhen.tian

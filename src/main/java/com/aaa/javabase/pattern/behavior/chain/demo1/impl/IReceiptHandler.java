@@ -1,4 +1,4 @@
-package com.aaa.javabase.pattern.behavior.chain.demo1.type;
+package com.aaa.javabase.pattern.behavior.chain.demo1.impl;
 
 import com.aaa.javabase.pattern.behavior.chain.demo1.IReceiptHandleChain;
 import com.aaa.javabase.pattern.behavior.chain.demo1.model.Receipt;
