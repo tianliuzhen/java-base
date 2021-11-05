@@ -1,6 +1,7 @@
 package com.aaa.javabase.pattern.behavior.chain.demo3.impl;
 
 import com.aaa.javabase.pattern.behavior.chain.demo3.model.RecruitModel;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @version 1.0 DeleteStatusHandler.java  2021/11/5 21:56
  */
 
+@Order(1000)
 @Component
 public class DeleteStatusHandler implements RecruitStatusHandler {
 

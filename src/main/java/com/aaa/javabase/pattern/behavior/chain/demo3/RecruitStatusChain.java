@@ -37,7 +37,7 @@ public class RecruitStatusChain {
      */
     @PostConstruct
     public void initData() {
-        recruitStatusHandlers = myBeanFactory.getBeansOfType(RecruitStatusHandler.class);
+        recruitStatusHandlers = myBeanFactory.getBeansOfTypeAsc(RecruitStatusHandler.class);
     }
 
     /**
