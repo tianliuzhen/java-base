@@ -5,6 +5,7 @@ import com.aaa.javabase.pattern.behavior.chain.demo3.impl.RecruitStatusHandler;
 import com.aaa.javabase.pattern.behavior.chain.demo3.model.RecruitModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -28,9 +29,11 @@ public class RecruitStatusChain {
      */
     private List<RecruitStatusHandler> recruitStatusHandlers;
 
-
     @Autowired
     private MyBeanFactory<Void, RecruitStatusHandler> myBeanFactory;
+
+    // 记录当前处理器位置
+    private int index;
 
     /**
      * 初始化处理器数据
@@ -47,9 +50,12 @@ public class RecruitStatusChain {
      * @param recruitModels
      */
     public void handleBuildStatus(List<RecruitModel> recruitModels) {
-        // 执行所有的 招聘状态链处理器
-        for (RecruitStatusHandler handler : recruitStatusHandlers) {
-            handler.buildStatus(recruitModels);
+        if (!CollectionUtils.isEmpty(recruitStatusHandlers)) {
+            // 执行所有的 招聘状态链处理器
+            if (index <= recruitStatusHandlers.size() - 1) {
+                recruitStatusHandlers.get(index++).buildStatus(recruitModels, this);
+            }
+
         }
     }
 }

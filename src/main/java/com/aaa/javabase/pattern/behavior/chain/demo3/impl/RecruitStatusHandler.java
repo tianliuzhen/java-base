@@ -1,5 +1,6 @@
 package com.aaa.javabase.pattern.behavior.chain.demo3.impl;
 
+import com.aaa.javabase.pattern.behavior.chain.demo3.RecruitStatusChain;
 import com.aaa.javabase.pattern.behavior.chain.demo3.model.RecruitModel;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface RecruitStatusHandler {
      * 设置招聘列表状态
      *
      * @param recruitModels model
+     * @param recruitStatusChain 传递链
      */
-    void buildStatus(List<RecruitModel> recruitModels);
+    void buildStatus(List<RecruitModel> recruitModels, RecruitStatusChain recruitStatusChain);
 }

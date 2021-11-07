@@ -58,6 +58,8 @@ public class WebPatternController {
 
         recruitStatusChain.handleBuildStatus(recruitModels);
 
+        recruitModels.forEach(e -> System.out.println(e.getStatus()));
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.aaa.javabase.pattern.behavior.chain.demo3.impl;
 
+import com.aaa.javabase.pattern.behavior.chain.demo3.RecruitStatusChain;
 import com.aaa.javabase.pattern.behavior.chain.demo3.model.RecruitModel;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class DeleteStatusHandler implements RecruitStatusHandler {
      * @param recruitModels model
      */
     @Override
-    public void buildStatus(List<RecruitModel> recruitModels) {
+    public void buildStatus(List<RecruitModel> recruitModels, RecruitStatusChain recruitStatusChain) {
         recruitModels.forEach(item -> {
             // TODO: 2021/11/5 业务逻辑处理
             List<String> status = item.getStatus();
@@ -33,5 +34,8 @@ public class DeleteStatusHandler implements RecruitStatusHandler {
             }
             item.setStatus(status);
         });
+
+        // 执行下一个行为链
+        recruitStatusChain.handleBuildStatus(recruitModels);
     }
 }
