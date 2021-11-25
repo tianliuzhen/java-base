@@ -15,12 +15,17 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @ToString
-public class DemoInternal  {
+public class DemoInternal implements Cloneable, Serializable {
 
     private String internalName;
 
     private String internalValue;
 
+
+    @Override
+    public DemoInternal clone() throws CloneNotSupportedException {
+        return (DemoInternal) super.clone();
+    }
 
 
 }

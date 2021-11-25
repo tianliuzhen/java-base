@@ -4,6 +4,7 @@ import com.aaa.javabase.jdk8.sort.DashboardSituationVo;
 import com.aaa.javabase.util.CloneUtil;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,19 +34,19 @@ public class TestMap {
          * 预估实际成交额	  近7天总成交额（元）	近7天平均成交额（元）	总订单数	 总UV	近七天总UV	平均AOV	平均订单转化率（%）
          * 1.
          */
-        dashboardSituationDetailVoV2.values().forEach(all ->{
+        dashboardSituationDetailVoV2.values().forEach(all -> {
             //根据 DashboardSituationVo 里面的字段排序
             Map<String, Map<String, DashboardSituationVo>> allMap = all;
 
-            allMap.forEach((k,v)->{
+            allMap.forEach((k, v) -> {
                 Map<String, DashboardSituationVo> oneMap = v;
                 // 1. 深拷贝一个map
-                Map<String, DashboardSituationVo> deepMap = CloneUtil.deepCloneMap(oneMap);
+                Map<String, DashboardSituationVo> deepMap = CloneUtil.deepCopyObj((HashMap<String, DashboardSituationVo>) oneMap);
                 // 2. 这里的构造一个临时排序变量 LinkedHashMap
                 Map<String, BigDecimal> linkedMap = new LinkedHashMap();
-                if(sortField.equals("perdayTurnover")){
+                if (sortField.equals("perdayTurnover")) {
                     Map<String, BigDecimal> finalLinkedMap = linkedMap;
-                    oneMap.forEach((k1, v1)-> finalLinkedMap.put(k1, v1.getPerdayTurnover()));
+                    oneMap.forEach((k1, v1) -> finalLinkedMap.put(k1, v1.getPerdayTurnover()));
                     if ("desc".equals(sortType)) {
                         linkedMap = sortByValue(linkedMap, 0);
                     }
@@ -53,15 +54,15 @@ public class TestMap {
                         linkedMap = sortByValue(linkedMap, 1);
                     }
                 }
-                Map<String, DashboardSituationVo>  needLinkedMap= new LinkedHashMap();
+                Map<String, DashboardSituationVo> needLinkedMap = new LinkedHashMap();
                 // 3. 构造排序后需要的 linkedMap
-                linkedMap.keySet().forEach(key ->{
+                linkedMap.keySet().forEach(key -> {
                     //此时的 linkedMap 是有序的
-                    needLinkedMap.put(key,deepMap.get(key));
+                    needLinkedMap.put(key, deepMap.get(key));
                 });
                 // 4. 进行排序，清空原有数据，从深拷贝中重新赋值 map
                 oneMap.clear();
-                allMap.put(k,needLinkedMap);
+                allMap.put(k, needLinkedMap);
 
             });
 
@@ -71,13 +72,12 @@ public class TestMap {
     }
 
 
-
-
     /**
      * 对 map 的 value 进行排序
+     *
      * @param map
      * @param sortType
-     * @return java.util.Map<K,V>
+     * @return java.util.Map<K, V>
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map, int sortType) {
         Map<K, V> result = new LinkedHashMap<>();

@@ -1,10 +1,9 @@
 package com.aaa.javabase.util;
 
+import lombok.SneakyThrows;
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author liuzhen.tian
@@ -12,9 +11,21 @@ import java.util.Map;
  */
 public class CloneUtil {
 
+    /**
+     * 通过 SerializationUtils 实现 clone
+     *
+     * @param object 克隆对象
+     * @param <T>    泛型T
+     * @return T
+     */
+    public static <T extends Serializable> T cloneByObj(T object) {
+        return SerializationUtils.clone(object);
+    }
+
     //  对象 克隆
+    @SneakyThrows
     @SuppressWarnings("unchecked")
-    public static <T extends Serializable> T deepCopyObj(T object) throws Exception{
+    public static <T extends Serializable> T deepCopyObj(T object) {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bout);
         oos.writeObject(object);
@@ -24,46 +35,5 @@ public class CloneUtil {
         // 这两个基于内存的流只要垃圾回收器清理对象就能够释放资源，这一点不同于对外部资源（如文件流）的释放
         return (T) ois.readObject();
     }
-    // list 克隆
-    public static <T> T deepCopyList(Collection<?> src) throws IOException, ClassNotFoundException {
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(byteOut);
-        out.writeObject(src);
-        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
-        ObjectInputStream in = new ObjectInputStream(byteIn);
-        @SuppressWarnings("unchecked")
-        Collection<T> dest = (Collection<T>) in.readObject();
-        return (T) dest;
-    }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Map deepCloneMap(Map obj) {
-        T clonedObj = null;
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(obj);
-            oos.close();
-
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            clonedObj = (T) ois.readObject();
-            ois.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (Map) clonedObj;
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        List<Integer> list = Arrays.asList(1,2,3);
-        List<Integer> list1 = list;
-        List<Integer> list2 = deepCopyList(list);
-        // 浅克隆
-        System.out.println(list == list1);
-        // 深克隆
-        System.out.println(list == list2);
-
-    }
 }

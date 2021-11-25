@@ -1,6 +1,9 @@
 package com.aaa.javabase.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -12,7 +15,7 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @ToString
-public class Demo implements Cloneable {
+public class Demo implements Cloneable, Serializable {
 
     private String name;
 
@@ -26,6 +29,10 @@ public class Demo implements Cloneable {
         Demo demo = null;
         try {
             demo = (Demo) super.clone(); //浅复制
+            // demo.setDemoInternal(demoInternal.clone());
+            // 或者是
+            demo.demoInternal = demoInternal.clone();
+
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
