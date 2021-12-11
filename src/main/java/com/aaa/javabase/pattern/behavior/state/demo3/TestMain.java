@@ -6,9 +6,11 @@ package com.aaa.javabase.pattern.behavior.state.demo3;
  */
 public class TestMain {
     public static void main(String[] args) {
-        // 前端拿到，0-基础需求，1-技术需求，2-非技术需求
-        int isTech = 1;
+        // mock 前端传来需求id、技术类型、参数，0-基础需求，1-技术需求，2-非技术需求
+        int requireId = 123;
+        String isTech = "tech";
         String type = "distribution";
+        String data = "json数据";
 
         // 1、获取具体的需求状态对象
         Require require = RequireMap.getValue(isTech, type);
@@ -18,7 +20,7 @@ public class TestMain {
         requireContext.setRequire(require);
 
         // 3、执行具体的方法
-        requireContext.doAction(123, "sss");
+        requireContext.doAction(requireId, data);
     }
 
 }

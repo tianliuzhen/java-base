@@ -1,6 +1,7 @@
 package com.aaa.javabase.pattern.behavior.state.demo3.impl.nontech;
 
 import com.aaa.javabase.pattern.behavior.state.demo3.Require;
+import com.aaa.javabase.pattern.behavior.state.demo3.model.IsTechEnum;
 
 /**
  * 【初始状态】 非技术需求创建
@@ -15,7 +16,7 @@ public class CreateNonTechRequire implements Require {
     }
     @Override
     public String isTech() {
-        return "nonTech";
+        return IsTechEnum.NON_TECH.getCode();
     }
 
     @Override

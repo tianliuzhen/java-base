@@ -22,7 +22,7 @@ public class BaseConfirmRequire implements Require {
 
     @Override
     public String isTech() {
-        return "base";
+        return "";
     }
 
     @Override

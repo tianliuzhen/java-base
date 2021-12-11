@@ -1,6 +1,7 @@
 package com.aaa.javabase.pattern.behavior.state.demo3.impl.tech;
 
 import com.aaa.javabase.pattern.behavior.state.demo3.Require;
+import com.aaa.javabase.pattern.behavior.state.demo3.model.IsTechEnum;
 
 /**
  * 【初始状态】 技术需求创建
@@ -16,7 +17,7 @@ public class CreateTechRequire implements Require {
 
     @Override
     public String isTech() {
-        return "tech";
+        return IsTechEnum.TECH.getCode();
     }
 
     @Override

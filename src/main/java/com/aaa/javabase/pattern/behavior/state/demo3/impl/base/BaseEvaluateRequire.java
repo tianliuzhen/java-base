@@ -16,7 +16,7 @@ public class BaseEvaluateRequire implements Require {
 
     @Override
     public String isTech() {
-        return "base";
+        return "";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.aaa.javabase.pattern.behavior.state.demo3.impl.tech;
 
 import com.aaa.javabase.pattern.behavior.state.demo3.Require;
+import com.aaa.javabase.pattern.behavior.state.demo3.model.IsTechEnum;
 
 /**
  * 【分配】 技术需求
@@ -15,7 +16,7 @@ public class DistributionTechRequire implements Require {
     }
     @Override
     public String isTech() {
-        return "tech";
+        return IsTechEnum.TECH.getCode();
     }
 
     @Override

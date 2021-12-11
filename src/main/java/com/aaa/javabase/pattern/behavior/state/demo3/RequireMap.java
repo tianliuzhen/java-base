@@ -6,9 +6,11 @@ import com.aaa.javabase.pattern.behavior.state.demo3.impl.nontech.CreateNonTechR
 import com.aaa.javabase.pattern.behavior.state.demo3.impl.nontech.TempSaveNonTechRequire;
 import com.aaa.javabase.pattern.behavior.state.demo3.impl.tech.CreateTechRequire;
 import com.aaa.javabase.pattern.behavior.state.demo3.impl.tech.DistributionTechRequire;
+import com.aaa.javabase.pattern.behavior.state.demo3.model.IsTechEnum;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 注册需求容器map
@@ -18,30 +20,36 @@ import java.util.Map;
  */
 public class RequireMap {
 
+    // 技术和非技术需求-流程状态处理
     private static Map<String, Map<String, Require>> map = new HashMap<>(16);
+    // 技术和非技术需求-通用流程状态处理
+    private static Map<String, Require> baseMap = new HashMap<>(16);
 
+    /**
+     * 初始化需求状态对应动作
+     */
     static {
-        // 技术
+        // #### 非技术
         HashMap<String, Require> techMap = new HashMap<>();
+        // 初始状态 - 对应创建
         techMap.put("create", new CreateNonTechRequire());
+        // 初始状态 - 对应暂存
         techMap.put("tempSave", new TempSaveNonTechRequire());
         // ...
-        map.put("tech", techMap);
-
-        // 非技术
+        map.put(IsTechEnum.TECH.getCode(), techMap);
+        // #### 非技术
         HashMap<String, Require> nonTechMap = new HashMap<>();
+        // 初始状态 - 对应创建
         techMap.put("create", new CreateTechRequire());
+        // 初始状态 - 分发
         techMap.put("distribution", new DistributionTechRequire());
         // ...
-        map.put("nonTech", nonTechMap);
+        map.put(IsTechEnum.NON_TECH.getCode(), nonTechMap);
 
 
         // 通用（需求确认、评价）
-        HashMap<String, Require> baseMap = new HashMap<>();
         baseMap.put("confirm", new BaseConfirmRequire());
         baseMap.put("evaluate", new BaseEvaluateRequire());
-        // ...
-        map.put("base", nonTechMap);
     }
 
     /**
@@ -51,24 +59,22 @@ public class RequireMap {
      * @param type   操作类型
      * @return Require
      */
-    public static Require getValue(Integer isTech, String type) {
-        String key = "";
-        switch (isTech) {
-            // 通用需求
-            case 0:
-                key = "base";
-                break;
-            // 技术需求
-            case 1:
-                key = "tech";
-                break;
-            // 非技术需求
-            case 2:
-                key = "nonTech";
-                break;
+    public static Require getValue(String isTech, String type) {
+
+        // 需求通用模块处理（确认、评价）
+        switch (type) {
+            case "confirm":
+                return baseMap.get("confirm");
+            case "evaluate":
+                return baseMap.get("evaluate");
         }
-        Map<String, Require> map = RequireMap.map.get(key);
-        return map.get(type);
+
+        // 1、获取技术类型的map
+        Map<String, Require> map = RequireMap.map.get(isTech);
+
+        // 2、获取技术类型的map里面的具体map
+        return Optional.ofNullable(map.get(type)).
+                orElseThrow(() -> new RuntimeException(type + ":找不到对应处理类"));
     }
 
 }
