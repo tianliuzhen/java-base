@@ -52,6 +52,17 @@ public class RequireStateMachine {
     @Getter
     private RequireStateEnum state;
 
+    /**
+     * 状态机执行入口
+     * <p>
+     * 其实，普通需求仅仅根据【需求状态】就能知道【需求Action】，为什么这里还要加一个需求action呢
+     * 是因为可能一个状态会有俩个动作。这个具体的Action 由前端传来。
+     *
+     * @param techTypeEnum 技术类型
+     * @param action       需求事件
+     * @param code         需求id
+     * @param jsonData     处理参数
+     */
     public void execute(TechTypeEnum techTypeEnum, RequireActionEnum action, String code, Object jsonData) {
         // 1、匹配事件
         RequireStateMachineTrans machineTrans = machineTransList
