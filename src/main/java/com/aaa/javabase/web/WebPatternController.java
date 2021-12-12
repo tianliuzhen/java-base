@@ -5,6 +5,10 @@ import com.aaa.javabase.pattern.behavior.chain.demo3.model.RecruitModel;
 import com.aaa.javabase.pattern.behavior.state.demo2.OrderState;
 import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateContext;
 import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateMap;
+import com.aaa.javabase.pattern.behavior.stateMachine.demo1.RequireStateMachine;
+import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.RequireActionEnum;
+import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.RequireStateEnum;
+import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.TechTypeEnum;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
@@ -43,6 +47,12 @@ public class WebPatternController {
      */
     @Autowired
     private RecruitStatusChain recruitStatusChain;
+
+    /**
+     * 状态机
+     */
+    @Autowired
+    private RequireStateMachine requireStateMachine;
 
 
     /**
@@ -84,7 +94,7 @@ public class WebPatternController {
      * 策略模式
      */
     @GetMapping(value = "/inspectionSolver")
-    public void test() {
+    public void inspectionSolver() {
         //准备数据
         InspectionEnum taskType = InspectionEnum.INSPECTION_TASK_TYPE_BATCH_REPLACE_ORDER_GOODS;
         Long orderId = 123L;
@@ -97,4 +107,26 @@ public class WebPatternController {
         // 调用不同的solve的方法进行处理
         solver.slove(orderId, userId);
     }
+
+    /**
+     * 状态机
+     */
+    @GetMapping(value = "/requireStateMachine")
+    public void requireStateMachine() {
+
+
+        // 执行动作 (技术创建)
+        requireStateMachine.setState(RequireStateEnum.INIT);
+        requireStateMachine.execute(TechTypeEnum.TECH, RequireActionEnum.CREATE, "123", "");
+
+        // 执行动作 (技术确认)
+        requireStateMachine.setState(RequireStateEnum.NO_CONFIRMED);
+        requireStateMachine.execute(TechTypeEnum.TECH, RequireActionEnum.CONFIRM, "123", "");
+
+        // 执行动作 (非技术确认)
+        requireStateMachine.setState(RequireStateEnum.NO_CONFIRMED);
+        requireStateMachine.execute(TechTypeEnum.NON_TECH, RequireActionEnum.CONFIRM, "123", "");
+
+    }
+
 }
