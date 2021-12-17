@@ -1,14 +1,13 @@
-package com.aaa.javabase.multithreading.threadpool;
+package com.aaa.javabase.multithreading.threadpool.prioritized;
 
 /**
- * description: 描述
+ * 线程池有界队列
  *
- * @author 田留振(liuzhen.tian @ haoxiaec.com)
- * @version 1.0
- * @date 2020/4/23
+ * @author liuzhen.tian
  */
 
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.Random;
 
 @Slf4j
@@ -36,7 +35,7 @@ public class PrioritizedRunnable implements Runnable, Comparable<PrioritizedRunn
         log.info("compareTo. this.name={}, secondOne.name={}", this.getName(), secondOne.getName());
         if (this.getRts() < secondOne.getRts()) {
             return -1;
-        }else if(this.getRts()> secondOne.getRts()){
+        } else if (this.getRts() > secondOne.getRts()) {
             return 1;
         } else {
             return 0;

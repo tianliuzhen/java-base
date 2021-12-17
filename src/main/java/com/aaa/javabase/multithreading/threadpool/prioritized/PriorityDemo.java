@@ -1,4 +1,4 @@
-package com.aaa.javabase.multithreading.threadpool;
+package com.aaa.javabase.multithreading.threadpool.prioritized;
 
 /**
  * description: 描述
