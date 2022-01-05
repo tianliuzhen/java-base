@@ -1,12 +1,7 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.config.TestProperties;
 import com.aaa.javabase.domain.BaseMain;
-import com.aaa.javabase.pattern.behavior.state.demo2.OrderState;
-import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateContext;
-import com.aaa.javabase.pattern.behavior.state.demo2.OrderStateMap;
-import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
-import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
@@ -73,4 +68,15 @@ public class WebController {
     public void testBean() {
         abean.get();
     }
+
+    @Autowired
+    private TestProperties testProperties;
+
+    @GetMapping("/testProperties")
+    public String testProperties() {
+
+        return testProperties.toString();
+    }
+
+
 }
