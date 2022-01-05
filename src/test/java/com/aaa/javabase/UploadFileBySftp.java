@@ -2,8 +2,6 @@ package com.aaa.javabase;
 
 import com.aaa.javabase.util.SftpClient;
 import com.jcraft.jsch.SftpException;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
 
@@ -12,12 +10,12 @@ import java.io.*;
  * @version $ Id: UploadFileBySftp.java, v 0.1 2020/7/1 10:08 liuzhen.tian Exp $
  */
 
-@SpringBootTest
+// @SpringBootTest
 public class UploadFileBySftp {
 
     public static final String READ_PATH = System.getProperty("user.dir")+ "\\src\\test\\resources\\test";
 
-    @Test
+    // @Test
     public void upload() throws SftpException, FileNotFoundException {
         SftpClient sftpClient = new SftpClient("",22,"","");
         sftpClient.login();
@@ -35,7 +33,7 @@ public class UploadFileBySftp {
         System.out.println(file_temp_20200701);
     }
 
-    @Test
+    // @Test
     public  void createFile() throws FileNotFoundException {
         File file = new File(READ_PATH);
         if (file.exists()) {

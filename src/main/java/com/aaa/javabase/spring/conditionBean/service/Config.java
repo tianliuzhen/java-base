@@ -2,7 +2,6 @@ package com.aaa.javabase.spring.conditionBean.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,6 @@ import org.springframework.core.annotation.Order;
  */
 @Slf4j
 @Configuration
-@ConditionalOnClass(name = "hunter2")
 @Order(11)
 public class Config {
 
@@ -27,17 +25,18 @@ public class Config {
         city.setCityName("千岛湖");
         return city;
     }
+
     @Bean
     public City2 city2() {
         City2 city2 = new City2();
         city2.setCityName("北极");
         return city2;
     }
+
     /**
      * 这里加了ConditionalOnBean注解，就代表如果city存在才实例化people
      */
-
-    @Bean(name={  "people3","people4"})
+    @Bean(name = {"people3", "people4"})
     @ConditionalOnBean(name = "c")
     public People people(City city) {
         //这里如果city实体成功注入 这里就会执行

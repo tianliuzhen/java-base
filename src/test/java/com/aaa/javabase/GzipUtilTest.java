@@ -2,7 +2,6 @@ package com.aaa.javabase;
 
 
 import com.aaa.javabase.util.GzipUtil;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -17,7 +16,7 @@ public class GzipUtilTest  {
     public static final String WRITE_PATH = System.getProperty("user.dir")+ "\\src\\test\\resources\\test\\testFile.zip";
 
 
-    @Test
+    // @Test
     public void gzipFile(){
         /**
          * 读取文件的路径
@@ -26,7 +25,7 @@ public class GzipUtilTest  {
         GzipUtil.gzipFile(READ_PATH,WRITE_PATH);
     }
 
-    @Test
+    // @Test
     public void unGzipFile(){
         /**
          * 读取压缩文件的路径

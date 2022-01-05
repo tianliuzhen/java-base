@@ -1,8 +1,6 @@
 package com.aaa.javabase;
 
-import com.aaa.javabase.processor.AppConfig;
 import com.aaa.javabase.service.BeanCycle;
-import com.aaa.javabase.service.OrderService;
 import com.aaa.javabase.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ class JavabaseApplicationTests {
         // ac.close();
         ac.registerShutdownHook();
     }
-    @Test
+    // @Test
     public void changeBean(){
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(JavabaseApplication.class);
         UserService bean = context.getBean(UserService.class);
