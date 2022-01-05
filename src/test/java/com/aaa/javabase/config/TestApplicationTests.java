@@ -11,17 +11,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class TestApplicationTests {
 
+    /**
+     * @Configuration 测试
+     */
     @Autowired
     private MyTestConfig.Car car;
 
     @Autowired
     private MyTestConfig.Driver driver;
 
+    /**
+     * @Component 测试
+     */
     @Autowired
     private MyTestConfig2.Car car2;
 
     @Autowired
     private MyTestConfig2.Driver driver2;
+
+    @Autowired
+    private TestProperties testProperties;
 
     @Test
     public void contextLoads() {
