@@ -102,8 +102,8 @@ public class WebController {
     }
 
     @PostMapping("/getPeople3")
-    public Object getPeople3(@RequestParam
-                             @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Object getPeople3(@RequestParam(defaultValue = "2022-12-14 21:08:00")
+                             @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
                                      Date date) {
         return date;
 
