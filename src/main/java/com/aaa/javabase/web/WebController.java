@@ -7,6 +7,7 @@ import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -72,10 +73,39 @@ public class WebController {
     }
 
 
-    @GetMapping("/testInt")
-    public People testInt() {
+    /**
+     * 测试时间：出参
+     */
+    @GetMapping("/getPeople")
+    public People getPeople() {
         People people = new People();
+        // Date 类型
+        people.setDate(new Date());
+        // LocalDateTime 类型
+        people.setLocalDateTime(LocalDateTime.now());
         return people;
+
+    }
+
+    /**
+     * 入参：
+     * {
+     * "date": "2022-02-14 20:46:12",
+     * "localDateTime": "2022-02-14 20:46:12"
+     * }
+     * 测试时间：入参
+     */
+    @PostMapping("/getPeople2")
+    public People getPeople2(@RequestBody People people) {
+        return people;
+
+    }
+
+    @PostMapping("/getPeople3")
+    public Object getPeople3(@RequestParam
+                             @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                     Date date) {
+        return date;
 
     }
 
@@ -87,7 +117,7 @@ public class WebController {
     @Autowired
     private TestProperties testProperties;
 
-    @GetMapping("/testProperties")
+    @PostMapping("/testProperties")
     public String testProperties() {
 
         return testProperties.toString();

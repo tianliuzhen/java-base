@@ -3,6 +3,8 @@ package com.aaa.javabase.spring.conditionBean.service;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +30,7 @@ public class People {
      */
     private Integer age;
     /**
-     *  城市信息
+     * 城市信息
      */
     private City city;
 
@@ -37,6 +39,11 @@ public class People {
     private Set set;
 
     private Map map;
+
+    // 若全局配置已配置，此注解可不加
+    // @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date date;
+    private LocalDateTime localDateTime;
 
     public People(String name, Integer age, City city) {
         this.name = name;
