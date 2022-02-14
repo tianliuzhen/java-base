@@ -6,10 +6,12 @@ import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author liuzhen.tian
@@ -23,6 +25,19 @@ public class WebController {
 
     @Autowired
     private Abean abean;
+
+
+    /**
+     * Map 接受 application.properties  map字段
+     */
+    @Value("#{${wei_xin_config}}")
+    private Map<String, String> weiXinConfig;
+
+    @GetMapping(value = "weiXinConfig")
+    public Object weiXinConfig() {
+        return weiXinConfig;
+    }
+
 
     /**
      * 用户列表
