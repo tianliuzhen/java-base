@@ -14,7 +14,7 @@ public class AtomicTest {
             index.compareAndSet(10, 11);
             index.compareAndSet(11, 10);
             System.out.println(Thread.currentThread().getName()+
-                    "：10-&gt;11-&gt;10");
+                    "：10->;11->;10");
         },"张三").start();
 
         new Thread(() ->  {

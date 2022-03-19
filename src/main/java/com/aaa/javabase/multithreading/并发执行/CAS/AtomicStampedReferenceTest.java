@@ -1,7 +1,6 @@
 package com.aaa.javabase.multithreading.并发执行.CAS;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
@@ -9,7 +8,6 @@ import java.util.concurrent.atomic.AtomicStampedReference;
  * @version 1.0 AtomicTest.java  2021/3/1 22:51
  */
 public class AtomicStampedReferenceTest {
-    private static AtomicInteger index = new AtomicInteger(10);
 
     /**
      * initialRef    初始值
