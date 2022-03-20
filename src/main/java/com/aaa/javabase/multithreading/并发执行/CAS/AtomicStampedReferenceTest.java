@@ -1,5 +1,6 @@
 package com.aaa.javabase.multithreading.并发执行.CAS;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
@@ -16,6 +17,7 @@ public class AtomicStampedReferenceTest {
     static AtomicStampedReference<Integer> stampRef
                             = new AtomicStampedReference(10, 1);
     public static void main(String[] args) {
+        ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap();
 
         //模拟 ABA ，在线程执行期间，另外一个线程，修改数据。
         new Thread(() -> {
