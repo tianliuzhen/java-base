@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @version 1.0 BeanFactory.java  2021/11/5 22:11
  */
 @Component
-public class MyBeanFactory<k, v> implements ApplicationContextAware {
+public class  MyBeanFactory<k, v> implements ApplicationContextAware {
 
     /**
      * 上下文
