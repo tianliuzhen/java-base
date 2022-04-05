@@ -13,6 +13,7 @@ public class TestMain {
         link03.run();
 
         Link05 link05 = new Link05();
+        link05.setLink05IsAlarm(true);
         link05.run();
     }
 }
