@@ -1,4 +1,4 @@
-package com.aaa.javabase.pattern.structure.decoration.demo3.impl2;
+package com.aaa.javabase.pattern.structure.decoration.demo3.common;
 
 import com.aaa.javabase.pattern.structure.decoration.demo3.WallBeautify;
 

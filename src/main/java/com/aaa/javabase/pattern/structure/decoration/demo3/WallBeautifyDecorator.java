@@ -18,7 +18,7 @@ public  abstract class WallBeautifyDecorator implements WallBeautify {
 
     @Override
     public void operation() {
-        wallBeautify.operation();
+        // wallBeautify.operation();
         decoration();
     }
 

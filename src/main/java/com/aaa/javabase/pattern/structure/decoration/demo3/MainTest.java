@@ -1,6 +1,6 @@
 package com.aaa.javabase.pattern.structure.decoration.demo3;
 
-import com.aaa.javabase.pattern.structure.decoration.demo3.impl2.WallBeautifyClean;
+import com.aaa.javabase.pattern.structure.decoration.demo3.common.WallBeautifyClean;
 import com.aaa.javabase.pattern.structure.decoration.demo3.imp.WallBeautifyHang;
 import com.aaa.javabase.pattern.structure.decoration.demo3.imp.WallBeautifyPaint;
 import com.aaa.javabase.pattern.structure.decoration.demo3.imp.WallBeautifyPutty;
