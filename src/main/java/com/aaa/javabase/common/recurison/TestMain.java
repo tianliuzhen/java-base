@@ -1,4 +1,4 @@
-package com.aaa.javabase.leetcode.recurison;
+package com.aaa.javabase.common.recurison;
 
 /**
  * @author liuzhen.tian
@@ -18,32 +18,32 @@ import java.util.List;
  */
 public class TestMain {
     public static void main(String[] args) {
-        List<TestNode> testNodes = mockData();
+        List<TestNodeModel> TestNodeModels = mockData();
 
         // 1、获取节点id的所有父节点集合(包含当前节点id)
-        List<TestNode> parentId = getParentNodesById(testNodes, 101);
+        List<TestNodeModel> parentId = getParentNodesById(TestNodeModels, 101);
 
         // 2、获取节点id获取某个节点
-        TestNode nodesById = getNodesById(testNodes, 9);
+        TestNodeModel nodesById = getNodesById(TestNodeModels, 9);
 
         // 4、获取节点id获取该节点下的所有节点
         // 4.1、先获取某个节点对象
-        List<TestNode> nodeResult = Lists.newArrayList();
-        getNodesById2(testNodes, 1, nodeResult);
+        List<TestNodeModel> nodeResult = Lists.newArrayList();
+        getNodesById2(TestNodeModels, 1, nodeResult);
         // 4.2、先获取某个节点对象
-        List<TestNode> result = Lists.newArrayList();
+        List<TestNodeModel> result = Lists.newArrayList();
         result.add(nodeResult.get(0));
         getChildrenNodesById(nodeResult.get(0), result);
 
         // 5、根据节点id获取兄弟所有节点
-        List<TestNode> brotherNodesById = getBrotherNodesById(testNodes, 9);
+        List<TestNodeModel> brotherNodesById = getBrotherNodesById(TestNodeModels, 9);
 
 
         // 6、根据当前节点id，获取及所有的父级兄弟节点的所有父节点
-        List<TestNode> parentBrotherAllNodesById = getParentBrotherAllNodesById(testNodes, 1);
+        List<TestNodeModel> parentBrotherAllNodesById = getParentBrotherAllNodesById(TestNodeModels, 1);
 
         // 7、根据节点id获取当前节点
-        TestNode testNode = getNodesById3(testNodes, 8);
+        TestNodeModel TestNodeModel = getNodesById3(TestNodeModels, 8);
 
     }
 
@@ -51,26 +51,26 @@ public class TestMain {
     /**
      * 根据当前节点id，获取及所有的父级兄弟节点的所有父节点
      *
-     * @param testNodes
+     * @param TestNodeModels
      * @param id
      */
-    private static List<TestNode> getParentBrotherAllNodesById(List<TestNode> testNodes, int id) {
-        List<TestNode> result = Lists.newArrayList();
-        TestNode testNode = null;
+    private static List<TestNodeModel> getParentBrotherAllNodesById(List<TestNodeModel> TestNodeModels, int id) {
+        List<TestNodeModel> result = Lists.newArrayList();
+        TestNodeModel TestNodeModel = null;
         // 1、获取当前节点id父节点的父节点
-        List<TestNode> parentNodes = getParentNodesById(testNodes, id);
+        List<TestNodeModel> parentNodes = getParentNodesById(TestNodeModels, id);
 
         // 小于3表示当前父节点是顶级节点
         if (parentNodes.size() < 3) {
             return Collections.singletonList(parentNodes.get(parentNodes.size() - 1));
         }
 
-        testNode = parentNodes.get(2);
+        TestNodeModel = parentNodes.get(2);
 
         // 2、获取父节点的父节点所有兄弟节点
-        List<TestNode> children = testNode.getChildren();
-        for (TestNode child : children) {
-            List<TestNode> parentNodesById = getParentNodesById(testNodes, child.getId());
+        List<TestNodeModel> children = TestNodeModel.getChildren();
+        for (TestNodeModel child : children) {
+            List<TestNodeModel> parentNodesById = getParentNodesById(TestNodeModels, child.getId());
             if (parentNodesById.size() < 2) {
                 continue;
             }
@@ -82,13 +82,13 @@ public class TestMain {
 
     }
 
-    private static void getChildrenNodesById(TestNode testNodes, List<TestNode> result) {
-        // result.add(testNodes);
-        if (!CollectionUtils.isEmpty(testNodes.getChildren())) {
-            for (TestNode testNode : testNodes.getChildren()) {
-                result.add(testNode);
-                if (!CollectionUtils.isEmpty(testNode.getChildren())) {
-                    getChildrenNodesById(testNode, result);
+    private static void getChildrenNodesById(TestNodeModel TestNodeModels, List<TestNodeModel> result) {
+        // result.add(TestNodeModels);
+        if (!CollectionUtils.isEmpty(TestNodeModels.getChildren())) {
+            for (TestNodeModel TestNodeModel : TestNodeModels.getChildren()) {
+                result.add(TestNodeModel);
+                if (!CollectionUtils.isEmpty(TestNodeModel.getChildren())) {
+                    getChildrenNodesById(TestNodeModel, result);
                 }
             }
         }
@@ -97,22 +97,22 @@ public class TestMain {
     /**
      * 1、根据子节点获取父节点集合
      *
-     * @param testNodes 节点集合
+     * @param TestNodeModels 节点集合
      * @param id        节点id
      * @return list
      */
-    private static List<TestNode> getParentNodesById(List<TestNode> testNodes, long id) {
-        for (TestNode testNode : testNodes) {
+    private static List<TestNodeModel> getParentNodesById(List<TestNodeModel> TestNodeModels, long id) {
+        for (TestNodeModel TestNodeModel : TestNodeModels) {
             // 匹配id
-            if (testNode.getId().equals(id)) {
-                return Lists.newArrayList(testNode);
+            if (TestNodeModel.getId().equals(id)) {
+                return Lists.newArrayList(TestNodeModel);
             }
 
-            if (!CollectionUtils.isEmpty(testNode.getChildren())) {
+            if (!CollectionUtils.isEmpty(TestNodeModel.getChildren())) {
                 // 核心思路：从集合第一级开始递归查询其所有的子节点，并匹配id
-                List<TestNode> parentsNodes = getParentNodesById(testNode.getChildren(), id);
+                List<TestNodeModel> parentsNodes = getParentNodesById(TestNodeModel.getChildren(), id);
                 if (!CollectionUtils.isEmpty(parentsNodes)) {
-                    parentsNodes.add(testNode);
+                    parentsNodes.add(TestNodeModel);
                     return parentsNodes;
                 }
             }
@@ -123,13 +123,13 @@ public class TestMain {
     /**
      * 2、根据ID获取该节点的对象 -- 写法1
      *
-     * @param testNodes 节点集合
+     * @param TestNodeModels 节点集合
      * @param id        节点id
-     * @return TestNode
+     * @return TestNodeModel
      */
-    private static TestNode getNodesById(List<TestNode> testNodes, long id) {
+    private static TestNodeModel getNodesById(List<TestNodeModel> TestNodeModels, long id) {
         // 调用根据子节点获取父节点的方法
-        List<TestNode> parentNodesByChildrenId = getParentNodesById(testNodes, id);
+        List<TestNodeModel> parentNodesByChildrenId = getParentNodesById(TestNodeModels, id);
         if (!CollectionUtils.isEmpty(parentNodesByChildrenId)) {
             return parentNodesByChildrenId.get(0);
         }
@@ -139,19 +139,19 @@ public class TestMain {
     /**
      * 3、根据ID获取该节点的对象 -- 写法2
      *
-     * @param testNodes 节点集合
+     * @param TestNodeModels 节点集合
      * @param id        节点id
-     * @return TestNode
+     * @return TestNodeModel
      */
-    private static void getNodesById2(List<TestNode> testNodes, long id, List<TestNode> testNodeList) {
-        for (TestNode testNode : testNodes) {
+    private static void getNodesById2(List<TestNodeModel> TestNodeModels, long id, List<TestNodeModel> TestNodeModelList) {
+        for (TestNodeModel TestNodeModel : TestNodeModels) {
             // 匹配到节点
-            if (testNode.getId().equals(id)) {
-                testNodeList.add(testNode);
+            if (TestNodeModel.getId().equals(id)) {
+                TestNodeModelList.add(TestNodeModel);
             }
 
-            if (!CollectionUtils.isEmpty(testNode.getChildren())) {
-                getNodesById2(testNode.getChildren(), id, testNodeList);
+            if (!CollectionUtils.isEmpty(TestNodeModel.getChildren())) {
+                getNodesById2(TestNodeModel.getChildren(), id, TestNodeModelList);
             }
         }
 
@@ -160,18 +160,18 @@ public class TestMain {
 
     /**
      * 3、根据ID获取该节点的对象 -- 写法3
-     * @param testNodes 节点集合
+     * @param TestNodeModels 节点集合
      * @param id 节点id
-     * @return TestNode
+     * @return TestNodeModel
      */
-    private static TestNode getNodesById3(List<TestNode> testNodes, long id) {
-        for (TestNode testNode : testNodes) {
+    private static TestNodeModel getNodesById3(List<TestNodeModel> TestNodeModels, long id) {
+        for (TestNodeModel TestNodeModel : TestNodeModels) {
             // 匹配到节点
-            if (testNode.getId().equals(id)) {
-                return testNode;
+            if (TestNodeModel.getId().equals(id)) {
+                return TestNodeModel;
             }
-            if (!CollectionUtils.isEmpty(testNode.getChildren())) {
-                TestNode node = getNodesById3(testNode.getChildren(), id);
+            if (!CollectionUtils.isEmpty(TestNodeModel.getChildren())) {
+                TestNodeModel node = getNodesById3(TestNodeModel.getChildren(), id);
                 if (node != null) {
                     return node;
                 }
@@ -183,25 +183,25 @@ public class TestMain {
     /**
      * 5、根据ID获取所有子节点的所有兄弟节点
      *
-     * @param testNodes 节点集合
+     * @param TestNodeModels 节点集合
      * @param id        节点id
-     * @return TestNode
+     * @return TestNodeModel
      */
-    private static List<TestNode> getBrotherNodesById(List<TestNode> testNodes, long id) {
+    private static List<TestNodeModel> getBrotherNodesById(List<TestNodeModel> TestNodeModels, long id) {
         // 非顶级节点：获取节点父节点对象里的children
-        List<TestNode> parentNodes = getParentNodesById(testNodes, id);
+        List<TestNodeModel> parentNodes = getParentNodesById(TestNodeModels, id);
         if (parentNodes.size() >= 2) {
             return parentNodes.get(1).getChildren();
         }
 
         // 顶级节点：第一级是自己，从原始数组中遍历第一层即可
         parentNodes.clear();
-        parentNodes.addAll(testNodes);
+        parentNodes.addAll(TestNodeModels);
         return parentNodes;
 
     }
 
-    private static List<TestNode> mockData() {
+    private static List<TestNodeModel> mockData() {
         String json = "[\n" +
                 "    {\n" +
                 "        \"id\":1,\n" +
@@ -267,6 +267,6 @@ public class TestMain {
                 "    }\n" +
                 "]";
 
-        return JSON.parseArray(json, TestNode.class);
+        return JSON.parseArray(json, TestNodeModel.class);
     }
 }
