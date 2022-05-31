@@ -5,6 +5,9 @@ import com.aaa.javabase.domain.BaseMain;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +21,8 @@ import java.util.Map;
  * @author liuzhen.tian
  * @version $ Id: WebTest.java, v 0.1 2020/6/18 11:02 liuzhen.tian Exp $
  */
+
+@Log4j2
 @RestController
 public class WebController {
 
@@ -119,9 +124,22 @@ public class WebController {
 
     @PostMapping("/testProperties")
     public String testProperties() {
-
         return testProperties.toString();
     }
 
+
+    private static Logger com_dal = LogManager.getLogger("com.dal");
+    private static Logger com_util = LogManager.getLogger("com.util");
+    @PostMapping("/testLogPrint")
+    public void testLogPrint() {
+        log.info("###info");
+        log.error("###error");
+        log.warn("###warn");
+        com_dal.info("###com_dal  info");
+        com_dal.error("###com_dal  info");
+        com_util.error("###com_util  error");
+        com_util.info("###com_util  info");
+
+    }
 
 }
