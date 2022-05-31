@@ -87,7 +87,7 @@
         </RollingFile>
 
         <!-- 自定义 dal文件日志 -->
-        <RollingFile name="com.dal" fileName="${FILE_PATH}/${FILE_NAME}/service/${date:yyyy-MM-dd}.com-dal.log"
+        <RollingFile name="com-dal" fileName="${FILE_PATH}/${FILE_NAME}/service/${date:yyyy-MM-dd}.com-dal.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
             <!-- 如果不设置拦截都输出，如：error、info 等  -->
             <!--   <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>-->
@@ -102,7 +102,7 @@
         </RollingFile>
 
         <!-- 自定义 util文件日志 -->
-        <RollingFile name="com.util" fileName="${FILE_PATH}/${FILE_NAME}/service/${date:yyyy-MM-dd}.com-util.log"
+        <RollingFile name="com-util" fileName="${FILE_PATH}/${FILE_NAME}/service/${date:yyyy-MM-dd}.com-util.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log.gz">
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
@@ -132,12 +132,12 @@
         </Logger>
 
         <!--  自定义 dal文件日志    -->
-        <Logger name="com.dal" level="info" additivity="false">
-            <AppenderRef ref="com.dal"/>
+        <Logger name="com-dal" level="info" additivity="false">
+            <AppenderRef ref="com-dal"/>
         </Logger>
         <!--  自定义 util文件日志    -->
-        <Logger name="com.util" level="info" additivity="false">
-            <AppenderRef ref="com.util"/>
+        <Logger name="com-util" level="info" additivity="false">
+            <AppenderRef ref="com-util"/>
         </Logger>
 
         <root level="info">

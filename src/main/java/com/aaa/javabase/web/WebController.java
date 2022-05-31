@@ -128,8 +128,8 @@ public class WebController {
     }
 
 
-    private static Logger com_dal = LogManager.getLogger("com.dal");
-    private static Logger com_util = LogManager.getLogger("com.util");
+    private static Logger com_dal = LogManager.getLogger("com-dal");
+    private static Logger com_util = LogManager.getLogger("com-util");
     @PostMapping("/testLogPrint")
     public void testLogPrint() {
         log.info("###info");
