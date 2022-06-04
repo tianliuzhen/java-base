@@ -1,6 +1,8 @@
 package com.aaa.javabase.multithreading.lock.readWrite;
 
 /**
+ * 读读共享
+ *
  * @author liuzhen.tian
  * @version 1.0 ReadReadTest.java  2022/6/4 13:09
  */

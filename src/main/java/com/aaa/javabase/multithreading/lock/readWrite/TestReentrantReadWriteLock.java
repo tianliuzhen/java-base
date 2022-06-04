@@ -7,10 +7,12 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * 读写互斥之饥饿写测试
+ *
  * @author liuzhen.tian
- * @version 1.0 TestReentrantReadWriteLock.java  2022/6/3 23:18
+ * @version 1.0 WriteHungerTest.java  2022/6/3 23:18
  */
-public class TestReentrantReadWriteLock {
+public class WriteHungerTest {
 
     //读写锁
     private static ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock(false);
@@ -31,12 +33,12 @@ public class TestReentrantReadWriteLock {
      */
     public final static void main(String[] args) throws InterruptedException {
         // 模拟写线程的线程为1个
-        new Thread(TestReentrantReadWriteLock::write).start();
+        new Thread(WriteHungerTest::write).start();
         TimeUnit.SECONDS.sleep(1);
 
         // 模拟读线程的线程为500个
         for (int i = 0; i < 500; i++) {
-            new Thread(TestReentrantReadWriteLock::read).start();
+            new Thread(WriteHungerTest::read).start();
         }
     }
 
