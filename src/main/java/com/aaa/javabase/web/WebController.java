@@ -124,6 +124,7 @@ public class WebController {
 
     @PostMapping("/testProperties")
     public String testProperties() {
+        log.warn("###warn");
         return testProperties.toString();
     }
 
@@ -139,6 +140,8 @@ public class WebController {
         com_dal.error("###com_dal  info");
         com_util.error("###com_util  error");
         com_util.info("###com_util  info");
+        String str = null;
+        str.equals("aaa");
 
     }
 
