@@ -20,7 +20,7 @@ public class TestMain {
                 "  }\n" +
                 "}\n";
 
-        // getAllObject(strJson); // java.lang.StackOverflowError
+        // getAllObject(strJson); // java.lang.StackOverflBeanPostProcessorowError
 
 
         // 限制递归层数为2层

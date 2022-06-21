@@ -7,24 +7,33 @@ https://blog.csdn.net/weixin_44181671/article/details/108630950
     比如AnnotationConfigApplicationContext、XmlWebApplicationContext等。
 
 2、bean的加载过程
-    AbstractBeanFactory.Class
-    **********获取bean的入口
-    org.springframework.context.support.AbstractApplicationContext.getBean(java.lang.String)
-    ||
-    org.springframework.beans.factory.support.AbstractBeanFactory.getBean(java.lang.String)
-    ||
-    org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean (:187)
-    ||
-    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(java.lang.String, org.springframework.beans.factory.support.RootBeanDefinition, java.lang.Object[])
-    ||
-    org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean
-        1、:340(实例化bean)
-            :371 循环依赖暴露前期引用bean [通过 this.addSingletonFactory ，设置第三级缓存singletonFactories ]
-
-        2、:379(populateBean 填充bean)
-        
-        3、:380(initializeBean 初始化bean)
-
-
-
+    org.springframework.context.support.AbstractApplicationContext.refresh
+        ||
+        org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization
+            ||
+            org.springframework.beans.factory.config.ConfigurableListableBeanFactory.preInstantiateSingletons
+            ||
+              org.springframework.beans.factory.support.AbstractBeanFactory.getBean(java.lang.String)
+              ||
+              org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean
+                  ||
+                  || （从三级缓存中检查检查是否已经创建好了bean）
+                  org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(java.lang.String)
+                  ||
+                  || （单例或者原型模式创建bean）
+                  org.springframework.beans.factory.support.AbstractBeanFactory.createBean
+                      ||
+                      org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean
+                         ||
+                         || # 实例化bean
+                         org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance
+                         ||
+                         || （通过 addSingletonFactory 方法，在实例化之后，初始化之前，把早起暴露的对象放在三级缓存中。）
+                         || # 属性注入bean
+                         org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean
+                         || # 初始化bean
+                         org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(java.lang.String, java.lang.Object, org.springframework.beans.factory.support.RootBeanDefinition)
+                            || 执行后置处理器 BeanPostProcessor.postProcessBeforeInitialization
+                            || invokeInitMethods （该方法中执行 InitializingBean ）
+                            || 执行后置处理器 BeanPostProcessor.postProcessAfterInitialization
 
