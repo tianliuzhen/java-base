@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
@@ -16,6 +17,7 @@ import java.util.jar.JarFile;
 
 /**
  * 反射工具类
+ *
  * @author liuzhen.tian
  * @version 1.0 ReflectionUtil.java  2020/11/10 11:48
  */
@@ -33,22 +35,24 @@ public class ReflectionUtil {
 
     /**
      * 获取类加载器
+     *
      * @return
      */
-    public static ClassLoader getClassLoader(){
+    public static ClassLoader getClassLoader() {
         return Thread.currentThread().getContextClassLoader();
     }
 
     /**
      * 加载类
-     * @param className 类全限定名称
+     *
+     * @param className     类全限定名称
      * @param isInitialized 是否在加载完成后执行静态代码块
      * @return
      */
-    public static Class<?> loadClass(String className,boolean isInitialized) {
+    public static Class<?> loadClass(String className, boolean isInitialized) {
         Class<?> cls;
         try {
-            cls = Class.forName(className,isInitialized,getClassLoader());
+            cls = Class.forName(className, isInitialized, getClassLoader());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -56,25 +60,26 @@ public class ReflectionUtil {
     }
 
     public static Class<?> loadClass(String className) {
-        return loadClass(className,true);
+        return loadClass(className, true);
     }
 
     /**
      * 获取指定包下所有类
+     *
      * @param packageName
      * @return
      */
     public static Set<Class<?>> getClassSet(String packageName) {
         Set<Class<?>> classSet = new HashSet<>();
         try {
-            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".","/"));
+            Enumeration<URL> urls = getClassLoader().getResources(packageName.replace(".", "/"));
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
                 if (url != null) {
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
-                        String packagePath = url.getPath().replace("%20","");
-                        addClass(classSet,packagePath,packageName);
+                        String packagePath = url.getPath().replace("%20", "");
+                        addClass(classSet, packagePath, packageName);
                     } else if (protocol.equals("jar")) {
                         JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
                         if (jarURLConnection != null) {
@@ -86,7 +91,7 @@ public class ReflectionUtil {
                                     String jarEntryName = jarEntry.getName();
                                     if (jarEntryName.endsWith(".class")) {
                                         String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
-                                        doAddClass(classSet,className);
+                                        doAddClass(classSet, className);
                                     }
                                 }
                             }
@@ -103,7 +108,7 @@ public class ReflectionUtil {
     }
 
     private static void doAddClass(Set<Class<?>> classSet, String className) {
-        Class<?> cls = loadClass(className,false);
+        Class<?> cls = loadClass(className, false);
         classSet.add(cls);
     }
 
@@ -121,7 +126,7 @@ public class ReflectionUtil {
                 if (StringUtils.isNotEmpty(packageName)) {
                     className = packageName + "." + className;
                 }
-                doAddClass(classSet,className);
+                doAddClass(classSet, className);
             } else {
                 String subPackagePath = fileName;
                 if (StringUtils.isNotEmpty(packagePath)) {
@@ -131,7 +136,7 @@ public class ReflectionUtil {
                 if (StringUtils.isNotEmpty(packageName)) {
                     subPackageName = packageName + "." + subPackageName;
                 }
-                addClass(classSet,subPackagePath,subPackageName);
+                addClass(classSet, subPackagePath, subPackageName);
             }
         }
     }
@@ -143,6 +148,7 @@ public class ReflectionUtil {
 
     /**
      * 获取应用包名下某父类（或接口）的所有子类（或实现类）
+     *
      * @param superClass
      * @return
      */
@@ -158,6 +164,7 @@ public class ReflectionUtil {
 
     /**
      * 获取应用包名下带有某注解的类
+     *
      * @param annotationClass
      * @return
      */
@@ -169,6 +176,26 @@ public class ReflectionUtil {
             }
         }
         return classSet;
+    }
+
+    /**
+     * 反射解析方法
+     *
+     * @param clazz
+     * @param methodName
+     * @return
+     * @throws NoSuchMethodException
+     */
+    public static Method getMethod(Class<?> clazz, String methodName) throws NoSuchMethodException {
+        try {
+            return clazz.getDeclaredMethod(methodName, new Class[0]);
+        } catch (NoSuchMethodException e) {
+            Class<?> superclass = clazz.getSuperclass();
+            if (superclass == null) {
+                throw e;
+            }
+            return getMethod(superclass, methodName);
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Map;
 
@@ -81,5 +82,16 @@ public class UrlUtil {
             jsonObj.put("param", paramMap);
         }
         return jsonObj;
+    }
+
+    public static String getDomainName(String url) {
+        String host = "";
+        try {
+            URL Url = new URL(url);
+            host = Url.getHost();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return host;
     }
 }
