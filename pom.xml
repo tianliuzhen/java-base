@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-<!--            <scope>test</scope>-->
+            <!--            <scope>test</scope>-->
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
@@ -100,15 +100,34 @@
             <version>21.0</version>
         </dependency>
 
-
+        <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
+        <!-- 反射框架Reflections： 0.10 系列无法设置 classLoader
+        使用参考 https://blog.csdn.net/Amber_1/article/details/122943538 -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.10.2</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <!--  spring boot 默认打的是可执行 jar  ，springboot-maven-plugin打包的第一级目录为Boot-INF,无法引用.-->
+            <!--
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                   <groupId>org.springframework.boot</groupId>
+                   <artifactId>spring-boot-maven-plugin</artifactId>
+             </plugin>
+             -->
+            <!--  普通 maven 打包-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source> <!--指明源码用的Jdk版本-->
+                    <target>1.8</target> <!--指明打包后的Jdk版本-->
+                </configuration>
             </plugin>
         </plugins>
     </build>
