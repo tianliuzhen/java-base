@@ -2,9 +2,7 @@ package com.aaa.javabase.reflect;
 
 import com.aaa.javabase.reflect.domain.Person;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.sql.SQLOutput;
 
 /**
  * description: 描述
