@@ -22,11 +22,28 @@ public class FileUtil {
         List<ConfigVarModel> localVars = new ArrayList<>();
         try {
             URL url = Thread.currentThread().getContextClassLoader().getResource("config.json");
-            String content = FileUtils.readFileToString(new File(url.getPath()));
+            String content = null;
+            content = FileUtils.readFileToString(new File(url.getPath()));
             localVars = JSON.parseArray(content, ConfigVarModel.class);
         } catch (IOException e) {
-            // ignore
+            e.printStackTrace();
         }
         return localVars;
+    }
+
+    /**
+     * 写入文件
+     *
+     * @param data
+     */
+    public static void writeStringToFile(String data) {
+        List<ConfigVarModel> localVars = new ArrayList<>();
+        try {
+            URL url = Thread.currentThread().getContextClassLoader().getResource("config.json");
+            String content = null;
+            FileUtils.writeStringToFile(new File(url.getPath()), data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

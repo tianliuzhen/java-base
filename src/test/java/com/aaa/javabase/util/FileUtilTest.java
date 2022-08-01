@@ -12,5 +12,6 @@ public class FileUtilTest {
     public static void main(String[] args) {
         List<ConfigVarModel> configVars = FileUtil.getConfigVars();
         System.out.println();
+        // FileUtil.writeStringToFile("[{\"id\":3,\"name\":\"demoData\",\"desc\":\"demoData\"}]");
     }
 }
