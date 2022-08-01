@@ -1,4 +1,4 @@
-package com.aaa.javabase.test1;
+package com.aaa.javabase.threadTest.test1;
 
 /**
  * @author liuzhen.tian

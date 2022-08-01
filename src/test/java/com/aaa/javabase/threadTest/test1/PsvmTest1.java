@@ -1,9 +1,7 @@
-package com.aaa.javabase.test1;
+package com.aaa.javabase.threadTest.test1;
 
 import org.assertj.core.util.Lists;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
