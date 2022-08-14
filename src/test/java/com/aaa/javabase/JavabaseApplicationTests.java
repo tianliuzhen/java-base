@@ -1,6 +1,5 @@
 package com.aaa.javabase;
 
-import com.aaa.javabase.config.ConfigurationSupport;
 import com.aaa.javabase.service.BeanCycle;
 import com.aaa.javabase.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,9 @@ class JavabaseApplicationTests {
     @Test
     void TestBeanCycle(){
         myService.initMethod();
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ConfigurationSupport.class);
+        // 使用AnnotationConfigApplicationContext可以实现基于Java的配置类加载Spring的应用上下文。
+        // 避免使用application.xml进行配置。相比XML配置，更加便捷。
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanCycle.class);
         System.out.println("IOC容器创建完成........");
         BeanCycle beanCycle = (BeanCycle) ac.getBean("beanCycle");
         beanCycle.initMethod();
