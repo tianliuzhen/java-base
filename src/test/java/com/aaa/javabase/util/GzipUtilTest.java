@@ -1,7 +1,6 @@
-package com.aaa.javabase;
+package com.aaa.javabase.util;
 
 
-import com.aaa.javabase.util.GzipUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**

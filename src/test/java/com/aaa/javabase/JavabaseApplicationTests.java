@@ -1,5 +1,6 @@
 package com.aaa.javabase;
 
+import com.aaa.javabase.config.ConfigurationSupport;
 import com.aaa.javabase.service.BeanCycle;
 import com.aaa.javabase.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class JavabaseApplicationTests {
     @Test
     void TestBeanCycle(){
         myService.initMethod();
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(BeanCycle.class);
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ConfigurationSupport.class);
         System.out.println("IOC容器创建完成........");
         BeanCycle beanCycle = (BeanCycle) ac.getBean("beanCycle");
         beanCycle.initMethod();

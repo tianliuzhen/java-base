@@ -1,4 +1,4 @@
-package com.aaa.javabase;
+package com.aaa.javabase.util;
 
 import com.aaa.javabase.util.SftpClient;
 import com.jcraft.jsch.SftpException;
