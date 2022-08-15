@@ -1,15 +1,20 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.base.annotations.testImpl.Boy;
+import com.aaa.javabase.base.annotations.testImpl.Human;
+import com.aaa.javabase.base.annotations.testImpl.Man;
 import com.aaa.javabase.config.TestProperties;
 import com.aaa.javabase.domain.BaseMain;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
+import com.aaa.javabase.util.BeanContextUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -142,7 +147,26 @@ public class WebController {
         com_util.info("###com_util  info");
         String str = null;
         str.equals("aaa");
-
     }
 
+    @GetMapping("/testAspect")
+    public void testAspect() {
+        ApplicationContext context = BeanContextUtil.getApplicationContext();
+
+        Human human = context.getBean("human",Human.class);
+        System.out.println("---------------------This is a Human.");
+        human.say("hello!");
+        human.run();
+
+        Human man = context.getBean("man", Man.class);
+        System.out.println("---------------------This is a Man.");
+        man.say("hello!");
+        man.run();
+
+        Human boy = context.getBean("boy", Boy.class);
+        System.out.println("---------------------This is a Boy.");
+        boy.say("hello!");
+        boy.run();
+
+    }
 }
