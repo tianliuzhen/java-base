@@ -124,6 +124,14 @@
             <version>1.9.5</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.javamoney/moneta -->
+        <dependency>
+            <groupId>org.javamoney</groupId>
+            <artifactId>moneta</artifactId>
+            <version>1.4.2</version>
+            <type>pom</type>
+        </dependency>
+
     </dependencies>
 
     <build>
