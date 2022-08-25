@@ -9,6 +9,8 @@ import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.util.BeanContextUtil;
+import com.aaa.javabase.util.ThreadUtil;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liuzhen.tian
@@ -136,6 +139,7 @@ public class WebController {
 
     private static Logger com_dal = LogManager.getLogger("com-dal");
     private static Logger com_util = LogManager.getLogger("com-util");
+
     @PostMapping("/testLogPrint")
     public void testLogPrint() {
         log.info("###info");
@@ -153,7 +157,7 @@ public class WebController {
     public void testAspect() {
         ApplicationContext context = BeanContextUtil.getApplicationContext();
 
-        Human human = context.getBean("human",Human.class);
+        Human human = context.getBean("human", Human.class);
         System.out.println("---------------------This is a Human.");
         human.say("hello!");
         human.run();
@@ -169,4 +173,21 @@ public class WebController {
         boy.run();
 
     }
+
+    @SneakyThrows
+    @GetMapping("/executeThread")
+    public void executeThread() {
+        for (int i = 0; i < 10; i++) {
+            ThreadUtil.execute(() -> {
+                System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName());
+            });
+        }
+
+        TimeUnit.SECONDS.sleep(2);
+
+        ThreadUtil.close();
+
+    }
+
+
 }
