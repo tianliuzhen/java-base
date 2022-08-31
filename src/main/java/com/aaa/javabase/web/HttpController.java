@@ -17,8 +17,9 @@ public class HttpController {
      * 注意：请求类型只能是 post 否则无法接收
      */
     @PostMapping("/req1")
-    public void detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name ) {
+    public String detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name ) {
         System.out.println(">>> id=" + id + ",name=" + name);
+        return ">>> id=" + id + ",name=" + name;
     }
 
     @PostMapping("/req2")
@@ -26,7 +27,7 @@ public class HttpController {
         System.out.println(">>>id=" + params.get("id") + ",name=" + params.get("name"));
     }
 
-    @PostMapping("/detailByParam")
+    @PostMapping("/req3")
     public void detailByParam(@RequestBody String params) {
         System.out.println(">>>"+params);
     }
