@@ -1,5 +1,6 @@
 package com.aaa.javabase.fastjson;
 
+import com.aaa.javabase.web.WebController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -75,6 +76,10 @@ public class TestFastJson {
         // writeDateUseDateFormat();
         // beanToArray();
         // showJsonBySelf();
+
+        WebController webController = new WebController();
+        webController.executeThread();
+
     }
 
     /**
