@@ -29,6 +29,8 @@ public class TestAllowCoreThreadTimeOut {
     static {
         // 执行完任务，回收核心线程数，默认只会根据定义的存活时间回收，非核心线程数
         pool.allowCoreThreadTimeOut(true);
+        // 方法把所有线程都预热起来，让它们处于等待接收任务的状态。
+        pool.prestartAllCoreThreads();
         System.err.println("初始化-- 池中的当前线程数 = " + pool.getPoolSize());
         System.err.println("初始化-- 池中的活跃线程数 = " + pool.getActiveCount());
         // 当前线程数：线程池内存在的线程
