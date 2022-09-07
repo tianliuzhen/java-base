@@ -127,6 +127,8 @@ public class EasyPoiUtils {
         response.setHeader("content-Type", "application/vnd.ms-excel");
         // 下载文件的默认名称
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xls");
+        // 这种也可以
+        // response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), "ISO8859-1") + ".xls");
         //编码
         response.setCharacterEncoding("UTF-8");
 
