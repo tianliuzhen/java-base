@@ -203,7 +203,7 @@ public class ExcelController {
             if (!list.isEmpty()) {
                 workbook = ExcelExportUtil.exportBigExcel(exportParams, FullDataExportDTO.class, list);
                 ExcelExportUtil.closeExportBigExcel();
-                EasyPoiUtils.download(workbook, response);
+                EasyPoiUtils.download("单个导出",workbook, response);
             }
         } catch (IOException e) {
             e.printStackTrace();
