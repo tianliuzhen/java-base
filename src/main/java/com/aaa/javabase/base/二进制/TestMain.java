@@ -30,12 +30,24 @@ public class TestMain {
         System.out.println(-1 & CAPACITY);
         System.out.println(0 & CAPACITY);
 
+        System.out.println(RUNNING | 0);
+
         AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
         int i = workerCountOf(ctl.get());
         int i2 = workerCountOf(ctl.get() + 2);
         int runStateOf1 = (ctl.get() + 2) & ~CAPACITY;
         int runStateOf2 = (STOP ) & ~CAPACITY;
         System.out.println();
+
+        /**
+         *
+         *  00000000000000000000000000000000  (SHUTDOWN = -1 << 29 = -536870912  )
+         *                                  |  	  (二进制位于运算，对应位有一个为1则为1)
+         *  00000000000000000000000000000100  (假设从ctl 获取到当前工作线程数量=2，此时ctl = -536870910)
+         * 						        	=
+         *  00000000000000000000000000000100  (转为十进制 = -536870912)
+         *
+         */
     }
 
     private static int ctlOf(int rs, int wc) {
