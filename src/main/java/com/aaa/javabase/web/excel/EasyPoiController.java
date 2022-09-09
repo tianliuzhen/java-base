@@ -1,4 +1,4 @@
-package com.aaa.javabase.web;
+package com.aaa.javabase.web.excel;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
@@ -27,7 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class ExcelController {
+@RequestMapping(value = "/easyPoi")
+public class EasyPoiController {
     /**
      * 多sheet 测试导入
      */
