@@ -1,24 +1,32 @@
 package com.aaa.javabase.web.excel;
 
-import com.aaa.javabase.web.excel.model.ComplexHeadData;
-import com.aaa.javabase.web.excel.model.ImageDemoData;
-import com.aaa.javabase.web.excel.model.IndexData;
+import com.aaa.javabase.web.excel.model.*;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.ImageData;
 import com.alibaba.excel.metadata.data.WriteCellData;
+import com.alibaba.excel.read.listener.PageReadListener;
+import com.alibaba.excel.read.listener.ReadListener;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.util.FileUtils;
 import com.alibaba.excel.util.ListUtils;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.fastjson.JSON;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -30,7 +38,7 @@ import java.util.List;
  * @author liuzhen.tian
  * @version 1.0 EasyExcelController.java  2022/9/9 20:08
  */
-
+@Slf4j
 @RestController
 @RequestMapping(value = "/easyExcel")
 public class EasyExcelController {
@@ -142,7 +150,7 @@ public class EasyExcelController {
             // 这个类似于 css 的 margin
             // 这里实测 不能设置太大 超过单元格原始大小后 打开会提示修复。暂时未找到很好的解法。
             imageData.setTop(5);
-            imageData.setRight(20);
+            imageData.setRight(30);
             imageData.setBottom(5);
             imageData.setLeft(5);
 
@@ -155,7 +163,7 @@ public class EasyExcelController {
             imageData.setTop(5);
             imageData.setRight(5);
             imageData.setBottom(5);
-            imageData.setLeft(30);
+            imageData.setLeft(40);
             // 设置图片的位置 假设 现在目标 是 覆盖 当前单元格 和当前单元格右边的单元格
             // 起点相对于当前单元格为0 当然可以不写
             imageData.setRelativeFirstRowIndex(0);
@@ -170,4 +178,101 @@ public class EasyExcelController {
         }
     }
 
+    /**
+     * 测试导出 单个sheet
+     */
+    @SneakyThrows
+    @PostMapping("/importOne")
+    public void importOne(MultipartFile file) {
+        /**
+         * 写法1：JDK8+ ,不用额外写一个DemoDataListener
+         */
+        // since: 3.0.0-beta1
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        // 这里每次会读取100条数据 然后返回过来 直接调用使用数据就行
+        EasyExcel.read(file.getInputStream(), ComplexHeadData.class, new PageReadListener<ComplexHeadData>(dataList -> {
+            for (ComplexHeadData demoData : dataList) {
+                log.info("读取到一条数据{}", JSON.toJSONString(demoData));
+            }
+        })).sheet().doRead();
+
+        // 写法2：
+        // 匿名内部类 不用额外写一个DemoDataListener
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        readOneV2(file);
+
+        // 有个很重要的点 DemoDataListener 不能被spring管理，要每次读取excel都要new,然后里面用到spring可以构造方法传进去
+        // 写法3：
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        EasyExcel.read(file.getInputStream(), ComplexHeadData.class, new ComplexHeadDataListener()).sheet().doRead();
+
+        // 写法4
+        // 一个文件一个reader
+        try (ExcelReader excelReader = EasyExcel.read(file.getInputStream(), ComplexHeadData.class, new ComplexHeadDataListener()).build()) {
+            // 构建一个sheet 这里可以指定名字或者no
+            ReadSheet readSheet = EasyExcel.readSheet(0).build();
+            // 读取一个sheet
+            excelReader.read(readSheet);
+        }
+
+    }
+
+    private void readOneV2(MultipartFile file) throws IOException {
+        EasyExcel.read(file.getInputStream(), ComplexHeadData.class, new ReadListener<ComplexHeadData>() {
+            /**
+             * 单次缓存的数据量
+             */
+            public static final int BATCH_COUNT = 100;
+            /**
+             *临时存储
+             */
+            private List<ComplexHeadData> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+
+            @Override
+            public void invoke(ComplexHeadData data, AnalysisContext context) {
+                cachedDataList.add(data);
+                if (cachedDataList.size() >= BATCH_COUNT) {
+                    saveData();
+                    // 存储完成清理 list
+                    cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+                }
+            }
+
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext context) {
+                saveData();
+            }
+
+            /**
+             * 加上存储数据库
+             */
+            private void saveData() {
+                log.info("{}条数据，开始存储数据库！", cachedDataList.size());
+                log.info("存储数据库成功！");
+            }
+        }).sheet().doRead();
+    }
+
+    /**
+     * 测试导出 多个sheet
+     */
+    @SneakyThrows
+    @PostMapping("/importMany")
+    public void importMany(MultipartFile file) {
+        // 读取全部sheet
+        // 这里需要注意 DemoDataListener的doAfterAllAnalysed 会在每个sheet读取完毕后调用一次。然后所有sheet都会往同一个DemoDataListener里面写
+        EasyExcel.read(file.getInputStream(), ComplexHeadData.class, new ComplexHeadDataListener()).doReadAll();
+
+        // 读取部分sheet
+        // 写法1
+        try (ExcelReader excelReader = EasyExcel.read(file.getInputStream()).build()) {
+            // 这里为了简单 所以注册了 同样的head 和Listener 自己使用功能必须不同的Listener
+            ReadSheet readSheet1 =
+                    EasyExcel.readSheet(0).head(ComplexHeadData.class).registerReadListener(new ComplexHeadDataListener()).build();
+            ReadSheet readSheet2 =
+                    EasyExcel.readSheet(1).head(IndexData.class).registerReadListener(new IndexDataListener()).build();
+            // 这里注意 一定要把sheet1 sheet2 一起传进去，不然有个问题就是03版的excel 会读取多次，浪费性能
+            excelReader.read(readSheet1, readSheet2);
+        }
+    }
 }
