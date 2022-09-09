@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0 IndexDataListener.java  2022/9/9 21:59
  */
 @Slf4j
-public class IndexDataListener implements ReadListener<ImageDemoData> {
+public class IndexDataListener implements ReadListener<IndexData> {
     @Override
-    public void invoke(ImageDemoData data, AnalysisContext context) {
+    public void invoke(IndexData data, AnalysisContext context) {
         log.info("读取到一条数据{}", JSON.toJSONString(data));
     }
 

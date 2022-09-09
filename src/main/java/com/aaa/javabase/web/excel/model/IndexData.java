@@ -2,9 +2,8 @@ package com.aaa.javabase.web.excel.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -12,10 +11,9 @@ import java.util.Date;
  * @author liuzhen.tian
  * @version 1.0 IndexData.java  2022/9/9 20:23
  */
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class IndexData {
     @ExcelProperty(value = "字符串标题", index = 0)
     private String string;
