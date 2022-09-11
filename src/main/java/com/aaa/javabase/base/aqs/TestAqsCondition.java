@@ -1,9 +1,7 @@
 package com.aaa.javabase.base.aqs;
 
 
-import com.google.common.collect.Lists;
-
-import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -19,12 +17,15 @@ public class TestAqsCondition {
     final Condition notEmpty = lock.newCondition();
 
     final Object[] items = new Object[100];
-    int putptr, takeptr, count;
+    // 临时变量用于记录 put
+    int putptr;
+    // 临时变量用于记录 take
+    int takeptr;
+    int count;
 
-     List<Long> list = Lists.newArrayList();
 
     // 生产
-    public  void put(Object x) throws InterruptedException {
+    public void put(Object x) throws InterruptedException {
         lock.lock();
         try {
             while (count == items.length) {
@@ -35,6 +36,7 @@ public class TestAqsCondition {
                 putptr = 0;
             }
             ++count;
+            System.out.println(Thread.currentThread().getName() + "put: " + count);
             notEmpty.signal(); // 生产成功，队列已经 not empty 了，发个通知出去
         } finally {
             lock.unlock();
@@ -53,6 +55,7 @@ public class TestAqsCondition {
                 takeptr = 0;
             }
             --count;
+            System.out.println(Thread.currentThread().getName() + "take: " + count);
             notFull.signal(); // 被我消费掉一个，队列 not full 了，发个通知出去
             return x;
         } finally {
@@ -63,19 +66,33 @@ public class TestAqsCondition {
     public static void main(String[] args) throws InterruptedException {
 
 
-
         TestAqsCondition testAqsCondition = new TestAqsCondition();
 
-        List<Long> list2 = testAqsCondition.list;
-        list2 = Lists.newArrayList(1L);
+        // 模拟5个生产者
+        for (int i = 0; i < 5; i++) {
+            new Thread(() -> {
+                while (true) {
+                    try {
+                        testAqsCondition.put(UUID.randomUUID());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
 
 
-        testAqsCondition.take();
-        testAqsCondition.put(1);
-
-
+        //  模拟1个消费者
+        new Thread(() -> {
+            while (true) {
+                try {
+                    testAqsCondition.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
-
 
 
 }
