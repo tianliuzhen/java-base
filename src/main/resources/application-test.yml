@@ -27,3 +27,4 @@ spring:
 mybatis-plus:
   type-aliases-package: com.aaa.h2.model
   mapper-locations: classpath:/mybatis/*.xml
+
