@@ -19,7 +19,7 @@ public class PrintByOrder2 {
 
     @SneakyThrows
     public void print1() {
-        lock.lock();
+        lock.lockInterruptibly();
         try {
             while (state != 1) {
                 condition1.await();
@@ -36,35 +36,21 @@ public class PrintByOrder2 {
 
     @SneakyThrows
     public void print2() {
-        lock.lock();
+        System.out.println();
+        lock.lockInterruptibly();
         try {
             while (state != 2) {
                 condition2.await();
             }
             System.out.println(Thread.currentThread().getName() + " :print2...");
-            state++;
-            // 唤醒第三个条件队列
-            condition3.signal();
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @SneakyThrows
-    public void print3() {
-        lock.lock();
-        try {
-            while (state != 3) {
-                condition3.await();
-            }
-            System.out.println(Thread.currentThread().getName() + " :print3...");
             state = 1;
-            // 唤醒第一个条件队列，这里对应 print1 形成了闭环
+            // 唤醒第二个条件队列
             condition1.signal();
         } finally {
             lock.unlock();
         }
     }
+
 
     public static void main(String[] args) {
         PrintByOrder2 printByOrder = new PrintByOrder2();
@@ -75,17 +61,13 @@ public class PrintByOrder2 {
             }
         }).start();
 
+
         new Thread(() -> {
             while (true) {
                 printByOrder.print2();
             }
         }).start();
 
-        new Thread(() -> {
-            while (true) {
-                printByOrder.print3();
-            }
-        }).start();
 
     }
 }
