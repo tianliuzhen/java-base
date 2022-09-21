@@ -1,10 +1,12 @@
 package com.aaa.javabase;
 
 import com.aaa.javabase.util.LoggingListener;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.aaa.javabase.h2.mapper")
 public class JavabaseApplication {
 
     public static void main(String[] args) {
