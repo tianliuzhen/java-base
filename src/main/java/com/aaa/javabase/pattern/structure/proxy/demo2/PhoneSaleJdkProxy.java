@@ -15,6 +15,9 @@ public class PhoneSaleJdkProxy implements InvocationHandler {
         this.phoneService = phoneService;
     }
 
+    public PhoneSaleJdkProxy() {
+    }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object invoke = method.invoke(phoneService, args);

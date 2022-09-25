@@ -28,9 +28,9 @@ public class TestMain {
          */
         PhoneService service = (PhoneService) Proxy.newProxyInstance(
                 // 被代理对象类加载器
-                phoneService.getClass().getClassLoader(),
+                PhoneServiceImpl.class.getClassLoader(),
                 // 被代理对象接口
-                phoneService.getClass().getInterfaces(),
+                PhoneServiceImpl.class.getInterfaces(),
                 // 代理对象
                 phoneSaleJdkProxy);
 
