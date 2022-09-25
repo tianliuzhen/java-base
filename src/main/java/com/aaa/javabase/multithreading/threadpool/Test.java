@@ -1,9 +1,8 @@
 package com.aaa.javabase.multithreading.threadpool;
 
-import com.aaa.javabase.reflect.domain.Person;
+import com.aaa.javabase.base.reflect.domain.Person;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;

@@ -6,7 +6,7 @@ package com.aaa.javabase.pattern.structure.proxy.demo1;
  */
 public class TestMain {
     public static void main(String[] args) {
-        PhoneSaleProxy phoneSaleServiceImplProxy = new PhoneSaleProxy();
+        PhoneSaleProxy phoneSaleServiceImplProxy = new PhoneSaleProxy(new PhoneServiceImplV2());
         phoneSaleServiceImplProxy.service();
     }
 }

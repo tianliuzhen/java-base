@@ -10,8 +10,8 @@ public class PhoneSaleProxy implements PhoneService {
     // 被代理对象
     private PhoneService phoneService;
 
-    public PhoneSaleProxy() {
-        this.phoneService = new PhoneServiceImpl();
+    public PhoneSaleProxy(PhoneService phoneService) {
+        this.phoneService = phoneService;
     }
 
 
