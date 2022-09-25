@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author liuzhen.tian
  * @version 1.0 User.java  2022/9/17 21:43
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @TableName(value = "user") //访问h2数据库
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 

@@ -1,6 +1,5 @@
 package com.aaa.javabase.web;
 
-import com.aaa.javabase.h2.Model.User;
 import com.aaa.javabase.h2.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +19,13 @@ public class H2MybatisController {
 
     @GetMapping(value = "/findAll")
     public void findAll() {
-        for (int i = 0; i < 10; i++) {
-            mapper.insert(new User(null, "name" + 1, 1, ""));
-        }
-        mapper.selectList(null).forEach(System.out::println);
+        // for (int i = 0; i < 10; i++) {
+        //     mapper.insert(new User(null, "name" + 1, 1, ""));
+        // }
+        mapper.selectList(null);
+
+        mapper.selectList(null);
+
+
     }
 }
