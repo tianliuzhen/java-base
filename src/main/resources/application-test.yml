@@ -27,4 +27,8 @@ spring:
 mybatis-plus:
   type-aliases-package: com.aaa.h2.model
   mapper-locations: classpath:/mybatis/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 默认是开启二级缓存的
+    cache-enabled: true
 
