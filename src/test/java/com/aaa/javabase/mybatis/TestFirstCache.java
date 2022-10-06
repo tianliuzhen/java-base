@@ -1,5 +1,6 @@
 package com.aaa.javabase.mybatis;
 
+import com.aaa.javabase.h2.Model.User;
 import com.aaa.javabase.h2.mapper.UserMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -60,6 +61,8 @@ public class TestFirstCache {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         // 默认是开启一级缓存的
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        mapper.insert(new User(100L, "", 100, "7460@qq.com"));
 
         // 查询俩次一样接口的sql，实际上查询一次
         mapper.selectById(1L);
