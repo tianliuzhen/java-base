@@ -30,6 +30,14 @@ public class TestFirstCache {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    @Test
+    @Transactional
+    public void test31() {
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        mapper.getUserByIdOrName(1L,"xzxx");
+    }
+
+
     /**
      * spring 托管 sqlSession
      * 加上事务之后，就可以共享 SqlSession了。
