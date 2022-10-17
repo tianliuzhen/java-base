@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.javabase.h2.mapper.DeptMapper">
+
+    <select id="getOne" resultType="com.aaa.javabase.h2.Model.Dept">
+        select * from  `dept` limit 1
+    </select>
+
+    <select id="getDeptById" resultType="com.aaa.javabase.h2.Model.Dept">
+        select * from  `dept` limit 1
+    </select>
+</mapper>

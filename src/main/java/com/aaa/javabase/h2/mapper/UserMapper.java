@@ -19,4 +19,6 @@ public interface UserMapper extends BaseMapper<User> { // Mapper接口继承Base
 
     @Select(value = "select * from user where id=#{param1} or name=#{param2} ")
     User getUserByIdOrName(Long id,String name);
+
+    User getOne(@Param("id") Long id);
 }

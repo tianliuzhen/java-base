@@ -70,11 +70,11 @@ public class TestExecutor {
 
 
     /**
-     *  下面是一个使用Mybatis的BatchExecutor进行批量操作的示例。在示例中我们创建了一个使用BatchExecutor的SqlSession，
-     *  也可以是SqlSessionTemplate，其实现了SqlSession接口，底层通过一个SqlSession代理进行相应的操作。
-     *  然后在循环中一次调用对应Mapper的新增操作，相当于调用BatchExecutor的doUpdate()，
-     *  最后调用SqlSession的commit()方法提交事务，在SqlSession的commit()中会调用Executor的commit()，
-     *  从而导致了executeBatch()的发生。
+     * 下面是一个使用Mybatis的BatchExecutor进行批量操作的示例。在示例中我们创建了一个使用BatchExecutor的SqlSession，
+     * 也可以是SqlSessionTemplate，其实现了SqlSession接口，底层通过一个SqlSession代理进行相应的操作。
+     * 然后在循环中一次调用对应Mapper的新增操作，相当于调用BatchExecutor的doUpdate()，
+     * 最后调用SqlSession的commit()方法提交事务，在SqlSession的commit()中会调用Executor的commit()，
+     * 从而导致了executeBatch()的发生。
      */
     @Test
     public void BatchTest() {
@@ -85,6 +85,10 @@ public class TestExecutor {
             user.setName("Name_" + i);
             user.setEmail("email");
             mapper.insert(user);
+
+            if (i == 9) {
+                int a = 1 / 0;
+            }
         }
 
         // 批量插入User
@@ -92,4 +96,9 @@ public class TestExecutor {
         session.close();
     }
 
+    public static void main(String[] args) {
+        for (int i = 0; i < 7; i++) {
+            System.out.println(i);
+        }
+    }
 }
