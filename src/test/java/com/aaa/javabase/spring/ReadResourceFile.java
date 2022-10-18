@@ -34,14 +34,14 @@ public class ReadResourceFile {
          */
         InputStream inputStream;
         // 方式一：使用org.springframework.core.io.ClassPathResource，各种环境都能读取。（通用）
-        ClassPathResource classPathResource = new ClassPathResource("config.json");
+        ClassPathResource classPathResource = new ClassPathResource("json/config.json");
         inputStream = classPathResource.getInputStream();
 
         // 方式二
-        inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.json");
+        inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("json/config.json");
 
         // 方式三
-        inputStream = ReadResourceFile.class.getResourceAsStream("config.json");
+        inputStream = ReadResourceFile.class.getResourceAsStream("json/config.json");
 
         // 方式四：结合spring注解，使用org.springframework.core.io.ResourceLoader;类的注解。（通用）
         inputStream = resourceLoader.getResource("classpath:config.json").getInputStream();
