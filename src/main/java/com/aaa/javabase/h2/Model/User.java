@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author liuzhen.tian
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
+
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -31,4 +33,36 @@ public class User implements Serializable {
 
     @TableField(value = "email")
     private String email;
+
+    @TableField(value = "user_id")
+    private String userId;
+
+
+    @TableField(value = "dept_no")
+    private String deptNo;
+
+
+
+    /**
+     * 假设一个员工可以对应一个部门（主部门）
+     */
+    private Dept dept;
+    /**
+     * 假设一个员工也可以对应多个部门（子部门）
+     */
+    private List<Dept> deptList;
+
+
+    public User(Integer age) {
+        System.err.println("age = " + age);
+        this.age = age;
+    }
+
+
+    public User(Long id, String name, Integer age, String email) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+    }
 }

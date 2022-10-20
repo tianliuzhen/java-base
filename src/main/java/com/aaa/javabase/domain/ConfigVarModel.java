@@ -2,6 +2,8 @@ package com.aaa.javabase.domain;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * @author liuzhen.tian
  * @version 1.0 ConfigVarModel.java  2022/8/1 21:07
@@ -12,4 +14,6 @@ public class ConfigVarModel {
     private Long id;
     private String name;
     private String desc;
+
+    private Map tag;
 }

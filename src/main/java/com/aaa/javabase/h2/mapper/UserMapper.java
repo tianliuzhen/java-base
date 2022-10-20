@@ -21,4 +21,6 @@ public interface UserMapper extends BaseMapper<User> { // Mapper接口继承Base
     User getUserByIdOrName(Long id,String name);
 
     User getOne(@Param("id") Long id);
+
+    User getUserMap(@Param("id") Long id);
 }

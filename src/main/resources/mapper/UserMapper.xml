@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.javabase.h2.mapper.UserMapper">
+    <!-- 默认 autoMapping="true" 表示自动映射，
+         只有当 autoMapping="false" ，才会根据下面 column和 property 进行映射  -->
+    <resultMap id="userMap" type="com.aaa.javabase.h2.Model.User" autoMapping="false">
+        <!--
+        MyBatis 查询出数据后，会调用实体类的无参构造方法创建实体对象，
+        然后为该对象的属性赋值。有时候我们会在实体类中重载多个构造方法，
+        例如在不同的构造方法中执行不同的初始化操作，这种情况下我们希望 MyBatis 能够调用指定的构造方法来初始化对象。
+        此外，如果实体类中仅有带参的构造方法，那么也需要通知 MyBatis 调用指定的构造方法。
+        对于这两个问题，我们可以使用 MyBatis 提供的 constructor 元素来解决。
+        -->
+        <constructor>
+            <arg column="age" javaType="int"/>
+        </constructor>
 
+        <!--  id 是一个特殊的result，用于分组查询标识用      -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="user_id" property="userId"/>
+
+        <!--  一对一   -->
+        <association property="dept" column="dept_no" select="getDeptNo"></association>
+        <!--  一对多   -->
+        <collection property="deptList" column="dept_no" select="getDeptNos"/>
+    </resultMap>
 
     <select id="getOne" resultType="com.aaa.javabase.h2.Model.User">
-        select * from  `user` limit 1
+        select *
+        from `user` limit 1
+    </select>
+
+    <select id="getUserMap" resultMap="userMap">
+        select *
+        from `user`
+        order by id limit 1
+    </select>
+
+    <!--  注释 /* #{xxx} 是没有约束的,就是传递来的一个值,使用随便命名,不能为空#{},里面随便写一个名字就行*/
+          切记标签里面不要用 /* */ 注释，否则有问题   -->
+    <select id="getDeptNo" resultType="com.aaa.javabase.h2.Model.Dept">
+        select *
+        from `dept`
+        where dept_no = #{deptNo}
+        order by id limit 1
+    </select>
+
+    <select id="getDeptNos" resultType="com.aaa.javabase.h2.Model.Dept">
+        select *
+        from `dept`
+        where dept_no = #{deptNo}
     </select>
 
 </mapper>

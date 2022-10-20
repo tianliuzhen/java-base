@@ -27,4 +27,11 @@ public class UserMapperTest {
 
         mapper.selectList(null).forEach(System.out::println);
     }
+
+
+    @Test
+    public void getOneMap() {
+        mapper.getUserMap(null);
+        System.out.println();
+    }
 }
