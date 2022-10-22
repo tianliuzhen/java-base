@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aaa.javabase.h2.mapper.UserBillMapper">
+
+    <!-- ===============================分隔符==========嵌套循环依赖测试========================   -->
     <!-- 【循环嵌套步骤-2】：根据user_id查询用户 -->
     <resultMap id="userBillMap" type="com.aaa.javabase.h2.Model.UserBill">
         <!-- 账单对应用户  -->
@@ -28,7 +30,7 @@
         where id = #{id}
     </select>
 
-    <!-- ===============================分隔符==================================   -->
+    <!-- ===============================分隔符==========懒加载测试========================   -->
 
     <select id="getUserBillByUserIdV2" resultMap="userBillMapV2">
         select *
@@ -43,5 +45,54 @@
         select *
         from `user`
         where id = #{id}
+    </select>
+
+    <!-- ===============================分隔符=================join 查询一对一测试=================   -->
+
+    <resultMap id="userBillMapV3" type="com.aaa.javabase.h2.Model.UserBill" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--  注：
+            这里一定要有 columnPrefix 属性，否则嵌套的内部查询，字段映射会错乱
+            这里也一定要有 javaType 属性，否则无法映射。  -->
+        <association property="user" javaType="com.aaa.javabase.h2.Model.User" columnPrefix="user_" autoMapping="true"/>
+    </resultMap>
+    <select id="getUserBillById" resultMap="userBillMapV3">
+        select ub.id,ub.money,u.id as user_id,u.name as user_name
+        from `user_bill` ub join `user` u on ub.user_id=u.id
+        where ub.id = #{id}
+    </select>
+
+    <!-- ===============================分隔符===========join 查询一多一测试=======================   -->
+
+    <resultMap id="userBillMapV4" type="com.aaa.javabase.h2.Model.User" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--  注：
+            这里一定要有 columnPrefix 属性，否则嵌套的内部查询，字段映射会错乱
+            这里也一定要有 ofType 属性，否则无法映射。  -->
+        <collection property="userBillList" ofType="com.aaa.javabase.h2.Model.UserBill" columnPrefix="bill_" autoMapping="true"/>
+    </resultMap>
+    <select id="getUserBillByUserIdV3" resultMap="userBillMapV4">
+        select ub.id as bill_id,ub.money as bill_money,u.id ,u.name
+        from `user_bill` ub join `user` u on ub.user_id=u.id
+        where ub.user_id = #{id}
+    </select>
+
+
+    <!-- ===============================分隔符===========join 查询一多一测试（循环依赖）=======================   -->
+
+    <resultMap id="userBillMapV5" type="com.aaa.javabase.h2.Model.User" autoMapping="true">
+        <id column="id" property="id"/>
+        <!--  注：
+            这里一定要有 columnPrefix 属性，否则嵌套的内部查询，字段映射会错乱
+            这里也一定要有 ofType 属性，否则无法映射。  -->
+        <collection property="userBillList" ofType="com.aaa.javabase.h2.Model.UserBill" columnPrefix="bill_" autoMapping="true">
+            <!-- 测试一下循环依赖，根据 【用户 =》用户账单 =》查用户】-->
+            <association property="user" javaType="com.aaa.javabase.h2.Model.User" resultMap="userBillMapV5"/>
+        </collection>
+    </resultMap>
+    <select id="getUserBillByUserIdV4" resultMap="userBillMapV5">
+        select ub.id as bill_id,ub.money as bill_money,u.id ,u.name
+        from `user_bill` ub join `user` u on ub.user_id=u.id
+        where ub.user_id = #{id}
     </select>
 </mapper>

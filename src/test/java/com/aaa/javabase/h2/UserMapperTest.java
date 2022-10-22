@@ -99,4 +99,37 @@ public class UserMapperTest {
             return configuration;
         }
     }
+
+    /**
+     * join查询-测试 （一对一）
+     */
+    @Test
+    public void UserBillJoin() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserBillMapper mapper = sqlSession.getMapper(UserBillMapper.class);
+        UserBill userBill = mapper.getUserBillById(1);
+        System.out.println();
+    }
+
+    /**
+     * join查询-测试（一对多）
+     */
+    @Test
+    public void UserBillJoin2() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserBillMapper mapper = sqlSession.getMapper(UserBillMapper.class);
+        User user = mapper.getUserBillByUserIdV3(1);
+        System.out.println();
+    }
+
+    /**
+     * join查询-测试（一对多）（循环依赖）
+     */
+    @Test
+    public void UserBillJoin3() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserBillMapper mapper = sqlSession.getMapper(UserBillMapper.class);
+        User user = mapper.getUserBillByUserIdV4(1);
+        System.out.println();
+    }
 }
