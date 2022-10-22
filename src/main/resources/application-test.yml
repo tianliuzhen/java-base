@@ -31,4 +31,10 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 默认是开启二级缓存的
     cache-enabled: true
+    #开启懒加载
+    lazy-loading-enabled: true
+    # 默认是false 表示按需加载
+    aggressive-lazy-loading: false
+    configuration-factory: com.aaa.javabase.h2.UserMapperTest$ConfigurationFactory
+
 

@@ -42,7 +42,6 @@ public class User implements Serializable {
     private String deptNo;
 
 
-
     /**
      * 假设一个员工可以对应一个部门（主部门）
      */
@@ -52,6 +51,10 @@ public class User implements Serializable {
      */
     private List<Dept> deptList;
 
+    /**
+     * 用户对于账单
+     */
+    private List<UserBill> userBillList;
 
     public User(Integer age) {
         System.err.println("age = " + age);
@@ -65,4 +68,6 @@ public class User implements Serializable {
         this.age = age;
         this.email = email;
     }
+
+
 }

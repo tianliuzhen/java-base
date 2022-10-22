@@ -20,9 +20,9 @@
         <result column="name" property="name"/>
         <result column="user_id" property="userId"/>
 
-        <!--  一对一   -->
+        <!--  嵌套查询：  一对一  -->
         <association property="dept" column="dept_no" select="getDeptNo"></association>
-        <!--  一对多   -->
+        <!--  嵌套查询： 一对多   -->
         <collection property="deptList" column="dept_no" select="getDeptNos"/>
     </resultMap>
 

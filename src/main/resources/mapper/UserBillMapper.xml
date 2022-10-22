@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.javabase.h2.mapper.UserBillMapper">
+    <!-- 【循环嵌套步骤-2】：根据user_id查询用户 -->
+    <resultMap id="userBillMap" type="com.aaa.javabase.h2.Model.UserBill">
+        <!-- 账单对应用户  -->
+        <association column="user_id" property="user" select="getUserById"/>
+    </resultMap>
+
+    <!-- 【循环嵌套步骤-4】：根据user_id查询用户关联账单，与 步骤1形成闭环 -->
+    <resultMap id="userMap" type="com.aaa.javabase.h2.Model.User" autoMapping="true">
+        <!-- 注意：嵌套子查询如果不表明id，id不会自动映射       -->
+        <id column="id" property="id"/>
+        <collection property="userBillList" column="id" select="getUserBillByUserId"/>
+    </resultMap>
+
+    <!-- 【循环嵌套步骤-1】：根据用户id查询用户账单 -->
+    <select id="getUserBillByUserId" resultMap="userBillMap">
+        select *
+        from `user_bill`
+        where user_id = #{id} limit 1
+    </select>
+
+    <!-- 【循环嵌套步骤-3】：根据user_id查询用户 -->
+    <select id="getUserById" resultMap="userMap">
+        select *
+        from `user`
+        where id = #{id}
+    </select>
+
+    <!-- ===============================分隔符==================================   -->
+
+    <select id="getUserBillByUserIdV2" resultMap="userBillMapV2">
+        select *
+        from `user_bill`
+        where user_id = #{id} limit 1
+    </select>
+    <!--  配置懒加载  -->
+    <resultMap id="userBillMapV2" type="com.aaa.javabase.h2.Model.UserBill">
+        <association column="user_id" property="user" select="getUserByIdV2" fetchType="lazy"/>
+    </resultMap>
+    <select id="getUserByIdV2" resultType="com.aaa.javabase.h2.Model.User">
+        select *
+        from `user`
+        where id = #{id}
+    </select>
+</mapper>
