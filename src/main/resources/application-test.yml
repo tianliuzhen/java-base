@@ -35,6 +35,6 @@ mybatis-plus:
     lazy-loading-enabled: true
     # 默认是false 表示按需加载
     aggressive-lazy-loading: false
-    configuration-factory: com.aaa.javabase.h2.UserMapperTest$ConfigurationFactory
+#    configuration-factory: com.aaa.javabase.h2.UserMapperTest$ConfigurationFactory
 
 

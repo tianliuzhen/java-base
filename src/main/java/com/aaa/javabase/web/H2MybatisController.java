@@ -33,10 +33,7 @@ public class H2MybatisController {
         // for (int i = 0; i < 10; i++) {
         //     mapper.insert(new User(null, "name" + 1, 1, ""));
         // }
-        mapper.selectList(null);
-
-        mapper.selectList(null);
-
+        mapper.getUserMap(1L);
 
     }
 }

@@ -68,7 +68,7 @@
         <id column="id" property="id"/>
         <!--  注：
             这里一定要有 columnPrefix 属性，否则嵌套的内部查询，字段映射会错乱
-            这里也一定要有 ofType 属性，否则无法映射。  -->
+            这里也一定要有 ofType,ofType 表示 javaType 属性，否则无法映射。  -->
         <collection property="userBillList" ofType="com.aaa.javabase.h2.Model.UserBill" columnPrefix="bill_" autoMapping="true"/>
     </resultMap>
     <select id="getUserBillByUserIdV3" resultMap="userBillMapV4">
