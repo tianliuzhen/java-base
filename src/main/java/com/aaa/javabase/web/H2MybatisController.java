@@ -1,6 +1,8 @@
 package com.aaa.javabase.web;
 
 import com.aaa.javabase.domain.Demo;
+import com.aaa.javabase.h2.Model.Dept;
+import com.aaa.javabase.h2.mapper.DeptMapper;
 import com.aaa.javabase.h2.mapper.UserMapper;
 import com.aaa.javabase.spring.springImport.demo1.TestBean1;
 import com.aaa.javabase.spring.springImport.demo3.TestBean3;
@@ -27,13 +29,18 @@ public class H2MybatisController {
     @Autowired
     private TestBean3 testBean3;
 
+    @Autowired
+    private DeptMapper deptMapper;
+
     @GetMapping(value = "/findAll")
     public void findAll() {
 
         // for (int i = 0; i < 10; i++) {
         //     mapper.insert(new User(null, "name" + 1, 1, ""));
         // }
-        mapper.getUserMap(1L);
+        // mapper.getUserMap(1L);
 
+        Dept one = deptMapper.getOne(1L);
+        System.out.println();
     }
 }

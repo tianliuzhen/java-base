@@ -1,7 +1,6 @@
 package com.aaa.javabase.h2.mapper;
 
 import com.aaa.javabase.h2.Model.Dept;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface DeptMapper extends BaseMapper<Dept> {
+public interface DeptMapper {
 
     Dept getOne(@Param("id") Long id);
 
