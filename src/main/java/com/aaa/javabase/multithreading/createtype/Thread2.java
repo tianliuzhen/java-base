@@ -1,6 +1,5 @@
 package com.aaa.javabase.multithreading.createtype;
 
-import org.omg.PortableServer.THREAD_POLICY_ID;
 
 /**
  * description: 描述

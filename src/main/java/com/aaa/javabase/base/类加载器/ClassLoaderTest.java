@@ -1,7 +1,5 @@
 package com.aaa.javabase.base.类加载器;
 
-import com.sun.javafx.binding.DoubleConstant;
-
 import java.util.HashMap;
 
 /**
@@ -17,7 +15,7 @@ public class ClassLoaderTest {
          *
          */
         System.out.println("ClassLoaderTest.class.getClassLoader() = " + ClassLoaderTest.class.getClassLoader());
-        System.out.println("DoubleConstant.class.getClassLoader() = " + DoubleConstant.class.getClassLoader());
+        // System.out.println("DoubleConstant.class.getClassLoader() = " + DoubleConstant.class.getClassLoader());
         //  BootStrap ClassLoader,在jvm中通常使用c/c++ 语言原生实现，不能体现为java类,因此打印出来是 null
         System.out.println("HashMap.class.getClassLoader() = " + HashMap.class.getClassLoader());
 
