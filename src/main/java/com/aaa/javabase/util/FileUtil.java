@@ -3,6 +3,7 @@ package com.aaa.javabase.util;
 import com.aaa.javabase.domain.ConfigVarModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -33,7 +34,7 @@ public class FileUtil {
     }
 
     public static JSONObject getByFilePath(String filePath) {
-        JSONObject localVars=new JSONObject();
+        JSONObject localVars = new JSONObject();
         try {
             URL url = Thread.currentThread().getContextClassLoader().getResource(filePath);
             String content = null;
@@ -43,6 +44,24 @@ public class FileUtil {
             e.printStackTrace();
         }
         return localVars;
+    }
+
+    /**
+     * 读取指定文件，并转成list
+     *
+     * @param filePath
+     * @param clazz
+     * @return
+     */
+    public static <E> List<E> getByFilePath(String filePath, Class<E> clazz) {
+        List<E> result = Lists.newArrayList();
+        try {
+           String content = FileUtils.readFileToString(new File(filePath));
+            result = JSON.parseArray(content, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     /**
