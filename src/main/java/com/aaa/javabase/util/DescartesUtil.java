@@ -32,7 +32,7 @@ public class DescartesUtil {
     /**
      * 笛卡尔积组合
      *
-     * @param allValue    所有的值
+     * @param allValue    所有组合数据
      * @param lastResult  最终返回结果
      * @param index       下标
      * @param currentList 当前值
@@ -41,17 +41,19 @@ public class DescartesUtil {
     private static <T> void descartes(List<List<T>> allValue, List<List<T>> lastResult, int index, List<T> currentList) {
         // 根据下标取每种组合类型list值
         List<T> ts = allValue.get(index);
+
         if (index < allValue.size() - 1) {
-            for (int i = 0; i < ts.size(); i++) {
+            for (T t : ts) {
                 ArrayList<T> arrayList = new ArrayList<>(currentList);
-                arrayList.add(ts.get(i));
+                arrayList.add(t);
                 descartes(allValue, lastResult, index + 1, arrayList);
             }
         }
 
-        // 每层遍历完了，开始返回最终结果
+        // 所有组合数据最后一层
         if (index == allValue.size() - 1) {
             for (T t : ts) {
+                // 重新创建一个最新的组合对象
                 List<T> arrayList = new ArrayList<>(currentList);
                 arrayList.add(t);
                 lastResult.add(arrayList);

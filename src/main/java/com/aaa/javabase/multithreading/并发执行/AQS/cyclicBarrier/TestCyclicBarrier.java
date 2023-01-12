@@ -12,11 +12,26 @@ import java.util.concurrent.CyclicBarrier;
  * @version 1.0 TestCyclicBarrier.java  2022/3/20 17:24
  */
 public class TestCyclicBarrier {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 表示设置 循环栅栏的阈值为5，等于5的时候，会触发一个阈值事件。
         CyclicBarrier cyclicBarrier = new CyclicBarrier(5, () -> System.out.println("满人发车"));
 
         // 如果这里设置10个线程，则会 5个线程一批。分两批去执行。
+        for (int i = 0; i < 5; i++) {
+            new Thread(() -> {
+                try {
+                    System.out.println("Thread.currentThread().getName() ===== " + Thread.currentThread().getName());
+                    cyclicBarrier.await();
+                    System.out.println("Thread.currentThread().getName() +++++ " + Thread.currentThread().getName());
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+        Thread.sleep(1000);
         for (int i = 0; i < 5; i++) {
             new Thread(() -> {
                 try {
