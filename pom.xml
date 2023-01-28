@@ -203,6 +203,12 @@
             <version>4.1.6</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.16.0</version>
+        </dependency>
 
     </dependencies>
 
