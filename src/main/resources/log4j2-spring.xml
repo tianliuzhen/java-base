@@ -136,6 +136,7 @@
         <!--  自定义 dal文件日志    -->
         <Logger name="com.aaa.javabase.h2.mapper" level="${FILE_LEVEL}" additivity="false">
             <appenderRef ref="com-dal"/>
+            <appender-ref ref="Console"/>
         </Logger>
 
         <root level="info">
