@@ -25,10 +25,10 @@ spring:
         web-allow-others: true
 #mybatis
 mybatis-plus:
-#  type-aliases-package: com.aaa.h2.model
+  #  type-aliases-package: com.aaa.h2.model
   mapper-locations: classpath:/mapper/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
     # 默认是开启二级缓存的
     cache-enabled: true
     #开启懒加载
@@ -37,4 +37,10 @@ mybatis-plus:
     aggressive-lazy-loading: false
 #    configuration-factory: com.aaa.javabase.h2.UserMapperTest$ConfigurationFactory
 
-
+# 自定义日志级别 （优先级低）
+app:
+  level: debug
+# 通用的日志级别，指定某些包的级别 （优先级高）
+logging:
+  level:
+    com.aaa.javabase.h2.mapper: debug

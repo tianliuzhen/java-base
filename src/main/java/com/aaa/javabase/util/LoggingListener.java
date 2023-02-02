@@ -22,12 +22,14 @@ public class LoggingListener implements ApplicationListener, Ordered {
      */
     private final static String LOG_PATH = "log.path";
     private final static String LOG_NAME = "log.name";
+    private final static String LOG_LEVEL = "log.level";
 
     /**
      * spring 内部设置的日志文件的配置key
      */
     private final static String SPRING_LOG_PATH_PROP = "logging.file.path";
     private final static String SPRING_LOG_NAME_PROP = "spring.application.name";
+    private final static String SPRING_LOG_LEVEL = "app.level";
 
 
     @Override
@@ -56,6 +58,15 @@ public class LoggingListener implements ApplicationListener, Ordered {
                 MDC.put(LOG_NAME, fileName);
             }
 
+            // 设置上下文变量 - 日志级别
+            String fileLevel = environment.getProperty(SPRING_LOG_LEVEL);
+            if (StringUtils.isNotBlank(fileLevel)) {
+                // 若采用 System.setProperty方法，则在 log4j2-spring.xml 中用 ${sys:log.path} 获取 yml属性值
+                System.setProperty(LOG_LEVEL, fileLevel);
+
+                // 若采用 MDC.put           方法，则在 log4j2-spring.xml 中用 ${ctx:log.path} 获取 yml属性值
+                MDC.put(LOG_LEVEL, fileLevel);
+            }
         }
     }
 

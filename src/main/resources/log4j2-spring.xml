@@ -14,6 +14,8 @@
         <property name="FILE_PATH" value="${ctx:log.path}"/>
         <!-- 定义日志存储的名字": ${ctx:log.name} 读取的就是 application.yml 中的 spring.application.name  -->
         <property name="FILE_NAME" value="${ctx:log.name}"/>
+        <!-- 日志级别 -->
+        <property name="FILE_LEVEL" value="${ctx:log.level}"/>
 
         <!-- <springProperty scope="context" name="FILE_NAME" source="spring.application.name" defaultValue="localhost.log"/>-->
     </Properties>
@@ -120,10 +122,6 @@
     <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
-
-        <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
-<!--        <logger name="org.mybatis" level="info" additivity="false">-->
-<!--        </logger>-->
         <!--监控系统信息-->
         <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
         <Logger name="org.springframework" level="info" additivity="false">
@@ -131,17 +129,16 @@
         </Logger>
 
         <!--  自定义 util文件日志    -->
-        <Logger name="om.aaa.javabase.util" level="info" additivity="false">
+        <Logger name="com.aaa.javabase.util" level="info" additivity="false">
             <AppenderRef ref="com-util"/>
         </Logger>
 
         <!--  自定义 dal文件日志    -->
-        <Logger name="com.aaa.javabase.h2.mapper" level="debug" additivity="false">
+        <Logger name="com.aaa.javabase.h2.mapper" level="${FILE_LEVEL}" additivity="false">
             <appenderRef ref="com-dal"/>
-            <appender-ref ref="Console"/>
         </Logger>
 
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>
             <appender-ref ref="RollingFileInfo"/>
