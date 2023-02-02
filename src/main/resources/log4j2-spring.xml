@@ -33,7 +33,7 @@
                     pattern="%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx"/>
 
             <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
-            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
         </console>
 
         <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，适合临时测试用-->
@@ -122,25 +122,26 @@
     <loggers>
 
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
-        <logger name="org.mybatis" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
+<!--        <logger name="org.mybatis" level="info" additivity="false">-->
+<!--        </logger>-->
         <!--监控系统信息-->
         <!--若是additivity设为false，则 子Logger 只会在自己的appender里输出，而不会在 父Logger 的appender里输出。-->
         <Logger name="org.springframework" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <!--  自定义 dal文件日志    -->
-        <Logger name="com-dal" level="info" additivity="false">
-            <AppenderRef ref="com-dal"/>
-        </Logger>
         <!--  自定义 util文件日志    -->
-        <Logger name="com-util" level="info" additivity="false">
+        <Logger name="om.aaa.javabase.util" level="info" additivity="false">
             <AppenderRef ref="com-util"/>
         </Logger>
 
-        <root level="info">
+        <!--  自定义 dal文件日志    -->
+        <Logger name="com.aaa.javabase.h2.mapper" level="debug" additivity="false">
+            <appenderRef ref="com-dal"/>
+            <appender-ref ref="Console"/>
+        </Logger>
+
+        <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>
             <appender-ref ref="RollingFileInfo"/>
