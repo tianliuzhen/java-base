@@ -26,6 +26,11 @@ import java.io.*;
  * @version $Id: TestAliyunOss.java,v 0.1 2022年12月13日  6:27 PM:17 Exp $
  */
 public class TestAliyunOss {
+
+    public static final String ACCESS_KEY_ID = "xxx";
+    public static final String ACCESS_KEY_SECRET = "yyy";
+    public static final String BUCKET_NAME = "tls-oss";
+
     public static void main(String[] args) throws Exception {
         testFile();
         // testUpLoadJpg();
@@ -35,10 +40,10 @@ public class TestAliyunOss {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
         String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        String accessKeyId = "xxx";
-        String accessKeySecret = "xxx";
+        String accessKeyId = ACCESS_KEY_ID;
+        String accessKeySecret = ACCESS_KEY_SECRET;
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = "tls-oss";
+        String bucketName = BUCKET_NAME;
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String objectName = "demo/test2-3.txt";
 
@@ -87,10 +92,10 @@ public class TestAliyunOss {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
         String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        String accessKeyId = "LTAI5tQQAPKkbekzKgDvqLp8";
-        String accessKeySecret = "nKDyFqsVU0qAjgASnSpuHazsaodrFZ";
+        String accessKeyId = ACCESS_KEY_ID;
+        String accessKeySecret = ACCESS_KEY_SECRET;
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = "tls-oss";
+        String bucketName = BUCKET_NAME;
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String fileName = "demo/test2.jpg";
 
