@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.javabase.h2.mapper.UserExtMapper">
+
+    <resultMap id="userExtMap" type="com.aaa.javabase.h2.Model.UserExtModel" autoMapping="true">
+
+        <!--  嵌套查询：  一对一  -->
+        <association property="dept" column="dept_no" select="getDeptNo"/>
+        <!--  嵌套查询： 一对多   -->
+        <collection property="deptList" column="dept_no" select="getDeptNos"/>
+    </resultMap>
+
+    <select id="getDeptNo" resultType="com.aaa.javabase.h2.Model.Dept">
+        select *
+        from `dept`
+        where dept_no = #{deptNo}
+        order by id desc  limit 1
+    </select>
+
+    <select id="getDeptNos" resultType="com.aaa.javabase.h2.Model.Dept">
+        select *
+        from `dept`
+        where dept_no = #{deptNo}
+    </select>
+
+
+    <select id="getUserExtList" resultMap="userExtMap">
+        select *
+        from `user`
+    </select>
+
+</mapper>

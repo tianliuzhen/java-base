@@ -16,21 +16,15 @@ import com.aliyun.oss.model.PutObjectRequest;
 import java.io.*;
 
 /**
- * 下面四个参数可查看语雀：https://www.yuque.com/tianliuzhen/rinavs/ztnxddhszgo6tpnb
- * AccessKey ID: xx
- * AccessKey Secret: xx
- * Endpoint：xxx
- * Bucket：xxx
+ * AccessKey ID: LTAI5tQQAPKkbekzKgDvqLp8
+ * AccessKey Secret: nKDyFqsVU0qAjgASnSpuHazsaodrFZ
+ * Endpoint：oss-cn-hangzhou.aliyuncs.com
+ * Bucket：tls-oss.oss-cn-hangzhou.aliyuncs.com
  *
  * @author tlz
  * @version $Id: TestAliyunOss.java,v 0.1 2022年12月13日  6:27 PM:17 Exp $
  */
 public class TestAliyunOss {
-
-    public static final String ACCESS_KEY_ID = "xxx";
-    public static final String ACCESS_KEY_SECRET = "yyy";
-    public static final String BUCKET_NAME = "tls-oss";
-
     public static void main(String[] args) throws Exception {
         testFile();
         // testUpLoadJpg();
@@ -38,21 +32,21 @@ public class TestAliyunOss {
 
     private static void testFile() {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
-        String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
+        String endpoint = "oss-cn-hangzhou.aliyuncs.com";
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        String accessKeyId = ACCESS_KEY_ID;
-        String accessKeySecret = ACCESS_KEY_SECRET;
+        String accessKeyId = "LTAI5tQQAPKkbekzKgDvqLp8";
+        String accessKeySecret = "nKDyFqsVU0qAjgASnSpuHazsaodrFZ";
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = BUCKET_NAME;
+        String bucketName = "tls-oss";
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
-        String objectName = "demo/test2-3.txt";
+        String objectName = "demo/test5-1.txt";
 
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
             // 填写字符串。
-            String content = "Hello OSS 32";
+            String content = "Hello OSS 39";
 
             // 创建PutObjectRequest对象。
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, objectName, new ByteArrayInputStream(content.getBytes()));
@@ -66,7 +60,7 @@ public class TestAliyunOss {
             // 上传字符串。
             ossClient.putObject(putObjectRequest);
             // 上传后也能修改文件权限
-            ossClient.setObjectAcl(bucketName, objectName, CannedAccessControlList.Private);
+            ossClient.setObjectAcl(bucketName, objectName, CannedAccessControlList.PublicRead);
 
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
@@ -92,10 +86,10 @@ public class TestAliyunOss {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
         String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-        String accessKeyId = ACCESS_KEY_ID;
-        String accessKeySecret = ACCESS_KEY_SECRET;
+        String accessKeyId = "LTAI5tQQAPKkbekzKgDvqLp8";
+        String accessKeySecret = "nKDyFqsVU0qAjgASnSpuHazsaodrFZ";
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = BUCKET_NAME;
+        String bucketName = "tls-oss";
         // 填写Object完整路径，完整路径中不能包含Bucket名称，例如exampledir/exampleobject.txt。
         String fileName = "demo/test2.jpg";
 

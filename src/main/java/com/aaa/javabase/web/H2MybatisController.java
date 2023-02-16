@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/h2MybatisController")
 public class H2MybatisController {
     @Autowired
-    private UserMapper mapper;
+    private UserMapper userMapper;
     @Autowired
     private Demo demo;
 

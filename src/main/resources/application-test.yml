@@ -26,7 +26,7 @@ spring:
 #mybatis
 mybatis-plus:
   #  type-aliases-package: com.aaa.h2.model
-  mapper-locations: classpath:/mapper/*.xml
+  mapper-locations: classpath:/mapper/*/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
     # 默认是开启二级缓存的
