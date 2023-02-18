@@ -1,4 +1,4 @@
-package com.aaa.javabase.web.excel;
+package com.aaa.javabase.web;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;

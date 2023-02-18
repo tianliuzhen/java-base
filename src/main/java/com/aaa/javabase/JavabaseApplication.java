@@ -4,9 +4,11 @@ import com.aaa.javabase.config.LoggingListener;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @MapperScan("com.aaa.javabase.h2.mapper")
+@ImportResource(locations={"classpath:/spring-common.xml"})
 public class JavabaseApplication {
 
     public static void main(String[] args) {

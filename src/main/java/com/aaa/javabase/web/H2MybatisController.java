@@ -1,5 +1,6 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.domain.CommonBeanModel;
 import com.aaa.javabase.domain.Demo;
 import com.aaa.javabase.h2.Model.Dept;
 import com.aaa.javabase.h2.mapper.DeptMapper;
@@ -31,6 +32,10 @@ public class H2MybatisController {
 
     @Autowired
     private DeptMapper deptMapper;
+
+
+    @Autowired
+    private CommonBeanModel commonBeanModel;
 
     @GetMapping(value = "/findAll")
     public void findAll() {

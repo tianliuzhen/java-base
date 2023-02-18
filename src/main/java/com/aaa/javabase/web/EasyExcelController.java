@@ -1,4 +1,4 @@
-package com.aaa.javabase.web.excel;
+package com.aaa.javabase.web;
 
 import com.aaa.javabase.web.excel.model.*;
 import com.alibaba.excel.EasyExcel;
