@@ -1,4 +1,4 @@
-package com.aaa.javabase.util;
+package com.aaa.javabase.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;

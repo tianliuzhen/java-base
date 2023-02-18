@@ -1,6 +1,6 @@
 package com.aaa.javabase;
 
-import com.aaa.javabase.util.LoggingListener;
+import com.aaa.javabase.config.LoggingListener;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

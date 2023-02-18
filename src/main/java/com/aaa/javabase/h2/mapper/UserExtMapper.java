@@ -1,5 +1,6 @@
 package com.aaa.javabase.h2.mapper;
 
+import com.aaa.javabase.h2.Model.Dept;
 import com.aaa.javabase.h2.Model.UserExtModel;
 
 import java.util.List;
@@ -10,4 +11,6 @@ import java.util.List;
  */
 public interface UserExtMapper extends UserMapper{
     List<UserExtModel> getUserExtList();
+
+    Dept getDeptNo(String dept);
 }

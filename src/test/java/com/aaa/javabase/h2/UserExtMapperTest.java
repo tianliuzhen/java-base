@@ -1,13 +1,11 @@
 package com.aaa.javabase.h2;
 
-import com.aaa.javabase.h2.Model.UserExtModel;
 import com.aaa.javabase.h2.mapper.UserExtMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author liuzhen.tian
@@ -22,7 +20,8 @@ public class UserExtMapperTest {
 
     @Test
     public void getUserExtList() {
-        List<UserExtModel> userExtList = userExtMapper.getUserExtList();
+        userExtMapper.getDeptNo("20");
+        // List<UserExtModel> userExtList = userExtMapper.getUserExtList();
         System.out.println();
     }
 }
