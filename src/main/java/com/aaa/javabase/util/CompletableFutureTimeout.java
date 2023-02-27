@@ -72,7 +72,7 @@ public class CompletableFutureTimeout {
     public static <T> CompletableFuture<T> completeOnTimeout(T t, CompletableFuture<T> future, long timeout, TimeUnit unit) {
         final CompletableFuture<T> timeoutFuture = timeoutAfter(timeout, unit);
         return future.applyToEither(timeoutFuture, Function.identity()).exceptionally((throwable) -> {
-            System.err.println(throwable);
+            System.err.println("[completeOnTimeout]:" + throwable);
             return t;
         });
     }
