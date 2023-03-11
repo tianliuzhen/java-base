@@ -210,6 +210,17 @@
             <version>3.16.0</version>
         </dependency>
 
+        <!--Groovy-->
+        <!-- https://mvnrepository.com/artifact/org.apache.groovy/groovy-all -->
+        <dependency>
+            <groupId>org.apache.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>4.0.9</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
