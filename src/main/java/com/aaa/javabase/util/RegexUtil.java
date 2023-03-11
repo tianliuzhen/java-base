@@ -1,7 +1,5 @@
 package com.aaa.javabase.util;
 
-import com.alibaba.fastjson.JSON;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,6 +28,5 @@ public class RegexUtil {
             System.out.println(matcher2.group(1));
             System.out.println(matcher2.group(2));
         }
-        System.out.println(JSON.toJSONString(null));
     }
 }
