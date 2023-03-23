@@ -1,9 +1,11 @@
 package com.aaa.javabase.util;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -86,6 +88,16 @@ public class FutureUtil {
     }
 
     public static void main(String[] args) {
+        // testOne();
+
+        // 会有线程安全问题
+        testError();
+    }
+
+    /**
+     * 测试普通方法
+     */
+    private static void testOne() {
         List<Supplier<String>> suppliers = new ArrayList<>();
         suppliers.add(() -> {
             try {
@@ -109,5 +121,27 @@ public class FutureUtil {
         stopWatch.stop();
         System.out.println(stopWatch.getTotalTimeSeconds());
         System.out.println(list.toString());
+    }
+
+    /**
+     * 测试普通方法
+     */
+    private static void testError() {
+        List<Runnable> runnables = new ArrayList<>();
+        //  todo 这里是全局变量
+        HashMap<String, Object> result = new HashMap<>();
+        for (long i = 0; i < 10; i++) {
+            long finalI1 = i;
+            runnables.add(() -> {
+                result.put("result", (Lists.newArrayList(finalI1)));
+                testError(result);
+            });
+        }
+        // 并发执行会影响 result
+        FutureUtil.doRunAsync(runnables,null);
+    }
+
+    public static void testError(HashMap<String, Object> result){
+        System.out.println(result);
     }
 }
