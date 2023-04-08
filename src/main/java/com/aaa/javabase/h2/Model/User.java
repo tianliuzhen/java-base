@@ -17,7 +17,8 @@ import java.util.List;
  */
 
 @Data
-@TableName(value = "user") //访问h2数据库
+@TableName(value = "user",
+        excludeProperty = {"dept","deptList","userBillList"}) //访问h2数据库
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {

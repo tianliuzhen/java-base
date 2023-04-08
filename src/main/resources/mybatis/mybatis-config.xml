@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="SLF4J"/>
+        <!--<setting name="cacheEnabled" value="true" />-->
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="org.h2.Driver"/>
+                <property name="url" value="jdbc:h2:mem:test"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--  加载指定包 ，注意不支持多个包，只能一个包      -->
+        <package name="com.aaa.javabase.h2"/>
+        <!--  加载具体mapper      -->
+        <!--        <mapper class="com.aaa.javabase.h2.mapper.UserMapper" />-->
+        <!--  加载指定xml      -->
+        <!--        <mapper resource="mybatis/UserMapper.xml"/>-->
+    </mappers>
+</configuration>
