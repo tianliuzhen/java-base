@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ImportResource;
 @SpringBootApplication
 @MapperScan("com.aaa.javabase.h2.mapper")
 @ImportResource(locations={"classpath:/spring-common.xml"})
+// @EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy =true)
 public class JavabaseApplication {
 
     public static void main(String[] args) {
