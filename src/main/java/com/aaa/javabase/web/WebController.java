@@ -9,6 +9,7 @@ import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.util.BeanContextUtil;
+import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
@@ -33,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @RestController
 public class WebController {
+
 
     @Autowired
     private GoodsService goodsService;
@@ -117,7 +119,7 @@ public class WebController {
     @PostMapping("/getPeople3")
     public Object getPeople3(@RequestParam(defaultValue = "2022-12-14 21:08:00")
                              @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-                                     Date date) {
+                             Date date) {
         return date;
 
     }
@@ -136,21 +138,24 @@ public class WebController {
         return testProperties.toString();
     }
 
-
-    private static Logger com_dal = LogManager.getLogger("com-dal");
-    private static Logger com_util = LogManager.getLogger("com-util");
-
+    // 这里的@Log4j2 注解的log，本质上就是 logger，编译后看到class文件可以看到
+    private static final Logger logger = LogManager.getLogger(WebController.class);
     @PostMapping("/testLogPrint")
     public void testLogPrint() {
-        log.info("###info");
-        log.error("###error");
-        log.warn("###warn");
-        com_dal.info("###com_dal  info");
-        com_dal.error("###com_dal  info");
-        com_util.error("###com_util  error");
-        com_util.info("###com_util  info");
-        String str = null;
-        str.equals("aaa");
+        /**
+         * 记录一个之前理解错的点
+         * LogUtil.com_dal 虽然在当前 WebController中调的，但是它的 logger是 com_dal
+         * 不是WebController，二者是互不干涉。
+         */
+
+        // 指定类去记录日志
+        log.info("###log.info WebController");
+        log.error("###log.error WebController");
+        log.warn("###log.warn WebController");
+
+        // 指定文件去记录日志
+        LogUtil.com_dal.info("###LogUtil.com_dal");
+        LogUtil.com_dal.error("###LogUtil.com_dal");
     }
 
     @GetMapping("/testAspect")
