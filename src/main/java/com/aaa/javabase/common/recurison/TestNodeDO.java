@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.assertj.core.util.Lists;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,8 +54,34 @@ public class TestNodeDO {
     }
 
     public static void main(String[] args) {
-        List<TestNodeModel> testNodeModeTree = getTestNodeModeTree(getTestNodeDOList());
+        // mock 数据库数据
+        List<TestNodeDO> testNodeDOList = getTestNodeDOList();
+
+        // list转tree数据
+        List<TestNodeModel> testNodeModeTree = getTestNodeModeTree(testNodeDOList);
+
+        // tree数据转list
+        List<String> labels = parseLabelNByTree(testNodeModeTree);
+
         System.out.println(testNodeModeTree);
+    }
+
+    /**
+     * 递归解析tree数据格式
+     *
+     * @param testNodeModeTree tree数据格式
+     * @return
+     */
+    public static List<String> parseLabelNByTree(List<TestNodeModel> testNodeModeTree) {
+        List<String> result = new ArrayList<>();
+        for (TestNodeModel nodeModel : testNodeModeTree) {
+            result.add(nodeModel.getLabel());
+            if (!CollectionUtils.isEmpty(nodeModel.getChildren())) {
+                result.addAll(parseLabelNByTree(nodeModel.getChildren()));
+            }
+        }
+
+        return result;
     }
 
     /**
