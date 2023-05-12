@@ -18,6 +18,9 @@ import com.alibaba.fastjson.JSON;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,6 +72,28 @@ public class EasyExcelController {
         // 下载文件的默认名称
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xlsx");
     }
+
+    /**
+     * 测试导出 单个sheet
+     * <p>
+     * 用 ResponseEntity 导出Excel
+     */
+    @SneakyThrows
+    @GetMapping("/exportOne")
+    public ResponseEntity<byte[]> exportOne() {
+        // 构造 ResponseEntity 对象，设置响应头和响应体
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode("testName", "UTF-8") + ".xlsx");
+
+        // 使用try语句自动关闭流
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            EasyExcel.write(outputStream, ComplexHeadData.class).sheet("模板").doWrite(complexHeadData);
+            return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("导出失败");
+        }
+    }
+
 
     /**
      * 测试导出 单个sheet
