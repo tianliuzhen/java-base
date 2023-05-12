@@ -37,8 +37,7 @@ public class TestNodeDO {
 
     /**
      * mock 数据库数据
-     *
-     * @return List<TestNodeModel>
+     *     * @return List<TestNodeModel>
      */
     public static List<TestNodeDO> getTestNodeDOList() {
         return Lists.newArrayList(
