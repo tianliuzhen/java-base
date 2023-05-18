@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
  * @author liuzhen.tian
  * @version 1.0 Client.java  2023/4/25 22:36
  */
-public class Client {
+public class TestClient {
 
     static String SOURCE_CODE = "package com.aaa.javabase.domain;\n" +
             "\n" +
