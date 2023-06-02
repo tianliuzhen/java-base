@@ -3,6 +3,8 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.domain.BaseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -18,7 +20,7 @@ public class HttpController {
      * 注意：请求类型只能是 post 否则无法接收
      */
     @PostMapping("/req1")
-    public String detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name ) {
+    public String detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name) {
         System.out.println(">>> id=" + id + ",name=" + name);
         return ">>> id=" + id + ",name=" + name;
     }
@@ -30,14 +32,14 @@ public class HttpController {
 
     @PostMapping("/req3")
     public void detailByParam(@RequestBody String params) {
-        System.out.println(">>>"+params);
+        System.out.println(">>>" + params);
     }
 
 
     @PostMapping("/req4")
     @ResponseBody
     public Object detailByParam(@RequestBody BaseEntity base) {
-      return new BaseEntity(1000L);
+        return new BaseEntity(1000L, LocalDateTime.now(),new Date());
     }
 
 }

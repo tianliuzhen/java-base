@@ -1,10 +1,11 @@
 package com.aaa.javabase.domain;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author liuzhen.tian
@@ -14,6 +15,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseEntity {
-    @JsonSerialize(using = ToStringSerializer.class)
+    // @JsonSerialize(using = ToStringSerializer.class)
     private Long id = 1L;
+
+    private LocalDateTime beginTime;
+
+    private Date endTime;
 }
