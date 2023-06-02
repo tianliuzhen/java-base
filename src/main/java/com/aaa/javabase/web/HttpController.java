@@ -36,7 +36,7 @@ public class HttpController {
 
     @PostMapping("/req4")
     @ResponseBody
-    public Object detailByParam() {
+    public Object detailByParam(@RequestBody BaseEntity base) {
       return new BaseEntity(1000L);
     }
 
