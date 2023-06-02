@@ -1,5 +1,6 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.domain.BaseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -31,4 +32,12 @@ public class HttpController {
     public void detailByParam(@RequestBody String params) {
         System.out.println(">>>"+params);
     }
+
+
+    @PostMapping("/req4")
+    @ResponseBody
+    public Object detailByParam() {
+      return new BaseEntity(1000L);
+    }
+
 }

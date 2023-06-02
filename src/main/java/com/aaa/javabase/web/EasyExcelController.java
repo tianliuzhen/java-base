@@ -79,7 +79,7 @@ public class EasyExcelController {
      * 用 ResponseEntity 导出Excel
      */
     @SneakyThrows
-    @GetMapping("/exportOne")
+    @GetMapping("/exportOne2")
     public ResponseEntity<byte[]> exportOne() {
         // 构造 ResponseEntity 对象，设置响应头和响应体
         HttpHeaders headers = new HttpHeaders();
