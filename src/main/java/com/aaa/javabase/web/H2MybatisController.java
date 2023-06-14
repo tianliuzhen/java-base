@@ -5,8 +5,6 @@ import com.aaa.javabase.domain.Demo;
 import com.aaa.javabase.h2.Model.Dept;
 import com.aaa.javabase.h2.mapper.DeptMapper;
 import com.aaa.javabase.h2.mapper.UserMapper;
-import com.aaa.javabase.spring.springImport.demo1.TestBean1;
-import com.aaa.javabase.spring.springImport.demo3.TestBean3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +22,6 @@ public class H2MybatisController {
     private UserMapper userMapper;
     @Autowired
     private Demo demo;
-
-    @Autowired
-    private TestBean1 testBean1;
-    @Autowired
-    private TestBean3 testBean3;
 
     @Autowired
     private DeptMapper deptMapper;

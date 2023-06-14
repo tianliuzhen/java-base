@@ -5,9 +5,14 @@ import com.aaa.javabase.base.annotations.testImpl.Human;
 import com.aaa.javabase.base.annotations.testImpl.Man;
 import com.aaa.javabase.config.TestProperties;
 import com.aaa.javabase.domain.BaseMain;
+import com.aaa.javabase.multithreading.并发执行.completableFuture.CompletableBean;
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
+import com.aaa.javabase.spring.factoryBean.AppleBean;
 import com.aaa.javabase.spring.injection.construction.Abean;
+import com.aaa.javabase.spring.springImport.ImportBean1;
+import com.aaa.javabase.spring.springImport.ImportBean2;
+import com.aaa.javabase.spring.springImport.ImportBean3;
 import com.aaa.javabase.util.BeanContextUtil;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
@@ -131,6 +136,19 @@ public class WebController {
 
     @Autowired
     private TestProperties testProperties;
+
+    @Autowired
+    private AppleBean appleBean;
+    @Autowired
+    private CompletableBean completableBean;
+
+    @Autowired
+    private ImportBean1 importBean1;
+    @Autowired
+    private ImportBean2 importBean2;
+    @Autowired
+    private ImportBean3 importBean3;
+
 
     @PostMapping("/testProperties")
     public String testProperties() {

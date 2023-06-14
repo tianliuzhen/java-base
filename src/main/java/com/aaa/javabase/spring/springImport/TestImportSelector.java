@@ -1,4 +1,4 @@
-package com.aaa.javabase.spring.springImport.demo2;
+package com.aaa.javabase.spring.springImport;
 
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
@@ -10,6 +10,6 @@ import org.springframework.core.type.AnnotationMetadata;
 public class TestImportSelector implements ImportSelector {
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        return new String[]{"com.aaa.javabase.spring.springImport.demo1.TestBean1"};
+        return new String[]{"com.aaa.javabase.spring.springImport.ImportBean2"};
     }
 }
