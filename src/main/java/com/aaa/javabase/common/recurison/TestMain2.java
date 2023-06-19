@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,47 +20,63 @@ public class TestMain2 {
     public static void main(String[] args) {
         // mock 数据库存的数据
         List<TestNodeModel> initData = FileUtil.getByFilePath(path, TestNodeModel.class);
+        // 查询当前节点下的所有节点id
+        List<Long> childNodeId = getChildByNodeIdForList(initData, 1L);
+
 
         // 构建树形json节点
         List<TestNodeModel> testNodeModels = buildTreeNode(initData);
-
         // 查询当前节点下的所有节点id
-        List<Long> ids = Lists.newArrayList();
-        // getChildByNodeId(initData, 1L, ids); // 效果同下
-        getChildByNodeIdV2(initData, 1L, ids);
+        List<Long> childNodeId2 = getChildByNodeIdForTree(testNodeModels, 1L);
 
         System.out.println();
     }
+
     /**
-     * 根据当前节点id获取，所有的子节点（数据类型为最原始数据）
+     * 根据当前节点id获取，所有的子节点
+     * （数据类型为最原始数据-list）
      */
-    private static void getChildByNodeIdV2(List<TestNodeModel> initData, Long nodeId, List<Long> ids) {
+    private static List<Long> getChildByNodeIdForList(List<TestNodeModel> initData, Long nodeId) {
+        List<Long> ids = new ArrayList<>();
         for (TestNodeModel initDatum : initData) {
             if (initDatum.getParentId().equals(nodeId)) {
                 ids.add(initDatum.getId());
-                getChildByNodeIdV2(initData, initDatum.getId(), ids);
+                ids.addAll(getChildByNodeIdForList(initData, initDatum.getId()));
             }
         }
+        // todo 是否包含当前节点
+        // ids.add(nodeId);
+        return ids;
     }
 
 
     /**
-     * 根据当前节点id获取，所有的子节点（数据类型为解析并填充过的json数据）
+     * 根据当前节点id获取，所有的子节点
+     * （数据类型为解析并填充过的json数据）
      */
-    private static void getChildByNodeId(List<TestNodeModel> initData, Long nodeId, List<Long> ids) {
+    private static List<Long> getChildByNodeIdForTree(List<TestNodeModel> initData, Long nodeId) {
+        List<Long> ids = new ArrayList<>();
         for (TestNodeModel initDatum : initData) {
             if (initDatum.getId().equals(nodeId)) {
-                doGetChildByNodeId(initDatum.getChildren(), ids);
+                // todo 是否包含当前节点
+                // ids.add(nodeId);
+                ids.addAll(getChildByNodeIdForTree(initDatum.getChildren()));
+            } else {
+                ids.addAll(getChildByNodeIdForTree(initDatum.getChildren(), nodeId));
             }
         }
+        return ids;
     }
-    public static void doGetChildByNodeId(List<TestNodeModel> initData, List<Long> ids) {
-        for (TestNodeModel initDatum : initData) {
-            ids.add(initDatum.getId());
-            if (!CollectionUtils.isEmpty(initDatum.getChildren())) {
-                doGetChildByNodeId(initDatum.getChildren(), ids);
+
+    private static List<Long> getChildByNodeIdForTree(List<TestNodeModel> initData) {
+        List<Long> ids = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(initData)) {
+            for (TestNodeModel initDatum : initData) {
+                ids.add(initDatum.getId());
+                ids.addAll(getChildByNodeIdForTree(initDatum.getChildren()));
             }
         }
+        return ids;
     }
 
     /**
