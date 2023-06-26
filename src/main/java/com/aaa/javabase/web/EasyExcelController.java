@@ -79,8 +79,8 @@ public class EasyExcelController {
      * 用 ResponseEntity 导出Excel
      */
     @SneakyThrows
-    @GetMapping("/exportOne2")
-    public ResponseEntity<byte[]> exportOne() {
+    @GetMapping("/exportOne_by_responseEntity")
+    public ResponseEntity<byte[]> exportOneNew() {
         // 构造 ResponseEntity 对象，设置响应头和响应体
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode("testName", "UTF-8") + ".xlsx");
@@ -109,6 +109,36 @@ public class EasyExcelController {
 
     }
 
+    /**
+     * 测试导出 多个sheet
+     */
+    @SneakyThrows
+    @GetMapping("/exportMany_by_responseEntity")
+    public ResponseEntity<byte[]> exportManyNew() {
+        // 构造 ResponseEntity 对象，设置响应头和响应体
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode("testName", "UTF-8") + ".xlsx");
+
+        // 使用try语句自动关闭流
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            ExcelWriter excelWriter = EasyExcel.write(outputStream, ComplexHeadData.class).build();
+
+            // 导出sheet1
+            WriteSheet sheet1 = EasyExcel.writerSheet(0, "模板一").head(ComplexHeadData.class).build();
+            excelWriter.write(complexHeadData, sheet1);
+
+            // 导出sheet2
+            WriteSheet sheet2 = EasyExcel.writerSheet(1, "模板二").head(IndexData.class).build();
+            excelWriter.write(indexData, sheet2);
+
+            // todo 注意：这里必须要调用  excelWriter.close() 或者 excelWriter.finish();
+            excelWriter.close();
+
+            return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("导出失败");
+        }
+    }
 
     /**
      * 测试导出 多个sheet

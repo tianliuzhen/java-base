@@ -120,8 +120,8 @@ public class EasyPoiController {
      *
      * @return
      */
-    @GetMapping("/exportOne2")
-    public ResponseEntity<byte[]> exportOne2() {
+    @GetMapping("/exportMany_by_responseEntity")
+    public ResponseEntity<byte[]> exportManyNew() {
         //
         Workbook workBook = null;
         // 使用try语句自动关闭流
