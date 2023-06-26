@@ -27,7 +27,7 @@ public class EmpUtil {
     @Excel(name = "年龄", width = 30, type = 10, groupName = "基本信息")
     private Integer age;
 
-    @Excel(name = "入职时间", width = 30, groupName = "工作信息", format = "yyyy/MM/dd HH:mm")
+    @Excel(name = "入职时间", width = 30, groupName = "工作信息", format = "yyyy-MM-dd HH:mm:ss")
     private Date hiredate;
 
     @Excel(name = "薪酬", width = 30, type = 10, groupName = "工作信息")

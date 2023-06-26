@@ -15,17 +15,22 @@ import com.aaa.javabase.excel.excel2.EmpUtil;
 import com.aaa.javabase.excel.excel2.ExcelUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLEncoder;
+import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/easyPoi")
 public class EasyPoiController {
@@ -63,7 +68,7 @@ public class EasyPoiController {
 
                 List list = null;
                 //如果有些数据验证出来有误   为true
-                if (result.isVerfiyFail()) {
+                if (result.isVerifyFail()) {
                     //不合规定的数据
                     list = result.getFailList();
                     //拼凑错误信息,自定义
@@ -89,46 +94,70 @@ public class EasyPoiController {
     /**
      * 多sheet 测试导出
      */
+    @GetMapping("/exportMany2")
+    public void exportMany2(HttpServletResponse response) {
+        Workbook workBook = null;
+        try {
+            List<Map<String, Object>> sheetsList = getMaps();
+            // 执行方法
+            workBook = ExcelExportUtil.exportExcel(sheetsList, ExcelType.HSSF);
+            EasyPoiUtils.download(workBook, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (workBook != null) {
+                try {
+                    workBook.close();
+                } catch (IOException e) {
+                    log.error(e.toString());
+                }
+            }
+        }
+    }
+
+    /**
+     * 基于 ResponseEntity 对象，设置响应头和响应体
+     *
+     * @return
+     */
+    @GetMapping("/exportOne2")
+    public ResponseEntity<byte[]> exportOne2() {
+        //
+        Workbook workBook = null;
+        // 使用try语句自动关闭流
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            List<Map<String, Object>> sheetsList = getMaps();
+            workBook = ExcelExportUtil.exportExcel(sheetsList, ExcelType.HSSF);
+            workBook.write(outputStream);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode("testName", "UTF-8") + ".xlsx");
+            return new ResponseEntity<>(outputStream.toByteArray(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new RuntimeException("导出失败");
+        } finally {
+            if (workBook != null) {
+                try {
+                    workBook.close();
+                } catch (Exception e) {
+                    log.error(e.toString());
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 多sheet 测试导出
+     */
     @GetMapping("/exportMany")
     public void exportMany(HttpServletResponse response) {
         Workbook workBook = null;
         try {
-            // todo 有一个问题就是如果sheet填充的数据源是一样的，那么第二个sheet的内容就会为空
-            // 这里模拟两个数据源
-            List<DeptUtil> exportList = addList();
-            List<DeptUtil> exportList2 = addList2();
-            System.err.println(JSONArray.toJSONString(exportList));
-
-            // 创建参数对象（用来设定excel得sheet得内容等信息）
-            ExportParams deptExportParams = new ExportParams();
-            // 设置sheet得名称
-            deptExportParams.setSheetName("员工报表1");
-            // 创建sheet1使用得map
-            Map<String, Object> deptExportMap = new HashMap<>();
-            // title的参数为ExportParams类型，目前仅仅在ExportParams中设置了sheetName
-            deptExportMap.put("title", deptExportParams);
-            // 模版导出对应得实体类型
-            deptExportMap.put("entity", DeptUtil.class);
-            // sheet中要填充得数据
-            deptExportMap.put("data", exportList);
-
-            ExportParams empExportParams = new ExportParams();
-            empExportParams.setSheetName("员工报表2");
-            // 创建sheet2使用得map
-            Map<String, Object> empExportMap = new HashMap<>();
-            empExportMap.put("title", empExportParams);
-            empExportMap.put("entity", DeptUtil.class);
-            empExportMap.put("data", exportList);
-
-            // 将sheet1、sheet2、sheet3使用得map进行包装
-            List<Map<String, Object>> sheetsList = new ArrayList<>();
-            sheetsList.add(deptExportMap);
-            sheetsList.add(empExportMap);
-
+            List<Map<String, Object>> sheetsList = getMaps();
             // 执行方法
             workBook = ExcelExportUtil.exportExcel(sheetsList, ExcelType.HSSF);
             EasyPoiUtils.download(workBook, response);
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -140,6 +169,42 @@ public class EasyPoiController {
                 }
             }
         }
+    }
+
+    @NotNull
+    private List<Map<String, Object>> getMaps() {
+        // todo 有一个问题就是如果sheet填充的数据源是一样的，那么第二个sheet的内容就会为空
+        // 这里模拟两个数据源
+        List<DeptUtil> exportList = addList();
+        List<DeptUtil> exportList2 = addList2();
+        System.err.println(JSONArray.toJSONString(exportList));
+
+        // 创建参数对象（用来设定excel得sheet得内容等信息）
+        ExportParams deptExportParams = new ExportParams();
+        // 设置sheet得名称
+        deptExportParams.setSheetName("员工报表1");
+        // 创建sheet1使用得map
+        Map<String, Object> deptExportMap = new HashMap<>();
+        // title的参数为ExportParams类型，目前仅仅在ExportParams中设置了sheetName
+        deptExportMap.put("title", deptExportParams);
+        // 模版导出对应得实体类型
+        deptExportMap.put("entity", DeptUtil.class);
+        // sheet中要填充得数据
+        deptExportMap.put("data", exportList);
+
+        ExportParams empExportParams = new ExportParams();
+        empExportParams.setSheetName("员工报表2");
+        // 创建sheet2使用得map
+        Map<String, Object> empExportMap = new HashMap<>();
+        empExportMap.put("title", empExportParams);
+        empExportMap.put("entity", DeptUtil.class);
+        empExportMap.put("data", exportList2);
+
+        // 将sheet1、sheet2、sheet3使用得map进行包装
+        List<Map<String, Object>> sheetsList = new ArrayList<>();
+        sheetsList.add(deptExportMap);
+        sheetsList.add(empExportMap);
+        return sheetsList;
     }
 
 
@@ -175,10 +240,12 @@ public class EasyPoiController {
         EmpUtil empUtil = new EmpUtil();
         empUtil.setAge(1);
         empUtil.setEmpName("tom");
+        empUtil.setHiredate(new Date());
         empUtilList.add(empUtil);
         EmpUtil empUtil2 = new EmpUtil();
         empUtil2.setAge(2);
         empUtil2.setEmpName("tom2");
+        empUtil2.setHiredate(new Date());
         empUtilList.add(empUtil2);
         return empUtilList;
     }
@@ -202,9 +269,8 @@ public class EasyPoiController {
             Workbook workbook = null;
             ExportParams exportParams = new ExportParams();
             if (!list.isEmpty()) {
-                workbook = ExcelExportUtil.exportBigExcel(exportParams, FullDataExportDTO.class, list);
-                ExcelExportUtil.closeExportBigExcel();
-                EasyPoiUtils.download("单个导出",workbook, response);
+                workbook = ExcelExportUtil.exportExcel(exportParams, FullDataExportDTO.class, list);
+                EasyPoiUtils.download("单个导出", workbook, response);
             }
         } catch (IOException e) {
             e.printStackTrace();
