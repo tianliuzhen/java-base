@@ -56,7 +56,7 @@ public class TestAqsCondition {
             }
             --count;
             System.out.println(Thread.currentThread().getName() + "take: " + count);
-            notFull.signal(); // 被我消费掉一个，队列 not full 了，发个通知出去
+            notFull.signalAll(); // 被我消费掉一个，队列 not full 了，发个通知出去
             return x;
         } finally {
             lock.unlock();

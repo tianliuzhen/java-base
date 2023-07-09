@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class OrderEventListener2 implements ApplicationListener<OrderEvent2> {
+
     @Override
     public void onApplicationEvent(OrderEvent2 event) {
         System.out.println("我监听到了handleOrderEvent2发布的message为:" + event.getMsg());

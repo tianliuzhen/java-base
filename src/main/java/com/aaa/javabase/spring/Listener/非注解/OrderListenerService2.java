@@ -1,5 +1,6 @@
 package com.aaa.javabase.spring.Listener.非注解;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,18 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class OrderListenerService2 {
+public class OrderListenerService2 implements InitializingBean {
     @Autowired
     private ApplicationContext context;
 
+
+
     public void publishOrder() {
         context.publishEvent(new OrderEvent2(context,"建立订单2"));
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        context.publishEvent(new OrderEvent2(context,"@PostConstruct 建立订单2"));
     }
 }
