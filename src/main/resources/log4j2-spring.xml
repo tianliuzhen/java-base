@@ -108,18 +108,33 @@
     <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
-        <!--  additivity默认是true。默认会继承<root/>标签的<appender-ref/>
-              设置false则会阻断  -->
+        <!-- ******************* Logger简单说明  *******************
+         Logger name是可以实现继承的，继承是通过"."分割
+         additivity 默认是true，默认是继承父级的appender-ref，如果设置为false，则会阻断同名的appender-ref
+         如示意图：
+              com.aaa.javabase.web
+              ||  additivity=false(用于阻断com.aaa.javabase标签的appender-ref)
+              com.aaa.javabase
+              ||  additivity=true(默认会继承<root/>标签的appender-ref)
+              com.aaa
+              ||
+              root
+             -->
 
-        <!-- dal日志 (指定具体的日志name)    -->
+        <!-- dal日志 (拦截指定具体的日志name)    -->
+        <!-- 使用方式 Logger com_dal = LogManager.getLogger("com-dal");      -->
         <Logger name="com-dal" level="${FILE_LEVEL}" additivity="false">
             <appender-ref ref="COM_DAL"/>
             <appender-ref ref="CONSOLE"/>
         </Logger>
 
 
-        <!-- web日志 (指定具体的包路径)  -->
-        <Logger name="com.aaa.javabase.web" level="info" additivity="false">
+        <!-- web日志 (拦截指定具体的包路径)  -->
+        <!-- 使用方式 Logger clazz = Logger getLogger(Class<?> clazz)
+             如果 clazz 的包路径在 com.aaa.javabase.web，就会被此logger拦截到，匹配appender-ref
+             否则默认兜底走 root 里面的 appender-ref
+              -->
+        <Logger name="com.aaa.javabase.web" level="info" additivity="true">
             <appender-ref ref="COM_WEB"/>
             <appender-ref ref="CONSOLE"/>
         </Logger>
