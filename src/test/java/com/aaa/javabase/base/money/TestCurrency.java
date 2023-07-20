@@ -24,9 +24,10 @@ public class TestCurrency {
          * {"cent":100,"currency":"CNY"}
          */
         // fastJson 默认忽略：transient 修饰变量
-        String jsonString = JSONObject.toJSONString(myMoney);
+        String jsonStr = JSONObject.toJSONString(myMoney);
 
-        Object json = JSONObject.toJSON(myMoney);
+        // 字符串转money类
+        MyMoney myMoney1 = JSONObject.toJavaObject(JSONObject.parseObject(jsonStr), MyMoney.class);
 
         fastjsonWithSkipTransient(myMoney);
         System.out.println();
