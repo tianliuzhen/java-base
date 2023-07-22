@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class TestJSONField {
     public static void main(String[] args) {
-        TempDto aa = new TempDto("aa", new Date(), new Date());
+        TempDto aa = new TempDto("aa", new Date(), new Date(), true, true);
         System.out.println(JSONObject.toJSONString(aa));
     }
 
@@ -33,5 +33,16 @@ public class TestJSONField {
 
         @JSONField(format = "yyyy-MM-dd HH:mm:ss")
         private Date date1;
+
+        /**
+         * 如果加此注解 @JSONField(name = "isSuccess")，输出是isSuccess
+         * 如果是基本数据类型 boolean，默认会去掉is,输出 success
+         * 如果是包装类 Boolean，默认不会去掉is，输出是  isSuccess
+         */
+        // @JSONField(name = "isSuccess")
+        private Boolean isSuccess;
+
+        // @JSONField(name = "isFail")
+        private boolean isFail;
     }
 }

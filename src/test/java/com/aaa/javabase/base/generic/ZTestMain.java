@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSONObject;
  * @author liuzhen.tian
  * @version 1.0 TestMain.java  2023/7/22 16:17
  */
-public class TestMain {
+public class ZTestMain {
     public static void main(String[] args) {
         MonitorDataResp<WhiteBoxDataModel> whiteBoxData = new MonitorDataResp<>();
         WhiteBoxDataModel formatResult = new WhiteBoxDataModel();
