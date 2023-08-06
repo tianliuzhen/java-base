@@ -7,6 +7,7 @@ package com.aaa.javabase.base.objectOriented.proxy;
  * @version 1.0 JavassistProxy.java  2022/10/26 20:23
  */
 
+import com.aaa.javabase.base.objectOriented.proxy.service.DeptManagerImpl;
 import com.aaa.javabase.base.objectOriented.proxy.service.UserManager;
 import com.aaa.javabase.base.objectOriented.proxy.service.UserManagerImpl;
 
@@ -17,13 +18,15 @@ import java.lang.reflect.Proxy;
 public class JdkProxy {
 
     public static void main(String[] args) {
-        //实例化JDKProxy对象
-        JdkProxy jdkProxy = new JdkProxy();
         //获取代理对象
-        UserManager user = (UserManager) jdkProxy.getJDKProxy(new UserManagerImpl());
+        UserManager user = (UserManager) JdkProxy.getJDKProxy(new UserManagerImpl());
         //JDK代理 直接使用  UserManagerImpl 会出现问题，所以jdk代理只能代理接口
         //执行新增方法
         user.addUser("admin", "123123");
+
+        // 会报错
+        DeptManagerImpl deptManager = (DeptManagerImpl) JdkProxy.getJDKProxy(new DeptManagerImpl());
+        deptManager.deleteDept();
     }
 
     /**
@@ -31,7 +34,7 @@ public class JdkProxy {
      *
      * @param targetObject 目标对象
      */
-    private Object getJDKProxy(Object targetObject) {
+    public static Object getJDKProxy(Object targetObject) {
         //JDK动态代理只能针对实现了接口的类进行代理，newProxyInstance 函数所需参数就可看出
         return Proxy.newProxyInstance(
                 targetObject.getClass().getClassLoader(),// 目标对象类加载器
