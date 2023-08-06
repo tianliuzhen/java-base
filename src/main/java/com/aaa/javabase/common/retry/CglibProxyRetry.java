@@ -39,7 +39,7 @@ public class CglibProxyRetry {
                 } catch (Exception e) {
                     isSkip = false;
                     TimeUnit.SECONDS.sleep(1);
-                    log.error("CglibRetryInterceptor.intercept.重试" + (i + 1) + "几次");
+                    log.error("CglibRetry.intercept.重试" + (i + 1) + "几次");
                 }
                 if (isSkip) {
                     break;
@@ -67,7 +67,7 @@ public class CglibProxyRetry {
 
     public static void main(String[] args) {
 
-        RetryBean cglibProxy = (RetryBean) CglibProxyRetry.createCglibProxy(new RetryBean(), 3);
+        RetryBean.RetryBeanServiceImpl cglibProxy = (RetryBean.RetryBeanServiceImpl) CglibProxyRetry.createCglibProxy(new RetryBean.RetryBeanServiceImpl(), 3);
         cglibProxy.say();
     }
 }
