@@ -1,5 +1,6 @@
 package com.aaa.javabase.common.retry;
 
+import com.aaa.javabase.util.HttpClientUtil;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -17,8 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Data
 @Builder
 public class RetryTemplate {
-
-    private int retryTime = 1;
+    /**
+     * 重试次数
+     */
+    private int retryCount = 3;
     /**
      * 重试的睡眠时间，默认是ms
      */
@@ -41,13 +44,13 @@ public class RetryTemplate {
      */
     @SneakyThrows
     public Object execute() throws Exception {
-        for (int i = 0; i < retryTime; i++) {
+        for (int i = 0; i < retryCount; i++) {
             try {
                 return bizTask.call();
             } catch (Exception e) {
                 this.timeUnit.sleep(this.sleepTime);
-                log.warn("RetryTemplate.execute.重试" + (retryTime + 1) + "几次");
-                log.error("RetryTemplate.execute.error", e);
+                log.error("RetryTemplate.execute.重试" + (i + 1) + "几次");
+                // log.error("RetryTemplate.execute.error", e);
             }
         }
         return null;
@@ -66,5 +69,19 @@ public class RetryTemplate {
         return executorService.submit(this::execute);
     }
 
+
+    public static void main(String[] args) throws InterruptedException {
+        Object result = null;
+        try {
+            result = RetryTemplate.builder()
+                    .retryCount(3).sleepTime(1000).timeUnit(TimeUnit.MILLISECONDS)
+                    .bizTask(() -> HttpClientUtil.sendPostByUrlEncoder("http://127.0.0.1", null))
+                    .build()
+                    .execute();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(result);
+    }
 
 }
