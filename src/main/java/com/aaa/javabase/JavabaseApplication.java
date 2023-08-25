@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @MapperScan("com.aaa.javabase.h2.mapper")
+@tk.mybatis.spring.annotation.MapperScan("com.aaa.javabase.h2.tkmapper")
 @ImportResource(locations={"classpath:/spring-common.xml"})
 // @EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy =true)
 public class JavabaseApplication {

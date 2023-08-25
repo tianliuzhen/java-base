@@ -97,10 +97,10 @@ public class CglibProxy {
         //重写拦截方法
         @Override
         public Object intercept(Object obj, Method method, Object[] arr, MethodProxy proxy) throws Throwable {
-            System.out.println("Cglib动态代理，监听开始！");
+            System.out.println("net.sf.cglib.proxy-动态代理，监听开始！");
             //方法执行，参数：target 目标对象 arr参数数组
             Object invoke = method.invoke(target, arr);
-            System.out.println("Cglib动态代理，监听结束！");
+            System.out.println("net.sf.cglib.proxy-动态代理，监听结束！");
             return invoke;
         }
     }
