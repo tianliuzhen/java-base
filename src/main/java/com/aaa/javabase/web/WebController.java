@@ -3,6 +3,7 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.base.annotations.testImpl.Boy;
 import com.aaa.javabase.base.annotations.testImpl.Human;
 import com.aaa.javabase.base.annotations.testImpl.Man;
+import com.aaa.javabase.config.ProProperties;
 import com.aaa.javabase.config.TestProperties;
 import com.aaa.javabase.domain.BaseMain;
 import com.aaa.javabase.multithreading.并发执行.completableFuture.CompletableBean;
@@ -136,6 +137,10 @@ public class WebController {
 
     @Autowired
     private TestProperties testProperties;
+    @Autowired
+    private ProProperties proProperties;
+
+
 
     @Autowired
     private AppleBean appleBean;

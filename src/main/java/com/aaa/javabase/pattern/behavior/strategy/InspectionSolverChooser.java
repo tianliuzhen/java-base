@@ -2,7 +2,6 @@ package com.aaa.javabase.pattern.behavior.strategy;
 
 import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
