@@ -3,12 +3,14 @@ package com.aaa.javabase.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
  * @author liuzhen.tian
  * @version 1.0 BeanContextUtil.java  2022/7/22 22:27
  */
+@Order(value = -1999999999)
 @Component
 public class BeanContextUtil implements ApplicationContextAware {
     private static ApplicationContext applicationContext;

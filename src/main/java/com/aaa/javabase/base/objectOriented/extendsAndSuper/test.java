@@ -1,9 +1,6 @@
 package com.aaa.javabase.base.objectOriented.extendsAndSuper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -13,8 +10,9 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @date 2020/1/14
  */
- class test extends B {
-    int n=super.num;
+class test extends B {
+    int n = super.num;
+
     public test() {
     }
 
@@ -28,12 +26,20 @@ import java.util.stream.Collectors;
         //测试有参构造
         //  new test(new Object());
         // 测试无参构造
-        new test();
+        test1();
     }
+
     public static void test1() {
         List<Stu> list = new ArrayList<>();
-        list.add(new Stu("tom",23));
-        list.add(new Stu("tom2",13));
+        list.add(new Stu("tom", 23));
+        list.add(new Stu("tom", 13));
+
+        Map<String, Integer> collect1 = list.stream().collect(Collectors.toMap(Stu::getName, Stu::getAge));
+        Map<String, Integer> collect2 = list.stream().collect(Collectors.toMap(Stu::getName, Stu::getAge,
+                (o, n) -> o, HashMap::new));
+        List<String> collect3 = list.stream().map(Stu::getName).collect(Collectors.toList());
+
+
         //方法一,先倒序 取第一个
         List<Stu> collect = list.stream().sorted(Comparator.comparing(Stu::getAge).reversed()).collect(Collectors.toList());
         System.out.println(collect.get(0).toString());

@@ -23,8 +23,8 @@ spring:
       # 进行该配置后，h2 web consloe就可以在远程访问了。否则只能在本机访问。
       settings:
         web-allow-others: true
-#mybatis
-mybatis-plus:
+mybatis:
+#mybatis-plus:
   #  type-aliases-package: com.aaa.h2.model
   mapper-locations: classpath:/mapper/*/*.xml,classpath:/mapper-h2/*/*.xml
   configuration:

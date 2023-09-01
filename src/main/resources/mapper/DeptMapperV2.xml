@@ -5,9 +5,9 @@
     <select id="getOne" resultType="com.aaa.javabase.h2.Model.Dept">
         select * from  `dept` where 1=1
         <if test="id!=null">
-            and id=${id}
+            and id=#{id} or id=#{id2}
         </if>
-         limit 1
+      order by id desc   limit 1
     </select>
 
     <select id="getDeptById" resultType="com.aaa.javabase.h2.Model.Dept">

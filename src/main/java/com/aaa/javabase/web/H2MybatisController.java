@@ -37,8 +37,8 @@ public class H2MybatisController {
         //     mapper.insert(new User(null, "name" + 1, 1, ""));
         // }
         // mapper.getUserMap(1L);
-
-        Dept one = deptMapper.getOne(1L);
+        // Dept one = deptMapper.getDeptById(1L);
+        Dept one2 = deptMapper.getOne(1L,20L);
         System.out.println();
     }
 }

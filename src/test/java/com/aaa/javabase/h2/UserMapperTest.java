@@ -27,7 +27,7 @@ import java.util.List;
 public class UserMapperTest {
 
     @Resource
-    private UserMapper mapper;
+    private UserMapper userMapper;
 
     @Resource
     private UserBillMapper userBillMapper;
@@ -35,9 +35,9 @@ public class UserMapperTest {
     @Test
     public void findAll() {
         for (int i = 0; i < 10; i++) {
-            mapper.insert(new User(null, "name" + 1, 1, ""));
+            userMapper.insert(new User(null, "name" + 1, 1, ""));
         }
-        mapper.selectList(null).forEach(System.out::println);
+        userMapper.selectList(null).forEach(System.out::println);
     }
 
 
@@ -47,7 +47,7 @@ public class UserMapperTest {
      */
     @Test
     public void getOneMap() {
-        mapper.getUserMap(null);
+        userMapper.getUserMap(null);
         System.out.println();
     }
 

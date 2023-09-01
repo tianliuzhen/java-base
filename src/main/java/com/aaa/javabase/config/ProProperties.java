@@ -22,7 +22,7 @@ public class ProProperties {
     @Value("${className}")
     private String className;
 
-    @Value("#{${methodName}}")
+    @Value("${methodName}")
     private String methodName;
 
     // 这里加#{} 是为了解析Map类型
