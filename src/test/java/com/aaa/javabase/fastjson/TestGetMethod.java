@@ -1,8 +1,11 @@
 package com.aaa.javabase.fastjson;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * fastjson几个点注意：
@@ -14,7 +17,8 @@ import lombok.Data;
  * 默认给  boolean isFail  生成 isFail()\setFail()
  * <p/>
  * 2. 序列化默认执行时get方法
- * 如下面的：getNameByOpen()
+ * 如下面的：public Integer getNameByOpen()没有属性值也能执行getNameByOpen()
+ * 但是如果 public void getNameByOpen()是参数则不能执行
  */
 public class TestGetMethod {
     @Data
@@ -27,12 +31,10 @@ public class TestGetMethod {
         // 序列化之后（getIsXXX方法）：isSuccess
         private Boolean isSuccess;
         // 序列化之后（isXXX方法）：fail
+        // @JSONField(name = "isFail")
         private boolean isFail;
+        private Date currentDate;
 
-
-        public String getName() {
-            return "xxx";
-        }
 
         public Integer getNameByOpen() {
             setName("getNameByOpen");
@@ -44,21 +46,14 @@ public class TestGetMethod {
             return true;
         }
 
-        public boolean isFail() {
-            return isFail;
-        }
-
-        public void setFail(boolean fail) {
-            isFail = fail;
-        }
-
     }
 
     public static void main(String[] args) {
-        GetMethod object = new GetMethod("a", "a", "1", true, false);
-        String str = JSONObject.toJSONString(object);
+        GetMethod object = new GetMethod("a", "a", "1", true, true, new Date());
+        String str = JSONObject.toJSONString(object, SerializerFeature.WriteDateUseDateFormat);
+        GetMethod getMethod = JSONObject.parseObject(str, GetMethod.class);
         // BeanConvertUtil.beanTo(new GetMethod(), GetMethod.class);
-        System.out.println(JSONObject.toJSONString(str));
+        System.out.println(str);
     }
 
 }
