@@ -13,8 +13,8 @@ public class TestClient {
         Thread tom =new Thread(new Thread1("tom"));
         Thread cat = new Thread(new Thread1("cat"));
         tom.start();
-        tom.join();
         cat.start();
+        tom.join();
         cat.join();
         System.out.println("主线程结束："+Thread.currentThread().getName());
 

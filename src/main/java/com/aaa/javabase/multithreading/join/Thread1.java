@@ -1,5 +1,7 @@
 package com.aaa.javabase.multithreading.join;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * description: 描述
  *
@@ -12,6 +14,10 @@ public class Thread1 implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i <5 ; i++) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(200);
+            } catch (InterruptedException e) {
+            }
             System.out.println(name + "执行  :  " + i+"当前线程 : "+Thread.currentThread().getName());
         }
     }

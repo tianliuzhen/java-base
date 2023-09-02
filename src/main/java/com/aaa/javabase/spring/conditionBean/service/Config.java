@@ -26,22 +26,15 @@ public class Config {
         return city;
     }
 
-    @Bean
-    public City2 city2() {
-        City2 city2 = new City2();
-        city2.setCityName("北极");
-        return city2;
-    }
 
     /**
-     * 这里加了ConditionalOnBean注解，就代表如果city存在才实例化people
+     * 这里加了ConditionalOnBean注解，就代表如果c存在才实例化people
      */
     @Bean(name = {"people3", "people4"})
     @ConditionalOnBean(name = "c")
     public People people(City city) {
-        //这里如果city实体成功注入 这里就会执行
 //        city.setCityCode(301701);
-        return new People("小小1", 1, city);
+        return new People("111", 1, city);
     }
 
     @Bean(name = "people")

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ import java.util.function.Function;
 @Slf4j
 @Component
 @Order(1000000)
-// @DependsOn("beanContextUtil")
+@DependsOn("beanContextUtil")
 public class InspectionSolverChooser implements ApplicationContextAware {
 
     private ApplicationContext context;

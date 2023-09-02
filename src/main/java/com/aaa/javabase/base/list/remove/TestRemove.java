@@ -34,9 +34,9 @@ public class TestRemove {
          * 因为删除的是最后面的，所以下标不会改变
          *
          */
-        List<Integer> successList = Lists.newArrayList(2, 2, 3, 5, 5);
+        List<Integer> successList = Lists.newArrayList(2, 2, 3);
         for (int i = successList.size() - 1; i >= 0; i--) {
-            if (successList.get(i) == 5) {
+            if (successList.get(i) == 2) {
                 successList.remove(i);
             }
         }
