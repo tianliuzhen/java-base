@@ -8,7 +8,7 @@ public class TestIdeaConfig {
 
     /**
      * VM options：虚拟机参数，每个需要以 -D 或 -X 或 -XX 开头，每个参数使用空格隔开。
-     * 用于设置虚拟机相关的参数，如：-Xms768m -Xmx768m -XX:PermSize=64M -XX:MaxPermSize=512m
+     * 用于设置虚拟机相关的参数，如：-Xms1024m -Xmx1024m -XX:PermSize=64M -XX:MaxPermSize=512m
      * program arguments：
      * 程序参数，每个参数需要以空格隔开。用于java主类中的main方法传递参数
      * environment variables：

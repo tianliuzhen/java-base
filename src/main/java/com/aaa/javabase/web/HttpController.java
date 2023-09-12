@@ -3,9 +3,12 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.domain.BaseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
+import java.net.Socket;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liuzhen.tian
@@ -20,9 +23,18 @@ public class HttpController {
      * 注意：请求类型只能是 post 否则无法接收
      */
     @PostMapping("/req1")
-    public String detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name) {
+    public String detailByParam(@RequestParam Integer id, @RequestParam(value = "name") String name) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(2);
         System.out.println(">>> id=" + id + ",name=" + name);
         return ">>> id=" + id + ",name=" + name;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Socket socket = new Socket("127.0.0.1", 8080);
+        long start = System.currentTimeMillis();
+        InputStream is = socket.getInputStream();
+        is.read();
+        System.out.println("最终耗时：" + (System.currentTimeMillis() - start));
     }
 
     @PostMapping("/req2")
@@ -39,7 +51,7 @@ public class HttpController {
     @PostMapping("/req4")
     @ResponseBody
     public Object detailByParam(@RequestBody BaseEntity base) {
-        return new BaseEntity(1000L, LocalDateTime.now(),new Date());
+        return new BaseEntity(1000L, LocalDateTime.now(), new Date());
     }
 
 }
