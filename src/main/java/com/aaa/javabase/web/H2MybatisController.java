@@ -5,6 +5,11 @@ import com.aaa.javabase.domain.Demo;
 import com.aaa.javabase.h2.Model.Dept;
 import com.aaa.javabase.h2.mapper.DeptMapper;
 import com.aaa.javabase.h2.mapper.UserMapper;
+import com.aaa.javabase.spring.aopBeanTest.MyCglibBeanService;
+import com.aaa.javabase.spring.aopBeanTest.MyJavaBeanService;
+import com.aaa.javabase.spring.injection.construction.Abean;
+import com.aaa.javabase.spring.injection.construction.Bbean;
+import com.aaa.javabase.spring.injection.setter.Cbean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +37,21 @@ public class H2MybatisController {
     @Autowired
     private CommonBeanModel commonBeanModel;
 
+    @Autowired
+    private Abean abean;
+    @Autowired
+    private Bbean bbean;
+    @Autowired
+    private Cbean cbean;
+    @Autowired
+    private MyCglibBeanService myCglibBeanService;
+    @Autowired
+    private MyJavaBeanService myJavaBeanService;
+
     @GetMapping(value = "/findAll")
     public void findAll() {
-        for (int i = 0; i <2000; i++) {
+        myCglibBeanService.test();
+        for (int i = 0; i < 2000; i++) {
             new Thread(() -> {
                 try {
                     // 1MB=1024KB=1024x1024=1048576bytes

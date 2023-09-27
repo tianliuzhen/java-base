@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  * @author liuzhen.tian
  * @version 1.0 CompletableBean.java  2021/2/24 21:38
  */
-@EnableAsync  //  @Async 的使用必须先  @EnableAsync
 @Configuration
 public class CompletableBean {
 

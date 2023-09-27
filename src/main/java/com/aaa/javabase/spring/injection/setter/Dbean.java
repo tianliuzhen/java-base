@@ -1,13 +1,12 @@
 package com.aaa.javabase.spring.injection.setter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author liuzhen.tian
  * @version 1.0 Bbean.java  2020/11/25 11:47
  */
-@Component
+// @Component
 public class Dbean {
 
     private Cbean cbean;
