@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 // @Component
 public class Dbean {
 
+    @Autowired
     private Cbean cbean;
 
-    @Autowired
+    // @Autowired
     public void setCbean(Cbean cbean) {
         this.cbean = cbean;
     }
