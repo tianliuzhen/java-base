@@ -12,12 +12,13 @@ import org.springframework.stereotype.Component;
  */
 @Order(value = -1999999999)
 @Component
-public class BeanContextUtil implements ApplicationContextAware {
+public class SpringContextUtil implements ApplicationContextAware {
+
     private static ApplicationContext applicationContext;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        BeanContextUtil.applicationContext = applicationContext;
+        SpringContextUtil.applicationContext = applicationContext;
     }
 
     public static <T> T getBean(String beanName) {

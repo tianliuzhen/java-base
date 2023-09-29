@@ -14,7 +14,7 @@ import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.spring.springImport.ImportBean1;
 import com.aaa.javabase.spring.springImport.ImportBean2;
 import com.aaa.javabase.spring.springImport.ImportBean3;
-import com.aaa.javabase.util.BeanContextUtil;
+import com.aaa.javabase.util.SpringContextUtil;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
 import lombok.SneakyThrows;
@@ -183,7 +183,7 @@ public class WebController {
 
     @GetMapping("/testAspect")
     public void testAspect() {
-        ApplicationContext context = BeanContextUtil.getApplicationContext();
+        ApplicationContext context = SpringContextUtil.getApplicationContext();
 
         Human human = context.getBean("human", Human.class);
         System.out.println("---------------------This is a Human.");

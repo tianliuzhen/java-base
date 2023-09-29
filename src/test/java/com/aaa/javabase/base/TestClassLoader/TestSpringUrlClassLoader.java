@@ -2,7 +2,7 @@ package com.aaa.javabase.base.TestClassLoader;
 
 import com.aaa.javabase.base.TestClassLoader.util.ClassLoaderBeanUtil;
 import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
-import com.aaa.javabase.util.BeanContextUtil;
+import com.aaa.javabase.util.SpringContextUtil;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -32,7 +32,7 @@ public class TestSpringUrlClassLoader {
     @Test
     public void getBeanByAnnotation() {
         // spring 上下文
-        ApplicationContext applicationContext = BeanContextUtil.getApplicationContext();
+        ApplicationContext applicationContext = SpringContextUtil.getApplicationContext();
         DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 
         // classLoader.getClass().getSuperclass() 是  java.net.URLClassLoader
@@ -51,7 +51,7 @@ public class TestSpringUrlClassLoader {
     @Test
     public void getBeanByAnnotation2() {
         // spring 上下文
-        ApplicationContext applicationContext = BeanContextUtil.getApplicationContext();
+        ApplicationContext applicationContext = SpringContextUtil.getApplicationContext();
 
         List<Class<?>> classes = Lists.newArrayList();
         // 直接调用 getBeansWithAnnotation

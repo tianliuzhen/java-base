@@ -1,6 +1,6 @@
 package com.aaa.javabase.base;
 
-import com.aaa.javabase.util.BeanContextUtil;
+import com.aaa.javabase.util.SpringContextUtil;
 import com.aaa.javabase.util.SpringBeanManagerUtil;
 import com.aaa.javabase.web.excel.model.ImageDemoData;
 import org.junit.jupiter.api.Test;
@@ -22,11 +22,11 @@ public class SpringBeanManagerUtilTest {
         // 指定bean加载
         springBeanManagerUtil.registerSpringBean(ImageDemoData.class);
         // 读取bean是否生效
-        BeanContextUtil.getBean(ImageDemoData.class);
+        SpringContextUtil.getBean(ImageDemoData.class);
         // 指定bean卸载
         springBeanManagerUtil.deleteSpringBean(ImageDemoData.class);
         // 此时会报错，此bean已被移除
-        BeanContextUtil.getBean(ImageDemoData.class);
+        SpringContextUtil.getBean(ImageDemoData.class);
     }
 
 }

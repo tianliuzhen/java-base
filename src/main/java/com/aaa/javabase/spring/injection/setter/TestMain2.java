@@ -13,7 +13,7 @@ public class TestMain2 {
         // A1bean a1bean = ac.getBean(A1bean.class);
         // A2bean a2bean = ac.getBean(A2bean.class);
         // A3bean a3bean = ac.getBean(A3bean.class);
-        Ebean a4bean = ac.getBean(Ebean.class);
+        Fbean a4bean = ac.getBean(Fbean.class);
         System.out.println();
     }
 
