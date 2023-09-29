@@ -14,9 +14,9 @@ import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.spring.springImport.ImportBean1;
 import com.aaa.javabase.spring.springImport.ImportBean2;
 import com.aaa.javabase.spring.springImport.ImportBean3;
-import com.aaa.javabase.util.SpringContextUtil;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
+import com.aaa.javabase.util.spring.SpringUtilV1;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
@@ -183,7 +183,7 @@ public class WebController {
 
     @GetMapping("/testAspect")
     public void testAspect() {
-        ApplicationContext context = SpringContextUtil.getApplicationContext();
+        ApplicationContext context = SpringUtilV1.getApplicationContext();
 
         Human human = context.getBean("human", Human.class);
         System.out.println("---------------------This is a Human.");

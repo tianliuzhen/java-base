@@ -2,13 +2,12 @@ package com.aaa.javabase.pattern.behavior.strategy;
 
 import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
-import com.aaa.javabase.util.SpringContextUtil;
+import com.aaa.javabase.util.spring.SpringUtilV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -22,8 +21,7 @@ import java.util.function.Function;
  */
 @Slf4j
 @Component
-@Order(1000000)
-@DependsOn("springContextUtil")
+@DependsOn("springUtilV1")
 public class InspectionSolverChooser implements ApplicationContextAware {
 
     private ApplicationContext context;
@@ -56,7 +54,7 @@ public class InspectionSolverChooser implements ApplicationContextAware {
      * @param <V>         value
      */
     public <K, V> void registerChooser(Map<K, V> chooseMap, Class<V> solverClass, Function<V, K> getKeyFun) {
-        Map<String, V> solverMap = SpringContextUtil.getApplicationContext().getBeansOfType(solverClass);
+        Map<String, V> solverMap = SpringUtilV1.getApplicationContext().getBeansOfType(solverClass);
         for (V value : solverMap.values()) {
             K key = getKeyFun.apply(value);
             chooseMap.put(key, value);

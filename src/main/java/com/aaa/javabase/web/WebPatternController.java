@@ -14,6 +14,7 @@ import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
  * @author liuzhen.tian
  * @version 1.0 WebPattern.java  2021/11/5 22:34
  */
+@Order(value = -12222)
 @RequestMapping(value = "pattern/")
 @RestController
 public class WebPatternController {
