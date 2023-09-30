@@ -7,4 +7,6 @@
     <bean id="commonBeanModel" class="com.aaa.javabase.domain.CommonBeanModel"/>
 
     <bean id="a3bean" class="com.aaa.javabase.spring.injection.setter.A3bean"/>
+
+<!--    <bean depends-on="..."/>-->
 </beans>

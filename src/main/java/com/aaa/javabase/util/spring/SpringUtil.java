@@ -200,7 +200,6 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      */
     public <T> void registerBean(String beanName, T bean) {
         final ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
-        factory.autowireBean(bean);
         factory.registerSingleton(beanName, bean);
     }
 
