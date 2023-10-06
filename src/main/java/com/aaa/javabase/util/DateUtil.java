@@ -13,6 +13,13 @@ import java.util.Date;
  * @version 1.0 DateUtil.java  2023/10/6 19:58
  */
 public class DateUtil {
+    private static final ThreadLocal<SimpleDateFormat> THREAD_LOCAL = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+    };
+
     public static final String YYYY = "yyyy";
     public static final String YYYY_MM = "yyyy-MM";
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
@@ -85,6 +92,7 @@ public class DateUtil {
         }
     }
 
+
     public static Date strToDate(String dateStr, String format) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(format);
@@ -103,12 +111,22 @@ public class DateUtil {
         }
     }
 
+    public static String dateToStrSync(Date date) {
+        try {
+            SimpleDateFormat dateFormat = THREAD_LOCAL.get();
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            throw new RuntimeException("时间格式转换错误");
+        }
+    }
+
+
 
     public static void main(String[] args) {
         Date a1 = strToDate("2023-10-21 00:00:00");
-        System.out.println(dateToStr(addMonth(a1, 3)));
+        System.out.println(dateToStrSync(addMonth(a1, 3)));
         Date a2 = strToDate("2024-01-21 00:00:00");
-        System.out.println(dateToStr(addMonth(a2, 3)));
+        System.out.println(dateToStrSync(addMonth(a2, 3)));
 
         System.out.println("----------");
 
@@ -116,7 +134,7 @@ public class DateUtil {
         Date b1 = strToDate("2023-10-21 00:00:00");
         for (int i = 0; i < 4; i++) {
             b1 = addMonth(b1, 3);
-            System.out.println(dateToStr(b1));
+            System.out.println(dateToStrSync(b1));
         }
 
     }
