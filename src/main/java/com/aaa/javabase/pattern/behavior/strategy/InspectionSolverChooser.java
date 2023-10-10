@@ -5,6 +5,8 @@ import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
 import com.aaa.javabase.util.spring.SpringUtilV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.DependsOn;
@@ -25,7 +27,14 @@ import java.util.function.Function;
 public class InspectionSolverChooser implements ApplicationContextAware {
 
     private ApplicationContext context;
-    private HashMap<InspectionEnum, InspectionSolver> chooseMap = new HashMap<>(16);
+    private Map<InspectionEnum, InspectionSolver> chooseMap = new HashMap<>(16);
+
+
+    @Autowired
+    // private List<InspectionSolver> inspectionSolvers;
+    // private InspectionSolver[] inspectionSolvers;
+    private ObjectProvider<InspectionSolver> inspectionSolvers;
+
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -37,9 +46,14 @@ public class InspectionSolverChooser implements ApplicationContextAware {
         // 注册商品任务选择器
         // 方式一、 通过 supports方法注册
         // registerChooser(chooseMap, InspectionSolver.class, InspectionSolver::supports);
+
         // 方式二、 通过 注解 ChooserName 注册
         registerChooser(chooseMap, InspectionSolver.class,
                 value -> value.getClass().getAnnotation(ChooserName.class).value());
+
+        // 方式三、借助于ObjectProvider
+        // chooseMap = inspectionSolvers.stream().collect(Collectors.toMap(InspectionSolver::supports, Function.identity()));
+
 
         // ... 注册其他任务选择器
     }
