@@ -4,7 +4,7 @@
 
     <select id="getOne" resultType="com.aaa.javabase.h2.Model.Dept">
         select * from  `dept` where 1=1
-        <if test="id!=null">
+        <if test="id!=null || id2!=null">
             and id=#{id} or id=#{id2}
         </if>
       order by id desc   limit 1
@@ -16,5 +16,15 @@
             and id=#{id}
         </if>
         limit 1
+    </select>
+
+    <select id="selectByDept" resultType="com.aaa.javabase.h2.Model.Dept">
+        select * from `dept` where 1=1
+        <if test="deptNo!=null">
+            and dept_no=#{deptNo}
+        </if>
+        <if test="deptName!=null">
+            and dept_name=#{deptName}
+        </if>
     </select>
 </mapper>

@@ -10,9 +10,9 @@ public class TestMain2 {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(SetterConfig.class);
-        // A1bean a1bean = ac.getBean(A1bean.class);
-        // A2bean a2bean = ac.getBean(A2bean.class);
-        // A3bean a3bean = ac.getBean(A3bean.class);
+        A1bean a1bean = ac.getBean(A1bean.class);
+        A2bean a2bean = ac.getBean(A2bean.class);
+        A3bean a3bean = ac.getBean(A3bean.class);
         Fbean a4bean = ac.getBean(Fbean.class);
         System.out.println();
     }

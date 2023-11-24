@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,6 +48,19 @@ public class H2MybatisController {
     private MyCglibBeanService myCglibBeanService;
     @Autowired
     private MyJavaBeanService myJavaBeanService;
+
+    @GetMapping(value = "/selectByDept")
+    public void selectByDept() {
+        Dept dept = new Dept();
+        dept.setDeptNo(1);
+        dept.setDeptName("研发");
+        List<Dept> depts = deptMapper.selectByDept(dept);
+    }
+
+    @GetMapping(value = "/getDeptById")
+    public void getDeptById() {
+       deptMapper.getDeptById(1L);
+    }
 
     @GetMapping(value = "/findAll")
     public void findAll() {

@@ -8,7 +8,8 @@ import java.util.Random;
  */
 public class PasswordGenerator {
     // 定义包含数字、字符和特殊符号的字符集
-    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+    // private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public static String generatePassword(int length) {
         Random random = new Random();
@@ -23,7 +24,7 @@ public class PasswordGenerator {
     }
 
     public static void main(String[] args) {
-        int passwordLength = 18; // 设置密码长度
+        int passwordLength = 32; // 设置密码长度
         String generatedPassword = generatePassword(passwordLength);
         System.out.println(generatedPassword);
     }
