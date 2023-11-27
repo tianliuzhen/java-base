@@ -27,6 +27,10 @@ public class DateUtil {
     public static final String YYYY_MM_DD_HH = "yyyy-MM-dd HH";
     public static final String YYYY_MM_DD_HH_DD_SS = "yyyy-MM-dd HH:mm:ss";
 
+    public static Date addMinute(Date date, int minute) {
+        return addByDateType(date, minute, DateType.MINUTE);
+    }
+
     public static Date addDay(Date date, int days) {
         return addByDateType(date, days, DateType.DAY);
     }
@@ -120,6 +124,16 @@ public class DateUtil {
         }
     }
 
+    /**
+     * date1 > date2 ; return true;
+     *
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public static boolean greaterThan(Date date1, Date date2) {
+        return date1.compareTo(date2) > 0;
+    }
 
 
     public static void main(String[] args) {
