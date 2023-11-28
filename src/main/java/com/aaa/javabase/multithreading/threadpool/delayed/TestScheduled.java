@@ -17,15 +17,16 @@ public class TestScheduled {
 
     // private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(6);
     private final static ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(
-            6,
+            1,
             new ThreadFactoryBuilder().setNameFormat("common-scheduler-pool-%d").build());
 
     private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
 
     public static void main(String[] args) {
         // 延迟不循环任务schedule方法
+        Date date = new Date();
         for (int i = 0; i < 3; i++) {
-            doScheduled();
+            doScheduled(date);
         }
 
 
@@ -36,7 +37,11 @@ public class TestScheduled {
         // doSheduleWithFixedDelay();
     }
 
-    private static void doScheduled() {
+    /**
+     * 只执行一次（延迟不循环执行）
+     * 注意：当核心线程corePoolSize只有一个的时候，出现多个任务会进入队列等待。
+     */
+    private static void doScheduled(Date date) {
         scheduler.schedule(() -> {
             try {
                 System.out.println("开始执行... " + format.format(new Date()));
@@ -44,6 +49,7 @@ public class TestScheduled {
                 System.out.println("执行结束... " + format.format(new Date()));
 
                 System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName());
+                System.out.println("相同的入参 param：" + format.format(date));
 
             } catch (Exception e) {
 
