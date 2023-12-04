@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 
 /**
  * @author liuzhen.tian
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @ComponentScan(value = "com.aaa.javabase.spring.injection.setter")
-@ImportResource(locations = {"classpath:/spring-common.xml"})
+// @ImportResource(locations = {"classpath:/spring-common.xml"})
 public class SetterConfig {
 
     @Bean(autowire = Autowire.BY_TYPE)

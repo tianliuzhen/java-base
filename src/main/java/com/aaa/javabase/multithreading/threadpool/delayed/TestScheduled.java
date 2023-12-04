@@ -5,29 +5,45 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 思考：ScheduledExecutorService默认不支持有界队列？（https://www.cnpython.com/java/1399555）
+ * 解决方案：
+ * 参考1：
+ * 最简单的解决方法是使用scheduled executor只调度任务，而不是实际执行任务。
+ * 调度程序必须显式检查执行器队列大小(scheduler.getQueue().size()>10000)，如果执行器队列高于阈值，则放弃任务
+ *
  * @author liuzhen.tian
  * @version 1.0 TestScheduled.java  2023/5/12 23:00
  */
 public class TestScheduled {
-
+    // 不推荐
     // private final static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(6);
-    private final static ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(
+
+    /**
+     * 一般推荐：但是要注意，队列主动限制scheduler.getQueue().size()防止溢出
+     */
+    private final static ScheduledThreadPoolExecutor scheduler = new ScheduledThreadPoolExecutor(
             1,
             new ThreadFactoryBuilder().setNameFormat("common-scheduler-pool-%d").build());
+
+
+    /**
+     * 不推荐：自定义的带有界队列调度
+     */
+    private final static  BoundedScheduledThreadPoolExecutor boundedExecutor = new BoundedScheduledThreadPoolExecutor(
+            2,
+            new ThreadPoolExecutor.AbortPolicy(),
+            10);
 
     private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
 
     public static void main(String[] args) {
         // 延迟不循环任务schedule方法
-        Date date = new Date();
-        for (int i = 0; i < 3; i++) {
-            doScheduled(date);
-        }
+        doOneTask();
 
 
         // 延迟且循环sheduleAtFixedRate方法
@@ -35,6 +51,21 @@ public class TestScheduled {
 
         // todo 定时间间隔执行，如果间隔时间小于业务执行时间，间隔时间无效。
         // doSheduleWithFixedDelay();
+
+
+    }
+
+    private static void doOneTask() {
+        Date date = new Date();
+        System.out.println("main开始执行... " + format.format(new Date()));
+        for (int i = 0; i < 5; i++) {
+            // 模拟拒绝任务
+            // if (poolExecutor.getQueue().size() > 10) {
+            //     return;
+            // }
+            doScheduled(date);
+        }
+        System.out.println("main执行结束... " + format.format(new Date()));
     }
 
     /**
@@ -42,7 +73,7 @@ public class TestScheduled {
      * 注意：当核心线程corePoolSize只有一个的时候，出现多个任务会进入队列等待。
      */
     private static void doScheduled(Date date) {
-        scheduler.schedule(() -> {
+        boundedExecutor.schedule(() -> {
             try {
                 System.out.println("开始执行... " + format.format(new Date()));
                 Thread.sleep(2000);
@@ -102,4 +133,6 @@ public class TestScheduled {
             }
         }, 0, 3, TimeUnit.SECONDS);
     }
+
+
 }
