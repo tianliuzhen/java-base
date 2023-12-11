@@ -3,8 +3,10 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.domain.CommonBeanModel;
 import com.aaa.javabase.domain.Demo;
 import com.aaa.javabase.h2.Model.Dept;
+import com.aaa.javabase.h2.Model.UserBill;
 import com.aaa.javabase.h2.mapper.DeptMapper;
 import com.aaa.javabase.h2.mapper.UserMapper;
+import com.aaa.javabase.h2.tkmapper.TkDeptMapper;
 import com.aaa.javabase.spring.aopBeanTest.MyCglibBeanService;
 import com.aaa.javabase.spring.aopBeanTest.MyJavaBeanService;
 import com.aaa.javabase.spring.injection.construction.Abean;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -56,6 +59,19 @@ public class H2MybatisController {
         dept.setDeptName("研发");
         List<Dept> depts = deptMapper.selectByDept(dept);
     }
+
+    @Autowired
+    private TkDeptMapper tkDeptMapper;
+
+    @GetMapping(value = "/tkDeptMapperTest")
+    public void tkDeptMapperTest() {
+        Example.builder(UserBill.class).build()
+                .createCriteria().andEqualTo("aaa","123");
+        tkDeptMapper.selectByExample(null);
+
+        Dept deptCheck = tkDeptMapper.getDeptCheck("12");
+    }
+
 
     @GetMapping(value = "/getDeptById")
     public void getDeptById() {
