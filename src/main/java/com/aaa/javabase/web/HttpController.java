@@ -1,6 +1,8 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.common.util.DateUtil;
 import com.aaa.javabase.domain.BaseEntity;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -52,6 +54,13 @@ public class HttpController {
     @ResponseBody
     public Object detailByParam(@RequestBody BaseEntity base) {
         return new BaseEntity(1000L, LocalDateTime.now(), new Date());
+    }
+
+    @SneakyThrows
+    @GetMapping("/sleep_3s")
+    public void sleep_3s() {
+        Thread.sleep(1000 * 3);
+        System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
     }
 
 }

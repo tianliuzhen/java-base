@@ -75,7 +75,7 @@ public class RetryTemplate {
         try {
             result = RetryTemplate.builder()
                     .retryCount(3).sleepTime(1000).timeUnit(TimeUnit.MILLISECONDS)
-                    .bizTask(() -> HttpClientUtil.doPost("http://127.0.0.1", null))
+                    .bizTask(() -> HttpClientUtil.doPostWithNoPool("http://127.0.0.1", null))
                     .build()
                     .execute();
         } catch (Exception e) {

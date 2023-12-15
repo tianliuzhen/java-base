@@ -132,11 +132,11 @@
             <type>pom</type>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.httpcomponents</groupId>-->
+<!--            <artifactId>httpclient</artifactId>-->
+<!--            <version>4.4</version>-->
+<!--        </dependency>-->
 
         <!--   个人开源 easyPoi     -->
         <dependency>

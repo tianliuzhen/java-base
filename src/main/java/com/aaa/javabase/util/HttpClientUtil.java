@@ -1,33 +1,66 @@
 package com.aaa.javabase.util;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author liuzhen.tian
  * @version 1.0 HttpClientUtil.java  2022/8/31 20:45
  */
 public class HttpClientUtil {
+    private static final Logger logger = LogManager.getLogger(HttpClientUtil.class);
+
+    // 构造HttpClient客户端
+    private static CloseableHttpClient client;
+
+    static {
+        // 连接请求配置
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setSocketTimeout(1000 * 60) // 服务器响应时间设置：某个外部接口长时间未响应直接中断
+                /*
+                 * 连接等待时间：
+                 * 假设：MaxConnTotal=6，MaxConnPerRoute=2，设置 connectionRequestTimeout=4s
+                 * 条件：某个接口的执行时间=3s，执行3次，
+                 * 结果：在第3次执行的时候，因为已经耗时6s>4s,会直接异常抛出
+                 */
+                .setConnectionRequestTimeout(1000 * 60 * 10)
+                .setConnectTimeout(1000 * 60) // 连接某个服务器的时间，譬如：http连接前的“握手沟通”等前置等待时间
+                .build();
+
+        // 创建连接池并设置最大连接数和每个路由的最大连接数
+        client = HttpClientBuilder.create()
+                .setMaxConnTotal(6) // 一次最多接收MaxTotal次请求
+                .setMaxConnPerRoute(2) // 一个服务每次能并行接收的请求数量
+                .setDefaultRequestConfig(requestConfig)
+                .setConnectionTimeToLive(1, TimeUnit.MINUTES)
+                .build();
+    }
+
     /**
      * 描述：POST提交，采用x-www-form-urlencoded 构建参数，即将表单内的数据转换为键值对，如：name=java&age=23
      *
      * @param url
      * @param map
      */
-    public static String doPost(String url, Map<String, String> map) {
+    public static String doPostWithNoPool(String url, Map<String, String> map) {
         List<NameValuePair> params = new ArrayList<>();
         for (Map.Entry<String, String> entry : map.entrySet()) {
             params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
@@ -71,12 +104,46 @@ public class HttpClientUtil {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    /**
+     * GET直接请求发起
+     *
+     * @param url 请求URL
+     * @return 返回对象
+     */
+    public static JSONObject doGetWithPool(String url) throws Exception {
+        // 构造HttpGet请求对象
+        HttpGet request = new HttpGet(url);
+        CloseableHttpResponse response = null;
+        try {
+            // 发送请求
+            response = client.execute(request);
+            if (Objects.isNull(response) || Objects.isNull(response.getStatusLine())) {
+                throw new RuntimeException("Http响应结果为空");
+            }
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new RuntimeException("Http请求失败");
+            }
+            String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            return JSONObject.parseObject(body);
+        } catch (Exception e) {
+            throw new Exception("HttpClient调用异常", e);
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("id", "1");
         hashMap.put("name", "tom");
-        String url = "http://localhost:8080/httpController/req1";
+        String url = "http://localhost:8080/httpController/req3?params=id";
 
-        doPost(url, hashMap);
+        // doPost(url, hashMap);
+
+        doGetWithPool("http://localhost:8080/httpController/req5");
+
+        System.out.println();
     }
 }
