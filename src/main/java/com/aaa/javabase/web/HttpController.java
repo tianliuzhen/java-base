@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -58,9 +59,22 @@ public class HttpController {
 
     @SneakyThrows
     @GetMapping("/sleep_3s")
-    public void sleep_3s() {
+    public Object sleep_3s() {
         Thread.sleep(1000 * 3);
-        System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
+        System.err.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
+        return new HashMap<String, String>() {{
+            put("result","true");
+        }};
     }
 
+    @SneakyThrows
+    @RequestMapping("/sleep_1s")
+    public Object sleep_1s() {
+        Thread.sleep(1000 * 1);
+        System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
+        return new HashMap<String, String>() {{
+            put("result","true");
+        }};
+
+    }
 }

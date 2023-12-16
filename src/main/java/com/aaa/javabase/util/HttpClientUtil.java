@@ -15,6 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -62,8 +63,10 @@ public class HttpClientUtil {
      */
     public static String doPostWithNoPool(String url, Map<String, String> map) {
         List<NameValuePair> params = new ArrayList<>();
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        if (!CollectionUtils.isEmpty(map)) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            }
         }
 
         CloseableHttpResponse response = null;
