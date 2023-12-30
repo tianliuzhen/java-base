@@ -15,7 +15,8 @@ public class Human {
         System.out.println("Human says:" + sentence);
     }
 
-    public void run() {
+    public String run() {
         System.out.println("Human runs.");
+        return "Human runs.";
     }
 }

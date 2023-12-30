@@ -95,7 +95,7 @@ public class HttpClientUtilTest {
                     try {
                         // 局域网ip，也算单独的区别于127.0.0.1的ip
                         // JSONObject jsonObject = doGetWithPool("http://192.168.10.101:8080/httpController/sleep_1s");
-                        JSONObject jsonObject = doGetWithPool("http://localhost:8081/httpController/sleep_1s");
+                        JSONObject jsonObject = doGetWithPool("http://localhost:8081/httpController/sleep_1s_1");
                         System.out.println(">>>8081:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
                     } catch (Exception e) {
                         throw new RuntimeException(e);

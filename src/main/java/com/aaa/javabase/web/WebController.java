@@ -183,6 +183,9 @@ public class WebController {
         LogUtil.com_dal.error("###LogUtil.com_dal");
     }
 
+    /**
+     * 关于注解继承的问题的研究 todo
+     */
     @GetMapping("/testAspect")
     public void testAspect() {
         ApplicationContext context = SpringUtilV1.getApplicationContext();
@@ -197,7 +200,7 @@ public class WebController {
         man.say("hello!");
         man.run();
 
-        Human boy = context.getBean("boy", Boy.class);
+        Boy boy = context.getBean("boy", Boy.class);
         System.out.println("---------------------This is a Boy.");
         boy.say("hello!");
         boy.run();

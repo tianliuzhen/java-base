@@ -77,4 +77,15 @@ public class HttpController {
         }};
 
     }
+
+    @SneakyThrows
+    @RequestMapping("/sleep_1s_1")
+    public Object sleep_1s_1() {
+        Thread.sleep(1000 * 1);
+        System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
+        return new HashMap<String, String>() {{
+            put("result","true");
+        }};
+
+    }
 }

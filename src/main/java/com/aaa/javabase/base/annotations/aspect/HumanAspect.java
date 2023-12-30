@@ -1,8 +1,9 @@
 package com.aaa.javabase.base.annotations.aspect;
 
+import lombok.extern.log4j.Log4j2;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,11 +13,19 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Log4j2
 public class HumanAspect {
 
     @Around("@within(com.aaa.javabase.base.annotations.A1)")
-    public void execute1() {
+    public Object execute1(ProceedingJoinPoint point) {
         System.out.println("within A1");
+        Object result = null;
+        try {
+            result = point.proceed();
+        } catch (Throwable e) {
+           log.error(e);
+        }
+        return result;
     }
 
     // @Before("@target(com.aaa.javabase.base.annotations.A1)")
@@ -24,9 +33,16 @@ public class HumanAspect {
     //     System.out.println("target A1");
     // }
 
-    @Before("@within(com.aaa.javabase.base.annotations.A2)")
-    public void execute3() {
-        System.out.println("within A2");
+    @Around("@within(com.aaa.javabase.base.annotations.A2)")
+    public Object execute3(ProceedingJoinPoint point) {
+        System.out.println("within A1");
+        Object result = null;
+        try {
+            result = point.proceed();
+        } catch (Throwable e) {
+            log.error(e);
+        }
+        return result;
     }
 
     // @Before("@target(com.aaa.javabase.base.annotations.A2)")

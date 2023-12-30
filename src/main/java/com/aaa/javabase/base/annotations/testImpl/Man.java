@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Man extends Human {
     @Override
-    public void run() {
+    public String run() {
         System.out.println("Man runs.");
+        return "Man runs.";
     }
 
 }
