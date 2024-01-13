@@ -10,6 +10,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class ThreadUtil {
 
+    /**
+     * 输出当前线程的堆栈
+     * @return
+     */
+    public static String printStackTrace(){
+        StringBuilder stringBuilder = new StringBuilder();
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement stackTraceElement : stackTrace) {
+            stringBuilder.append(stackTraceElement.toString());
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString();
+    }
+
     public static final ThreadPoolExecutor POOL_EXECUTOR = new ThreadPoolExecutor(3, 6, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
 
     public static ThreadPoolExecutor getPoolExecutor() {
