@@ -1,15 +1,11 @@
 package com.aaa.javabase.util;
 
-import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StopWatch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 
 /**
@@ -18,6 +14,20 @@ import java.util.function.Supplier;
  */
 @Slf4j
 public class FutureUtil {
+    /**
+     * 超时专用线程池
+     */
+    public static final ThreadPoolExecutor execute_timeout_pool =
+            new ThreadPoolExecutor(3,
+                    6,
+                    60,
+                    TimeUnit.SECONDS,
+                    new ArrayBlockingQueue<>(10),
+                    new ThreadFactoryBuilder().setNameFormat("execute_timeout_pool").build());
+
+    static {
+        execute_timeout_pool.allowCoreThreadTimeOut(true);
+    }
 
     /**
      * 并发执行，带返回值
@@ -105,86 +115,113 @@ public class FutureUtil {
         return results;
     }
 
-    public static void main(String[] args) {
-        // testOne();
+    /**
+     * 执行超时返回（基于thread.join）
+     *
+     * @param bizTask       业务逻辑
+     * @param timeout       超时时间：ms
+     * @param fallbackLogic 兜底逻辑
+     * @param <T>
+     * @return
+     */
+    public static <T> T executeWithJoin(Runnable bizTask, long timeout, Callable<T> fallbackLogic) {
+        Thread thread = new Thread(bizTask);
+        thread.start();
 
-        // 会有线程安全问题
-        // testError();
-
-        // 这里有坑，核心线程就n-1个，超过就会阻塞
-        testDoRunAsync();
-    }
-
-    private static void testDoRunAsync() {
-        List<Runnable> runnableList = new ArrayList<>();
-        // 这里超过7个就会阻塞了
-        for (int i = 0; i < 8; i++) {
-            runnableList.add(() -> {
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-
+        try {
+            thread.join(timeout);
+            if (thread.isAlive()) {
+                return fallbackLogic.call();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        List<Object> objects = doRunAsync(runnableList);
-        stopWatch.stop();
-        double totalTimeSeconds = stopWatch.getTotalTimeSeconds();
-
-        System.out.println(totalTimeSeconds);
+        return null;
     }
 
     /**
-     * 测试普通方法
+     * 执行超时返回（CompletableFuture.get）
+     *
+     * @param task
+     * @param timeout
+     * @param unit
+     * @param fallbackLogic
+     * @param <T>
      */
-    private static void testOne() {
-        List<Supplier<String>> suppliers = new ArrayList<>();
-        suppliers.add(() -> {
+    public static <T> void executeWithTimeout(Runnable task, long timeout, TimeUnit unit, Runnable fallbackLogic) {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                task.run();
+            } catch (Exception e) {
+                throw new CompletionException(e);
             }
-            return "2";
         });
-        suppliers.add(() -> {
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return "1";
-        });
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-        List<String> list = FutureUtil.doSupplyAsync(suppliers, null);
-        stopWatch.stop();
-        System.out.println(stopWatch.getTotalTimeSeconds());
-        System.out.println(list.toString());
+        try {
+            future.get(timeout, unit);
+        } catch (TimeoutException e) {
+            fallbackLogic.run();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            // 尝试中断正在执行的任务
+            future.cancel(true);
+        }
     }
 
     /**
-     * 测试普通方法
+     * 执行超时返回（基于Future.get）
+     *
+     * @param task
+     * @param timeout
+     * @param unit
+     * @param fallbackLogic
      */
-    private static void testError() {
-        List<Runnable> runnables = new ArrayList<>();
-        //  todo 这里是全局变量
-        HashMap<String, Object> result = new HashMap<>();
-        for (long i = 0; i < 10; i++) {
-            long finalI1 = i;
-            runnables.add(() -> {
-                result.put("result", (Lists.newArrayList(finalI1)));
-                testError(result);
-            });
+    public static void executeWithTimeoutV2(Runnable task, long timeout, TimeUnit unit, Runnable fallbackLogic) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<?> future = executor.submit(task);
+        try {
+            future.get(timeout, unit);
+        } catch (TimeoutException e) {
+            fallbackLogic.run();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            // 尝试中断正在执行的任务
+            future.cancel(true);
+            executor.shutdownNow();
         }
-        // 并发执行会影响 result
-        FutureUtil.doRunAsync(runnables, null);
     }
 
-    public static void testError(HashMap<String, Object> result) {
-        System.out.println(result);
+
+    /**
+     * 执行超时返回（CompletableFuture.get）
+     *
+     * @param task
+     * @param timeout
+     * @param unit
+     * @param fallbackLogic
+     * @param <T>
+     */
+    public static <T> T executeWithTimeout(Callable<T> task, long timeout, TimeUnit unit, Callable<T> fallbackLogic) throws Exception {
+        CompletableFuture<T> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                return task.call();
+            } catch (Exception e) {
+                throw new CompletionException(e);
+            }
+        });
+        try {
+            return future.get(timeout, unit);
+        } catch (TimeoutException e) {
+            return fallbackLogic.call();
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("executeWithTimeout.err", e);
+        } finally {
+            // 尝试中断正在执行的任务
+            future.cancel(true);
+        }
+        return null;
     }
+
+
 }
