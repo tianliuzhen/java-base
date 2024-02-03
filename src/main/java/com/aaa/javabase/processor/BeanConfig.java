@@ -1,6 +1,6 @@
 package com.aaa.javabase.processor;
 
-import com.aaa.javabase.spring.factoryBean.FruitFactoryBean;
+import com.aaa.javabase.spring.factoryBean.AppleFactoryBean;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +15,11 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfig {
 
     @Autowired
-    private FruitFactoryBean fruitFactoryBean;
+    private AppleFactoryBean fruitFactoryBean;
 
 
     @Bean
-    public TestBean testBean01(FruitFactoryBean fruitFactoryBean) {
+    public TestBean testBean01(AppleFactoryBean fruitFactoryBean) {
         return new TestBean(fruitFactoryBean);
     }
 
@@ -31,7 +31,7 @@ public class BeanConfig {
 
     @AllArgsConstructor
     public class TestBean {
-        private FruitFactoryBean testBeanReq;
+        private AppleFactoryBean testBeanReq;
         public TestBean() {
             System.err.println("TestBean.**************");
         }

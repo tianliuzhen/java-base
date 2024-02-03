@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @version 1.0 MyFactoryBean.java  2023/6/14 22:33
  */
 @Component
-public class FruitFactoryBean implements FactoryBean<Object> {
+public class AppleFactoryBean implements FactoryBean<Object> {
 
     @Nullable
     private Object proxy;

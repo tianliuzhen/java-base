@@ -10,6 +10,7 @@ import com.aaa.javabase.multithreading.并发执行.completableFuture.Completabl
 import com.aaa.javabase.service.GoodsService;
 import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.factoryBean.AppleBean;
+import com.aaa.javabase.spring.factoryBean.OrangeBean;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.spring.springImport.ImportBean1;
 import com.aaa.javabase.spring.springImport.ImportBean2;
@@ -49,6 +50,11 @@ public class WebController {
 
     @Autowired
     private Abean abean;
+
+    @Autowired
+    private AppleBean appleBean;
+    @Autowired
+    private OrangeBean orangeBean;
 
 
     /**
@@ -142,10 +148,6 @@ public class WebController {
     @Autowired
     private ProProperties proProperties;
 
-
-
-    @Autowired
-    private AppleBean appleBean;
     @Autowired
     private CompletableBean completableBean;
 
