@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.HashMap;
 
 /**
  * @author liuzhen.tian
@@ -37,7 +36,7 @@ public class OrangeFactoryBean implements FactoryBean<Object> {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            return new HashMap<>();
+            return new Object();
         }
     }
 }

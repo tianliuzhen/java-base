@@ -12,8 +12,9 @@ import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.TechType
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
-import com.aaa.javabase.spring.factoryBean.AppleBean;
-import com.aaa.javabase.spring.factoryBean.OrangeBean;
+import com.aaa.javabase.spring.serviceLocatorFactoryBean.RiskParser;
+import com.aaa.javabase.spring.serviceLocatorFactoryBean.RiskParserFactory;
+import com.aaa.javabase.spring.serviceLocatorFactoryBean.model.RiskParserEnum;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -39,6 +40,11 @@ public class WebPatternController {
      */
     @Autowired
     private InspectionSolverChooser inspectionSolverChooser;
+    /**
+     * 策略 (serviceLocatorFactoryBean)
+     */
+    @Autowired
+    private RiskParserFactory riskParserFactory;
 
     /**
      * 状态
@@ -92,6 +98,18 @@ public class WebPatternController {
         // 3、执行具体的方法
         orderStateContext.doAction("123456");
 
+    }
+
+    /**
+     * 策略工厂模式（基于ServiceLocatorFactoryBean实现）
+     */
+    @GetMapping(value = "/riskParser")
+    public void riskParser() {
+        RiskParser parser = riskParserFactory.getParser(RiskParserEnum.codingRiskParser);
+        parser.scan();
+
+        RiskParser parserw = riskParserFactory.getParser(RiskParserEnum.msgRiskParser);
+        parserw.scan();
     }
 
     /**

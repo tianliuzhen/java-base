@@ -1,0 +1,14 @@
+基于serviceLocatorFactoryBean实现简单代理
+
+原理：
+org.springframework.beans.factory.config.ServiceLocatorFactoryBean
+实现了 FactoryBean
+重写了 getObjectType、getObject（包装了原来对象为新的代理对象）
+
+代理对象，会每次根据入参和返回类型，查询对应的执行类
+org.springframework.beans.factory.BeanFactory.getBean(java.lang.String, java.lang.Class<T>)
+
+总结：
+这里借助代理对象的思想，
+代理一个对象并不是非让原对象执行什么，
+而是通过代理对象通过参数指定返回一个特定对象，让用户有主动权去决策。
