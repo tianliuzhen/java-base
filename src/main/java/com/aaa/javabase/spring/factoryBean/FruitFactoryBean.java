@@ -1,6 +1,8 @@
 package com.aaa.javabase.spring.factoryBean;
 
+import com.aaa.javabase.base.objectOriented.proxy.CglibProxy;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,11 +10,15 @@ import org.springframework.stereotype.Component;
  * @version 1.0 MyFactoryBean.java  2023/6/14 22:33
  */
 @Component
-public class FruitFactoryBean implements FactoryBean<AppleBean> {
+public class FruitFactoryBean implements FactoryBean<Object> {
+
+    @Nullable
+    private Object proxy;
 
     @Override
-    public AppleBean getObject() throws Exception {
-        return new AppleBean();
+    public Object getObject() {
+        // 创建AppleBean的代理对象
+        return CglibProxy.createCglibProxy(new AppleBean());
     }
 
     @Override

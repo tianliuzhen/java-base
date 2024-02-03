@@ -1,5 +1,6 @@
 package com.aaa.javabase.util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.StopWatch;
@@ -32,11 +33,51 @@ public class FutureUtilTest {
 
     @Test
     public void executeWithTimeout2() throws Exception {
-        FutureUtil.executeWithTimeout(() -> {
-            return "";
-        }, 3, TimeUnit.SECONDS, () -> {
-            return "";
+        // StopWatch stopWatch = new StopWatch();
+        // stopWatch.start();
+        // FutureUtil.executeWithJoin(() -> {
+        //     if (true) {
+        //         while (true) {
+        //             System.out.println(Thread.currentThread().getName() + ":thread1循环中..." + Thread.currentThread().isInterrupted());
+        //         }
+        //     }
+        // }, 1000, () -> {
+        //     System.out.println("executeWithJoin 超时返回");
+        //     return null;
+        // });
+        // stopWatch.stop();
+
+        // System.out.println("stopWatch.getTotalTimeSeconds() = " + stopWatch.getTotalTimeSeconds());
+
+        StopWatch stopWatch2 = new StopWatch();
+        stopWatch2.start();
+        FutureUtil.executeWithTimeoutV2(() -> {
+            if (true) {
+                try {
+                    JSONObject jsonObject = HttpClientUtil.doGetWithPool("http://localhost:8080/testAsyncError");
+                    boolean interrupted = Thread.currentThread().isInterrupted();
+                    if (interrupted) {
+                        System.out.println("thread1程序终止");
+                    }
+                    System.out.println(1);
+
+                    // 你的任务代码
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // 处理中断
+                }
+            }
+        }, 1, TimeUnit.SECONDS, () -> {
         });
+        stopWatch2.stop();
+        System.out.println("stopWatch.getTotalTimeSeconds() = " + stopWatch2.getTotalTimeSeconds());
+
+        if (true) {
+            while (true) {
+                Thread.sleep(100);
+                System.out.println(Thread.currentThread().getName() + ":thread1循环中..." + Thread.currentThread().isInterrupted());
+            }
+        }
     }
 
 

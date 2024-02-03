@@ -12,6 +12,7 @@ import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.TechType
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
 import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
 import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.spring.factoryBean.AppleBean;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -109,6 +110,9 @@ public class WebPatternController {
         // 调用不同的solve的方法进行处理
         solver.slove(orderId, userId);
     }
+
+    @Autowired
+    private AppleBean appleBean;
 
     /**
      * 状态机

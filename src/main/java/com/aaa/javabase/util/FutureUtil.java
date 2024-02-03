@@ -167,7 +167,7 @@ public class FutureUtil {
             future.cancel(true);
         }
     }
-
+    static  ExecutorService executor = Executors.newSingleThreadExecutor();
     /**
      * 执行超时返回（基于Future.get）
      *
@@ -177,7 +177,6 @@ public class FutureUtil {
      * @param fallbackLogic
      */
     public static void executeWithTimeoutV2(Runnable task, long timeout, TimeUnit unit, Runnable fallbackLogic) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<?> future = executor.submit(task);
         try {
             future.get(timeout, unit);
@@ -187,8 +186,8 @@ public class FutureUtil {
             e.printStackTrace();
         } finally {
             // 尝试中断正在执行的任务
-            future.cancel(true);
-            executor.shutdownNow();
+            future.cancel(true); // 底层调用：java.lang.Thread.interrupt
+            // executor.shutdownNow();
         }
     }
 
