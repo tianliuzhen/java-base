@@ -71,9 +71,12 @@ public class TestISO88591 {
 
     private static void testIsoToGbk() throws UnsupportedEncodingException {
         // 集团/蚂蚁集团/数字金融/保险/网关业务
-        //  éå¢/èèéå¢/æ°å­éè/ä¿é©/ç½å³ä¸å¡
+        // éå¢/èèéå¢/æ°å­éè/ä¿é©/ç½å³ä¸å¡
         String testMsg = new String("éå¢/èèéå¢/æ°å­éè/ä¿é©/ç½å³ä¸å¡ "
                 .getBytes("iso-8859-1"), "utf-8");
+        String testMsg2 = new String("é\u009B\u0086å\u009B¢/è\u009A\u0082è\u009A\u0081é\u009B\u0086å\u009B¢/æ\u0095°å\u00AD\u0097é\u0087\u0091è\u009E\u008D/ä¿\u009Dé\u0099©/ç½\u0091å\u0085³ä¸\u009Aå\u008A¡"
+                .getBytes("iso-8859-1"), "utf-8");
         System.out.println(testMsg);
+        System.out.println(testMsg2);
     }
 }
