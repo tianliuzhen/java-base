@@ -9,16 +9,21 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.Args;
+import org.apache.http.util.CharArrayBuffer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.CollectionUtils;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -80,7 +85,8 @@ public class HttpClientUtil {
             response = httpClient.execute(httppost);
             HttpEntity httpEntity = response.getEntity();
 
-            result = EntityUtils.toString(httpEntity);
+            // result = EntityUtils.toString(httpEntity, StandardCharsets.UTF_8);
+            result = toString(httpEntity, StandardCharsets.UTF_8);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -126,7 +132,8 @@ public class HttpClientUtil {
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 throw new RuntimeException("Http请求失败");
             }
-            String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            // String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            String body = toString(response.getEntity(), StandardCharsets.UTF_8);
             return JSONObject.parseObject(body);
         } catch (Exception e) {
             throw new Exception("HttpClient调用异常", e);
@@ -134,6 +141,77 @@ public class HttpClientUtil {
             if (response != null) {
                 response.close();
             }
+        }
+    }
+
+
+    /**
+     * 重写此方法，
+     * 因为此方法默认读取的是传回来的 编码，如果有编码就不用我们的编码，如果出现iso-8859-1会导致中文乱码的问题
+     * org.apache.http.util.EntityUtils#toString(org.apache.http.HttpEntity, java.nio.charset.Charset)
+     *
+     * @param entity
+     * @param defaultCharset
+     * @return
+     * @throws Exception
+     */
+    public static String toString(
+            final HttpEntity entity, final Charset defaultCharset) throws Exception {
+        Args.notNull(entity, "Entity");
+        ContentType contentType = null;
+        try {
+            // todo 不再取返回的编码类型
+            // contentType = ContentType.get(entity);
+        } catch (final UnsupportedCharsetException ex) {
+            if (defaultCharset == null) {
+                throw new UnsupportedEncodingException(ex.getMessage());
+            }
+        }
+        if (contentType != null) {
+            if (contentType.getCharset() == null) {
+                contentType = contentType.withCharset(defaultCharset);
+            }
+        } else {
+            contentType = ContentType.DEFAULT_TEXT.withCharset(defaultCharset);
+        }
+        return toString(entity, contentType);
+    }
+
+    private static String toString(
+            final HttpEntity entity,
+            final ContentType contentType) throws IOException {
+        final InputStream inStream = entity.getContent();
+        if (inStream == null) {
+            return null;
+        }
+        try {
+            Args.check(entity.getContentLength() <= Integer.MAX_VALUE,
+                    "HTTP entity too large to be buffered in memory");
+            int capacity = (int)entity.getContentLength();
+            if (capacity < 0) {
+                capacity = 4096;
+            }
+            Charset charset = null;
+            if (contentType != null) {
+                charset = contentType.getCharset();
+                if (charset == null) {
+                    final ContentType defaultContentType = ContentType.getByMimeType(contentType.getMimeType());
+                    charset = defaultContentType != null ? defaultContentType.getCharset() : null;
+                }
+            }
+            if (charset == null) {
+                charset = HTTP.DEF_CONTENT_CHARSET;
+            }
+            final Reader reader = new InputStreamReader(inStream, charset);
+            final CharArrayBuffer buffer = new CharArrayBuffer(capacity);
+            final char[] tmp = new char[1024];
+            int l;
+            while((l = reader.read(tmp)) != -1) {
+                buffer.append(tmp, 0, l);
+            }
+            return buffer.toString();
+        } finally {
+            inStream.close();
         }
     }
 
