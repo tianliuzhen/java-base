@@ -1,5 +1,6 @@
 package com.aaa.javabase.base;
 
+import com.aaa.javabase.h2.Model.User;
 import org.junit.jupiter.api.Test;
 
 import java.lang.ref.WeakReference;
@@ -15,6 +16,7 @@ public class WeakReferenceTest {
      */
     @Test
     public void test1() {
+        String s = referent.get();
         WeakReference weakReference = new WeakReference(referent);
         //   Object o = weakRerference.get(); 如果有值来接收，那么  System.gc(); 依然不会被回收
         weakReference.get();
@@ -53,11 +55,28 @@ public class WeakReferenceTest {
     @Test
     public void test2() {
         ThreadLocal<String> userInfo = new ThreadLocal<>();
+        userInfo.get();
+        userInfo.set("123");
         WeakReference weakRerference = new WeakReference(userInfo);
         //   Object o = weakRerference.get(); 如果有值来接收，那么  System.gc(); 依然不会被回收
         weakRerference.get();
         userInfo = null;
         System.gc();
         weakRerference.get();
+    }
+
+    public static void main(String[] args) {
+        User user = new User();
+        user.setName("aaa");
+
+        extracted(user);
+
+        System.out.println();
+    }
+
+    private static void extracted(User user) {
+        User user1 = user;
+        user1.setName("11");
+
     }
 }
