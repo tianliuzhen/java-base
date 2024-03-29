@@ -68,7 +68,12 @@ public class EasyExcelController {
     @SneakyThrows
     private void setResponseHeader(HttpServletResponse response, String fileName) {
         // 告诉浏览器用什么软件可以打开此文件
-        response.setHeader("content-Type", "application/vnd.ms-excel");
+        /**
+         * https://huaweicloud.csdn.net/64ee0925a3cccc782cc5757a.html
+         * 需要注意的是，application/vnd.ms-excel 仅适用于旧版本的 Microsoft Excel 文件（.xls）。
+         * 对于较新的 .xlsx 文件，应使用 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet 作为 MIME 类型。
+         */
+        response.setHeader("content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         // 下载文件的默认名称
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8") + ".xlsx");
     }
