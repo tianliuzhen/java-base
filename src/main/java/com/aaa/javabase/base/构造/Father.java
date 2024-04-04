@@ -9,10 +9,10 @@ package com.aaa.javabase.base.构造;
 
         Father() {
             age = 40;
-            print();
+            print2();
         }
 
-        public void print() {
+        public void print2() {
             System.out.println("Father.print.age:" + age);
         }
     }

@@ -9,10 +9,9 @@ public class Son extends Father {
 
     Son() {
         // age = 18;
-        super.print();
+        print();
     }
 
-    @Override
     public void print() {
         System.out.println("Son.print.age:" + age);
     }
