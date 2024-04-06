@@ -132,11 +132,11 @@
             <type>pom</type>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpclient</artifactId>-->
-<!--            <version>4.4</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.httpcomponents</groupId>-->
+        <!--            <artifactId>httpclient</artifactId>-->
+        <!--            <version>4.4</version>-->
+        <!--        </dependency>-->
 
         <!--   个人开源 easyPoi     -->
         <dependency>
@@ -229,26 +229,31 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+
+        <!-- spring-boot-loader-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-loader</artifactId>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <build>
         <plugins>
             <!--  spring boot 默认打的是可执行 jar  ，springboot-maven-plugin打包的第一级目录为Boot-INF,无法引用.-->
-            <!--
             <plugin>
-                   <groupId>org.springframework.boot</groupId>
-                   <artifactId>spring-boot-maven-plugin</artifactId>
-             </plugin>
-             -->
-            <!--  普通 maven 打包-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source> <!--指明源码用的Jdk版本-->
-                    <target>1.8</target> <!--指明打包后的Jdk版本-->
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--  普通 maven 打包-->
+            <!-- <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <configuration>
+                     <source>1.8</source> &lt;!&ndash;指明源码用的Jdk版本&ndash;&gt;
+                     <target>1.8</target> &lt;!&ndash;指明打包后的Jdk版本&ndash;&gt;
+                 </configuration>
+             </plugin>-->
         </plugins>
     </build>
 

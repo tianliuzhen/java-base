@@ -1,10 +1,7 @@
 package com.aaa.javabase.spring.autowriedAndResource;
 
-import com.aaa.javabase.spring.autowriedAndResource.service.HelloService;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.annotation.Resource;
+import com.aaa.javabase.spring.autowriedAndResource.service.MyService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * description:
@@ -14,13 +11,10 @@ import javax.annotation.Resource;
  * @date 2020/6/16
  */
 
-@SpringBootTest
 public class HelloTest {
-    @Resource
-    // @Autowired
-    private HelloService helloV2ServiceImpl;
-    @Test
-    public void hello() {
-        helloV2ServiceImpl.helloWord();
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ac= new AnnotationConfigApplicationContext("com.aaa.javabase.spring.autowriedAndResource");
+        MyService myService = ac.getBean(MyService.class);
+        myService.say();
     }
 }

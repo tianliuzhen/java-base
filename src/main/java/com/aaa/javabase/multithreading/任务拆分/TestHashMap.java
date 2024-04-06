@@ -5,20 +5,19 @@ package com.aaa.javabase.multithreading.任务拆分;
  * @version 1.0 TestHashMap.java  2024/4/4 14:55
  */
 public class TestHashMap {
-
     public static void main(String[] args) {
-        // 结果不等于取模预算，但结果会更加散列（6
+        // (n-1) & hash 不等于 hash % n
         System.out.println("i = (n - 1) & hash");
         System.out.println(7 & 6);  // 6
         System.out.println(8 % 6);  // 2
         System.out.println(15 & 6); // 6
         System.out.println(16 % 6); // 4
         System.out.println("++++++++++++++++++++");
-        // 但是把运算的值反过来就相等了
+        // hash & (n-1) 等于 n % hash
         System.out.println(6 & 7);  // 6
-        System.out.println(6 % 8);  // 2
+        System.out.println(6 % 8);  // 6
         System.out.println(6 & 15); // 6
-        System.out.println(6 % 16); // 4
+        System.out.println(6 % 16); // 6
         System.out.println("++++++++++++++++++++");
 
         /*

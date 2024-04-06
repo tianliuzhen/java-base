@@ -1,7 +1,6 @@
 package com.aaa.javabase.util.spring;
 
 import com.alibaba.fastjson.TypeReference;
-import com.sun.xml.internal.ws.util.UtilException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -55,14 +54,14 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
         return null == beanFactory ? applicationContext : beanFactory;
     }
 
-    public ConfigurableListableBeanFactory getConfigurableBeanFactory() throws UtilException {
+    public ConfigurableListableBeanFactory getConfigurableBeanFactory() throws Exception {
         final ConfigurableListableBeanFactory factory;
         if (null != beanFactory) {
             factory = beanFactory;
         } else if (applicationContext instanceof ConfigurableApplicationContext) {
             factory = ((ConfigurableApplicationContext) applicationContext).getBeanFactory();
         } else {
-            throw new UtilException("No ConfigurableListableBeanFactory from context!");
+            throw new Exception("No ConfigurableListableBeanFactory from context!");
         }
         return factory;
     }
@@ -198,7 +197,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      * @author shadow
      * @since 5.4.2
      */
-    public <T> void registerBean(String beanName, T bean) {
+    public <T> void registerBean(String beanName, T bean) throws Exception {
         final ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
         factory.registerSingleton(beanName, bean);
     }
@@ -212,13 +211,13 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      * @author shadow
      * @since 5.7.7
      */
-    public void unregisterBean(String beanName) {
-        final ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
+    public void unregisterBean(String beanName)  throws Exception {
+        ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
         if (factory instanceof DefaultSingletonBeanRegistry) {
             DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry) factory;
             registry.destroySingleton(beanName);
         } else {
-            throw new UtilException("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
+            throw new Exception("Can not unregister bean, the factory is not a DefaultSingletonBeanRegistry!");
         }
     }
 

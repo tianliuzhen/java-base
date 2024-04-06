@@ -47,7 +47,7 @@ public class SpringBeanManagerUtilTest {
 
     //  ******************* 推荐 ******************* 这种会丢失很多spring本身属性
     @Test
-    public void registerBean() {
+    public void registerBean() throws Exception {
         // 指定bean加载
         springUtil.registerBean("imageDemoData", new ImageDemoData());
         // 读取bean是否生效
