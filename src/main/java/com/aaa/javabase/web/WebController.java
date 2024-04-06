@@ -18,6 +18,7 @@ import com.aaa.javabase.spring.springImport.ImportBean3;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
 import com.aaa.javabase.util.spring.SpringUtilV1;
+import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
@@ -93,12 +94,25 @@ public class WebController {
      * @return
      */
     @PostMapping("/objectResponseDate")
-    public Object response() {
+    public Object objectResponseDate() {
         BaseMain baseMain = new BaseMain();
         baseMain.setDate(new Date());
         baseMain.setLocalDateTime(LocalDateTime.now());
 
         return baseMain;
+    }
+
+    /**
+     * 如果没有这里的配置
+     * com.aaa.javabase.config.DateConfig#customJackson()
+     * 那么前端对 Date和LocalDate的处理，都是比较麻烦的格式。
+     *
+     * @param baseMain
+     * @return
+     */
+    @PostMapping("/objectRequestDate")
+    public Object objectRequestDate(@RequestBody BaseMain baseMain) {
+        return JSONObject.toJSONString(baseMain);
     }
 
 
