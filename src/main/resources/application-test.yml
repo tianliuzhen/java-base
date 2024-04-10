@@ -1,9 +1,10 @@
 spring:
   datasource:
     #配置h2数据库的连接地址
-    # Embedded 嵌入式
-    # Remote (client/server) 远程连接
-    # In-Memory 内存
+    # 文件模式：jdbc:h2:~/test 连接位于用户目录下的test数据库
+    # 文件模式 win：jdbc:h2:file:F:\WorkSpace\MyGithub\java-base
+    # 文件模式 mac：jdbc:h2:file:/data/sample
+    # 内存模式：jdbc:h2:mem:<databaseName>  #其他参数DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false
     url: jdbc:h2:mem:test
     #配置JDBC Driver
     driver-class-name: org.h2.Driver
@@ -17,7 +18,7 @@ spring:
   h2:
     console:
       enabled: true
-      #进行该配置，你就可以通过YOUR_URL/h2访问h2 web consloe。YOUR_URL是你程序的访问URl。默认为/h2-console
+      # 进行该配置，你就可以通过YOUR_URL/h2访问h2 web consloe。YOUR_URL是你程序的访问URl。默认为/h2-console
       # http://localhost:8080/h2-console
       path: /h2-console
       # 进行该配置后，h2 web consloe就可以在远程访问了。否则只能在本机访问。

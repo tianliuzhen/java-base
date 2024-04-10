@@ -12,6 +12,7 @@ import com.aaa.javabase.spring.aopBeanTest.MyJavaBeanService;
 import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.spring.injection.construction.Bbean;
 import com.aaa.javabase.spring.injection.setter.Cbean;
+import com.aaa.javabase.util.jdbc.H2JdbcExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +52,12 @@ public class H2MybatisController {
     private MyCglibBeanService myCglibBeanService;
     @Autowired
     private MyJavaBeanService myJavaBeanService;
+
+    @GetMapping(value = "/h2JdbcExample")
+    public void h2JdbcExample() {
+        H2JdbcExample.H2Jdbc();
+    }
+
 
     @GetMapping(value = "/selectByDept")
     public void selectByDept() {
