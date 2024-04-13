@@ -15,7 +15,12 @@ public class Thread1 implements Runnable {
     public void run() {
         for (int i = 0; i <5 ; i++) {
             try {
-                TimeUnit.MILLISECONDS.sleep(200);
+                if (name.equals("tom")){
+                    TimeUnit.MILLISECONDS.sleep(1000);
+                }else {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                }
+
             } catch (InterruptedException e) {
             }
             System.out.println(name + "执行  :  " + i+"当前线程 : "+Thread.currentThread().getName());
