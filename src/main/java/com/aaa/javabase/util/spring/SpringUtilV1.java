@@ -6,7 +6,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * 不推荐使用 遇见 @PostConstruct 会发生空指针
+ * 不推荐使用 遇见 @PostConstruct 会发生空指针，
+ * 但是当前类上可以使用 @DependsOn("springUtilV1") 来规避
  *
  * @author liuzhen.tian
  * @version 1.0 BeanContextUtil.java  2022/7/22 22:27

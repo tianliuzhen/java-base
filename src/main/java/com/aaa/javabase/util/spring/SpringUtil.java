@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
+ * 五星推荐:https://www.yuque.com/tianliuzhen/rinavs/ucd8muucc2uqvglk
+ *
  * @author liuzhen.tian
  * @version 1.0 SpringUtils.java  2023/9/29 22:00
  */
