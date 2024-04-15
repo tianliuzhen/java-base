@@ -1,4 +1,4 @@
-package com.aaa.mybatisplus.util;
+package com.aaa.javabase.util;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
@@ -12,11 +12,12 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0 ThreadPoolUtil.java  2024/3/19 21:45
  */
 public class ThreadPoolUtil {
+
     public static final ThreadPoolExecutor common_pool =
             new ThreadPoolExecutor(
-                    7,
-                    10,
-                    60,
+                    20,
+                    20,
+                    60 * 60,
                     TimeUnit.SECONDS,
                     new ArrayBlockingQueue<>(100),
                     new CustomizableThreadFactory("common_pool"));

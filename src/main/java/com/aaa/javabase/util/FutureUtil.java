@@ -65,6 +65,50 @@ public class FutureUtil {
     /**
      * 并发执行，带返回值
      *
+     * @param suppliers    函数
+     * @param poolExecutor 线程池
+     * @param <T>          泛型返回值
+     * @return List<T>
+     */
+    public static <T> List<T> doSupplyAsync(List<Supplier<T>> suppliers, long timeout, TimeUnit timeUnit, ThreadPoolExecutor poolExecutor) {
+        List<T> results = new ArrayList<>();
+        List<CompletableFuture<T>> futureList = new ArrayList<>();
+        try {
+            // 1、构建Future线程
+            for (Supplier<T> supplier : suppliers) {
+                futureList.add(CompletableFuture.supplyAsync(supplier, poolExecutor));
+            }
+
+            // 2、阻塞线程直到所有线程完成
+            CompletableFuture[] completableFutures = futureList.toArray(new CompletableFuture[futureList.size()]);
+            CompletableFuture.allOf(completableFutures).get(timeout, timeUnit);
+
+            // 3、返回结果
+            for (CompletableFuture<T> future : futureList) {
+                T now = future.getNow(null);
+                if (now != null) {
+                    results.add(now);
+                }
+            }
+        } catch (TimeoutException e) {
+            log.error("[TimeoutException is error]", e);
+            for (CompletableFuture<T> future : futureList) {
+                T now = future.getNow(null);
+                if (now != null) {
+                    results.add(now);
+                }
+            }
+        } catch (InterruptedException e) {
+            log.error("[InterruptedException is error]", e);
+        } catch (ExecutionException e) {
+            log.error("[ExecutionException is error]", e);
+        }
+        return results;
+    }
+
+    /**
+     * 并发执行，带返回值
+     *
      * @param runnableList 函数
      * @param poolExecutor 线程池
      * @param <T>          泛型返回值
@@ -167,7 +211,9 @@ public class FutureUtil {
             future.cancel(true);
         }
     }
-    static  ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    static ExecutorService executor = Executors.newSingleThreadExecutor();
+
     /**
      * 执行超时返回（基于Future.get）
      *

@@ -1,6 +1,6 @@
 package com.aaa.javabase.multithreading.任务拆分;
 
-import com.aaa.mybatisplus.util.ThreadPoolUtil;
+import com.aaa.javabase.util.ThreadPoolUtil;
 import lombok.Data;
 import lombok.SneakyThrows;
 

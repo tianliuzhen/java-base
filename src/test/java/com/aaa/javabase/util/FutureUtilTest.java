@@ -16,8 +16,42 @@ import java.util.function.Supplier;
  * @version 1.0 FutureUtil.java  2024/1/18 21:12
  */
 public class FutureUtilTest {
+
     @Test
-    public void executeWithTimeout() throws Exception {
+    public void doSupplyAsyncWithTimeout() {
+        List<Supplier<Integer>> suppliers = new ArrayList<>();
+        for (int i = 0; i < 19; i++) {
+            int finalI = i;
+            suppliers.add(() -> {
+                if (finalI > 5) {
+                    try {
+                        TimeUnit.SECONDS.sleep(8);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                return finalI;
+            });
+
+        }
+        // 第一次线程池会预热：大概是 3.6232526
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        List<Integer> integers = FutureUtil.doSupplyAsync(suppliers, 2, TimeUnit.SECONDS, ThreadPoolUtil.common_pool);
+        stopWatch.stop();
+        System.out.println("integers = " + integers);
+        System.out.println("stopWatch.getTotalTimeSeconds() = " + stopWatch.getTotalTimeSeconds());
+        // 第二次线程池会正常：大概是 2.0048514
+        StopWatch stopWatch2 = new StopWatch();
+        stopWatch2.start();
+        List<Integer> integers2 = FutureUtil.doSupplyAsync(suppliers, 2, TimeUnit.SECONDS, ThreadPoolUtil.common_pool);
+        stopWatch2.stop();
+        System.out.println("integers = " + integers2);
+        System.out.println("stopWatch.getTotalTimeSeconds() = " + stopWatch2.getTotalTimeSeconds());
+    }
+
+    @Test
+    public void doSupplyAsyncTimeout() throws Exception {
         // 不带返回值的【超时返回】
         FutureUtil.executeWithTimeout(() -> {
         }, 3, TimeUnit.SECONDS, () -> {
