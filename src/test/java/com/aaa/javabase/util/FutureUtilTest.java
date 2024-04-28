@@ -145,13 +145,28 @@ public class FutureUtilTest {
         testDoRunAsync();
     }
 
+    /**
+     * ForkJoinPool 的核心线程数，有没有最大值，目前不好判定
+     */
     private static void testDoRunAsync() {
         List<Runnable> runnableList = new ArrayList<>();
         // 这里超过7个就会阻塞了
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 100; i++) {
             runnableList.add(() -> {
                 try {
                     TimeUnit.SECONDS.sleep(2);
+                    System.out.println("Thread.currentThread().getName() 1111= " + Thread.currentThread().getName());
+                    List<Runnable> arrayList2 = new ArrayList<>();
+                    arrayList2.add(() -> {
+                        System.err.println("Thread.currentThread().getName() 2222= " + Thread.currentThread().getName());
+
+                        List<Runnable> arrayList3 = new ArrayList<>();
+                        arrayList3.add(() -> {
+                            System.err.println("Thread.currentThread().getName() 3333= " + Thread.currentThread().getName());
+                        });
+                        FutureUtil.doRunAsync(arrayList3);
+                    });
+                    FutureUtil.doRunAsync(arrayList2);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
