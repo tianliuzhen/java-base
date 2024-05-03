@@ -3,6 +3,7 @@ package com.aaa.javabase.web;
 import com.aaa.javabase.base.annotations.testImpl.Boy;
 import com.aaa.javabase.base.annotations.testImpl.Human;
 import com.aaa.javabase.base.annotations.testImpl.Man;
+import com.aaa.javabase.config.PayConfig;
 import com.aaa.javabase.config.ProProperties;
 import com.aaa.javabase.config.TestProperties;
 import com.aaa.javabase.domain.BaseMain;
@@ -172,6 +173,8 @@ public class WebController {
     @Autowired
     private ImportBean3 importBean3;
 
+    @Autowired
+    private PayConfig payConfig;
 
     @PostMapping("/testProperties")
     public String testProperties() {

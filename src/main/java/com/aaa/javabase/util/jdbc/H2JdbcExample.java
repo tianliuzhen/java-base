@@ -17,7 +17,8 @@ public class H2JdbcExample {
      * jdbc:h2:mem:test 指的是在同一个 jvm 环境中才能加载到。
      */
     public static void H2Jdbc() {
-        String url = "jdbc:h2:mem:test"; // 内存模式
+        // String url = "jdbc:h2:mem:test"; // 内存模式
+        String url = "jdbc:h2:tcp://localhost/~/test"; // tcp远程连接
         String user = "root"; // 默认用户名
         String password = "123456"; // 默认密码为空
         Connection conn = null;

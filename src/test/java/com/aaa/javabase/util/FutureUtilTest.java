@@ -134,6 +134,73 @@ public class FutureUtilTest {
         }
     }
 
+    /**
+     *
+     */
+    public static void main(String[] args) {
+        int AC_SHIFT = 48;
+        int TC_SHIFT = 32;
+        long AC_MASK = 65535L << AC_SHIFT;
+        long TC_MASK = 65535L << TC_SHIFT;
+        long np = -8;
+        long left = (np << AC_SHIFT) & AC_MASK;
+        long right = (np << TC_SHIFT) & TC_MASK;
+        long ctl = left | right;
+        System.out.println("np << AC_SHIFT = " + Long.toBinaryString(np << AC_SHIFT));
+        System.out.println("&");
+        System.out.println("AC_MASK        = " + Long.toBinaryString(AC_MASK));
+        System.out.println("|");
+        System.out.println("np << TC_SHIFT = " + Long.toBinaryString(np << TC_SHIFT));
+        System.out.println("&");
+        System.out.println("TC_MASK        = " + Long.toBinaryString(TC_MASK));
+        System.out.println("最终结果");
+        System.out.println("ctl-left       = " + Long.toBinaryString(left));
+        System.out.println("ctl-right      = " + Long.toBinaryString(right));
+        System.out.println("ctl            = " + Long.toBinaryString(ctl));
+        System.out.println("ctl            = " + Long.toBinaryString(-1688879925035008L));
+        System.out.println("ADD_WORKER     = " + Long.toBinaryString(0x0001L << (TC_SHIFT + 15)));
+        /**
+         * 1111111111111001000000000000000000000000000000000000000000000000
+         * |
+         * 0000000000000000111111111111100100000000000000000000000000000000
+         * ctl=
+         * 1111111111111001111111111111100100000000000000000000000000000000
+         * & ADD_WORKER
+         * 0000000000000000100000000000000000000000000000000000000000000000
+         */
+
+        long AC_UNIT = 1L << AC_SHIFT; // 48
+        long TC_UNIT = 1L << TC_SHIFT; // 32
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc1            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc2            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc3            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc4            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc5            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc7            = " + Long.toBinaryString(ctl));
+        ctl = ((AC_MASK & (ctl + AC_UNIT)) | (TC_MASK & (ctl + TC_UNIT)));
+        System.out.println("nc8            = " + Long.toBinaryString(ctl));
+        /**
+         * 验证ctl的自增
+         nc1-left       = 1111111111111011000000000000000000000000000000000000000000000000
+         nc1-right      = 0000000000000000111111111111101100000000000000000000000000000000
+         nc1            = 1111111111111010111111111111101000000000000000000000000000000000
+         nc2            = 1111111111111011111111111111101100000000000000000000000000000000
+         nc3            = 1111111111111100111111111111110000000000000000000000000000000000
+         nc4            = 1111111111111101111111111111110100000000000000000000000000000000
+         nc5            = 1111111111111110111111111111111000000000000000000000000000000000
+         nc7            = 1111111111111111111111111111111100000000000000000000000000000000
+         nc8            = 0
+
+         */
+    }
+
+
     @Test
     public void main() {
         // testOne();
