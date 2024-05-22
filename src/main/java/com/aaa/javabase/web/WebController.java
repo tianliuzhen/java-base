@@ -6,6 +6,7 @@ import com.aaa.javabase.base.annotations.testImpl.Man;
 import com.aaa.javabase.config.PayConfig;
 import com.aaa.javabase.config.ProProperties;
 import com.aaa.javabase.config.TestProperties;
+import com.aaa.javabase.domain.BaseEntity;
 import com.aaa.javabase.domain.BaseMain;
 import com.aaa.javabase.multithreading.并发执行.completableFuture.CompletableBean;
 import com.aaa.javabase.service.GoodsService;
@@ -121,7 +122,8 @@ public class WebController {
      * 测试时间：出参
      */
     @GetMapping("/getPeople")
-    public People getPeople() {
+    public People getPeople() throws InterruptedException {
+        Thread.currentThread().join();
         People people = new People();
         // Date 类型
         people.setDate(new Date());
@@ -154,8 +156,8 @@ public class WebController {
     }
 
     @GetMapping("/testBean")
-    public void testBean() {
-        abean.get();
+    public BaseEntity testBean() {
+        return new BaseEntity();
     }
 
     @Autowired

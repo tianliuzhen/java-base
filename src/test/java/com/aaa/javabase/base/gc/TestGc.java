@@ -9,6 +9,15 @@ package com.aaa.javabase.base.gc;
  * -XX:+PrintGCDateStamps: 输出 GC 日期时间戳
  * -XX:+PrintHeapAtGC: 打印堆信息
  * -Xloggc:filename: 输出 GC 日志到指定文件名
+ * -XX:+PrintCommandLineFlags :输出垃圾回收器信息
+ * -XX:+UseParallelGC : 指定ParallelGC垃圾回收器，也是默认的，默认会开启自适应调节策略  -XX:+UseAdaptiveSizePolicy
+ * -XX:+UseParNewGC :    指定ParNew垃圾回收器，ParNew会自动关闭自适应策略，-XX:-UseAdaptiveSizePolicy
+ * -XX:+UseConcMarkSweepGC : 指定CMS垃圾回收器，CMS会自动关闭自适应策略，-XX:-UseAdaptiveSizePolicy
+ * -Xloggc:F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\base\gc\logs\gc.log
+ * -Xloggc:.\logs\gc.log
+ *
+ * -XX:+PrintCommandLineFlags -XX:+PrintGCDetails -Xloggc:./log/gc.log
+ *
  *
  * @author liuzhen.tian
  * @version 1.0 TestGc.java  2023/7/19 22:00
@@ -16,10 +25,13 @@ package com.aaa.javabase.base.gc;
 public class TestGc {
     /**
      * https://mp.weixin.qq.com/s/OCLs3ZFFMQeDIGNdAFWT2g
+     * jinfo -flag ParallelGCThreads 20292
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        // TimeUnit.SECONDS.sleep(1);
+
         demo1();  // 不回收
         // demo2(); // 回收 （手动赋值 null）
         // demo3(); // 回收 （同方法不同作用域,有新的索引）
