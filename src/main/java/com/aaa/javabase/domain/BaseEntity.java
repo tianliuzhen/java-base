@@ -21,4 +21,11 @@ public class BaseEntity {
     private LocalDateTime beginTime;
 
     private Date endTime;
+    private int status = 0;
+
+    public BaseEntity(Long id, LocalDateTime beginTime, Date endTime) {
+        this.id = id;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+    }
 }

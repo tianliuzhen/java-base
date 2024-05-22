@@ -53,14 +53,15 @@ public class DateConfig {
      * JDK1.8中添加新的时间日期API，LocalDate、LocalDateTime、LocalTime，但是我们在开发中使用时间戳作为参数值来传递是比较常用的，
      * 然而在SpringBoot中并没有为我们提供合适的JsonSerializer和JsonDeserializer。
      * 因此需要去封装一层
-     *
+     * <p>
      * spring:
-     *   jackson:
-     *     date-format: yyyy-MM-dd HH:mm:ss
-     *     time-zone: GMT+8
-     *     serialization:
-     *       write-dates-as-timestamps: false
+     * jackson:
+     * date-format: yyyy-MM-dd HH:mm:ss
+     * time-zone: GMT+8
+     * serialization:
+     * write-dates-as-timestamps: false
      * 这种配置只适用于Date这种，不适用于LocalDateTime等。
+     *
      * @return
      */
     @Bean
@@ -89,5 +90,12 @@ public class DateConfig {
             jacksonObjectMapperBuilder.modules(javaTimeModule);
 
         };
+    }
+
+    public static void main(String[] args) {
+        Class<Long> longClass = Long.class;
+        Class<Long> type = Long.TYPE;
+        System.out.println(longClass);
+        System.out.println(type);
     }
 }

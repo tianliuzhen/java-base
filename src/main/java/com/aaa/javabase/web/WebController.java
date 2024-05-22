@@ -156,7 +156,7 @@ public class WebController {
     }
 
     @GetMapping("/testBean")
-    public BaseEntity testBean() {
+    public BaseEntity testBean(@RequestBody BaseEntity va) {
         return new BaseEntity();
     }
 
