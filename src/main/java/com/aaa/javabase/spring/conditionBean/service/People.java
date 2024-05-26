@@ -50,4 +50,8 @@ public class People {
         this.age = age;
         this.city = city;
     }
+
+    public void print() {
+
+    }
 }

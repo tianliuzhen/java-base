@@ -1,12 +1,17 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.spring.conditionBean.service.People;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.management.ClassLoadingMXBean;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -64,5 +69,28 @@ public class GcTestController {
     @GetMapping(value = "/doGc")
     public void doGc() {
         System.gc();
+    }
+
+    @RequestMapping("/metaSpace0om")
+    public void metaSpaceOom() {
+        ClassLoadingMXBean classLoadingMXBean = ManagementFactory.getClassLoadingMXBean();
+        while (true) {
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(People.class);
+            enhancer.setUseCache(false);
+            enhancer.setCallback((MethodInterceptor) (o, method, objects, methodProxy) -> {
+                System.out.println("我是加强类·输出print之前的加强方法");
+                return methodProxy.invokeSuper(o, objects);
+            });
+            People people = (People) enhancer.create();
+            people.print();
+            System.out.println(people.getClass());
+            // 返回自Java虚拟机启动以来加载的类的总数
+            System.out.println("totalClass:" + classLoadingMXBean.getTotalLoadedClassCount());
+            // 返回自Java虚拟机已加载的类的数量
+            System.out.println("activeClass:" + classLoadingMXBean.getLoadedClassCount());
+            // 返回自Java虚拟机启动以来卸载载的类的总数
+            System.out.println("unloadedClass:" + classLoadingMXBean.getUnloadedClassCount());
+        }
     }
 }
