@@ -144,6 +144,34 @@ public class HttpClientUtil {
         }
     }
 
+    public static JSONObject doGetWithPool(String url,Map<String,String> header) throws Exception {
+        // 构造HttpGet请求对象
+        HttpGet request = new HttpGet(url);
+        if (!CollectionUtils.isEmpty(header)) {
+            header.forEach(request::setHeader);
+        }
+        CloseableHttpResponse response = null;
+        try {
+            // 发送请求
+            response = client.execute(request);
+            if (Objects.isNull(response) || Objects.isNull(response.getStatusLine())) {
+                throw new RuntimeException("Http响应结果为空");
+            }
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new RuntimeException("Http请求失败:"+response.getStatusLine().getStatusCode());
+            }
+            // String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+            String body = toString(response.getEntity(), StandardCharsets.UTF_8);
+            return JSONObject.parseObject(body);
+        } catch (Exception e) {
+            throw new Exception("HttpClient调用异常:"+e.getMessage(), e);
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+    }
+
 
     /**
      * 重写此方法，

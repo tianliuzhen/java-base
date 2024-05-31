@@ -21,9 +21,9 @@ public class TestISO88591 {
     public static void main(String[] args) throws UnsupportedEncodingException {
         testIsoToGbk();
 
-        byte[] utf = "测试".getBytes("UTF8");
-        byte[] gbk = "测试".getBytes("GBK");
-        byte[] iso = "测试".getBytes("iso-8859-1");
+        byte[] utf = "你好，世界！".getBytes("UTF8");
+        byte[] gbk = "你好，世界！".getBytes("GBK");
+        byte[] iso = "你好，世界！".getBytes("iso-8859-1");
 
         String utf_gbk = new String(utf, "GBK");
         String utf_iso = new String(utf, "iso-8859-1");

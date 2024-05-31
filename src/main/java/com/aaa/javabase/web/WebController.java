@@ -30,8 +30,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
@@ -123,8 +127,8 @@ public class WebController {
      */
     @GetMapping("/getPeople")
     public People getPeople() throws InterruptedException {
-        Thread.currentThread().join();
         People people = new People();
+        people.setName("再试试");
         // Date 类型
         people.setDate(new Date());
         // LocalDateTime 类型
@@ -186,6 +190,7 @@ public class WebController {
 
     // 这里的@Log4j2 注解的log，本质上就是 logger，编译后看到class文件可以看到
     private static final Logger logger = LogManager.getLogger(WebController.class);
+
     @PostMapping("/testLogPrint")
     public void testLogPrint() {
         /**
@@ -244,4 +249,22 @@ public class WebController {
     }
 
 
+    @GetMapping(value = "/charsetGbk", produces = MediaType.TEXT_PLAIN_VALUE + ";charset=GBK")
+    public void getGbkResponse(HttpServletResponse response) throws IOException {
+        String content = "你好，世界！"; // 你的内容
+        byte[] gbkBytes = content.getBytes(Charset.forName("GBK")); // 转换为GBK字节
+
+        // 设置响应内容类型和字符集
+        response.setContentType("text/plain;charset=GBK");
+
+        // 写入响应体
+        response.getOutputStream().write(gbkBytes);
+        response.flushBuffer();
+    }
+
+    @GetMapping(value = "/charsetDefault")
+    public String charsetDefault()  {
+        return "你好，世界！";
+    }
 }
+
