@@ -40,5 +40,6 @@ public class DelayQueueDemo {
             }
             Thread.sleep(1000);
         }
+        System.out.println("执行结束");
     }
 }

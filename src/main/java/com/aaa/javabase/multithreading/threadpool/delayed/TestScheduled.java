@@ -6,7 +6,6 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -31,13 +30,6 @@ public class TestScheduled {
             new ThreadFactoryBuilder().setNameFormat("common-scheduler-pool-%d").build());
 
 
-    /**
-     * 不推荐：自定义的带有界队列调度
-     */
-    private final static  BoundedScheduledThreadPoolExecutor boundedExecutor = new BoundedScheduledThreadPoolExecutor(
-            2,
-            new ThreadPoolExecutor.AbortPolicy(),
-            10);
 
     private final static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
 
@@ -51,8 +43,6 @@ public class TestScheduled {
 
         // todo 定时间间隔执行，如果间隔时间小于业务执行时间，间隔时间无效。
         // doSheduleWithFixedDelay();
-
-
     }
 
     private static void doOneTask() {
@@ -73,15 +63,11 @@ public class TestScheduled {
      * 注意：当核心线程corePoolSize只有一个的时候，出现多个任务会进入队列等待。
      */
     private static void doScheduled(Date date) {
-        boundedExecutor.schedule(() -> {
+        scheduler.schedule(() -> {
             try {
-                System.out.println("开始执行... " + format.format(new Date()));
-                Thread.sleep(2000);
+                System.out.println(Thread.currentThread().getName() + "开始执行... " + format.format(new Date()));
+                // Thread.sleep(2000);
                 System.out.println("执行结束... " + format.format(new Date()));
-
-                System.out.println("Thread.currentThread().getName() = " + Thread.currentThread().getName());
-                System.out.println("相同的入参 param：" + format.format(date));
-
             } catch (Exception e) {
 
             }
