@@ -19,7 +19,7 @@ public class TestCustomScheduled {
      */
     private final static ScheduledThreadPoolExecutor boundedExecutor = ScheduledThreadUtil.sche_pool;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         doOneTask();
     }
 

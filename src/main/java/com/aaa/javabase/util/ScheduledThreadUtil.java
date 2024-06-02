@@ -1,6 +1,6 @@
 package com.aaa.javabase.util;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
 
 import java.util.concurrent.*;
 
@@ -78,10 +78,10 @@ public class ScheduledThreadUtil {
      * 自定义的带有界队列调度
      */
     public static ScheduledThreadPoolExecutor sche_pool = new CustomScheduledThreadPoolExecutor(
-            10,
+            3,
             new ThreadPoolExecutor.AbortPolicy(),
             10, 10, TimeUnit.SECONDS,
-            new ThreadFactoryBuilder().setNameFormat("sche_pool").build()
+            new CustomizableThreadFactory("sche_pool")
     );
 
 }

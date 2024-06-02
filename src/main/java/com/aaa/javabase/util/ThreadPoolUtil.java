@@ -17,7 +17,7 @@ public class ThreadPoolUtil {
             new ThreadPoolExecutor(
                     20,
                     20,
-                    60 * 60,
+                    20,
                     TimeUnit.SECONDS,
                     new ArrayBlockingQueue<>(100),
                     new CustomizableThreadFactory("common_pool"));
@@ -29,11 +29,21 @@ public class ThreadPoolUtil {
                     60,
                     TimeUnit.SECONDS,
                     new ArrayBlockingQueue<>(10),
-                    new ThreadFactoryBuilder().setNameFormat("starmap_pool").build());
+                    new ThreadFactoryBuilder().setNameFormat("starmap_pool-%d").build());
 
     static {
         // 允许超时释放核心线程
         common_pool.allowCoreThreadTimeOut(true);
         starmap_pool.allowCoreThreadTimeOut(true);
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            starmap_pool.execute(()->{
+                System.out.println("Thread.currentThread().getThreadGroup().getName() = " + Thread.currentThread().getThreadGroup().getName());
+                System.out.println(finalI);
+            });
+        }
     }
 }
