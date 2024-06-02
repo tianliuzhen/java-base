@@ -1,8 +1,10 @@
 package com.aaa.javabase.multithreading.threadpool.delayed;
 
+import com.aaa.javabase.util.ScheduledThreadUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,10 +17,7 @@ public class TestCustomScheduled {
     /**
      * 不推荐：自定义的带有界队列调度
      */
-    private final static CustomScheduledThreadPoolExecutor boundedExecutor = new CustomScheduledThreadPoolExecutor(
-            2,
-            new ThreadPoolExecutor.AbortPolicy(),
-            10, 10, TimeUnit.SECONDS);
+    private final static ScheduledThreadPoolExecutor boundedExecutor = ScheduledThreadUtil.sche_pool;
 
     public static void main(String[] args) {
         doOneTask();
