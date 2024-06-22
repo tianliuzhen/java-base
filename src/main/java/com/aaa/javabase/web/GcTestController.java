@@ -30,6 +30,11 @@ public class GcTestController {
     private int _1M = 1024 * 1024;
     private List<byte[]> bytes = new ArrayList<>();
 
+    @GetMapping(value = "/add1M")
+    public void add1M() {
+        byte[] bytes1 = new byte[1 * _1M];
+    }
+
     @GetMapping(value = "/addEden")
     public void addEden() {
         if (bytes == null) {

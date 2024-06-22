@@ -5,6 +5,6 @@ server:
     # 服务器在任何给定时间接受和处理的最大连接数。一旦达到限制，操作系统仍然可以接受基于“acceptCount”属性的连接。
     max-connections: 10000
     # 工作线程的最大数量 io密集型建议10倍的cpu数，cpu密集型建议cpu数+1，绝大部分应用都是io密集型
-    maxThreads: 800
+    maxThreads: 200
     # 工作线程的最小数量，初始化时创建的线程数
     minSpareThreads: 10
