@@ -4,9 +4,10 @@ import lombok.Getter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * @author liuzhen.tian
@@ -23,9 +24,9 @@ public class DateUtil {
     public static final String YYYY = "yyyy";
     public static final String YYYY_MM = "yyyy-MM";
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
-    public static final String YYYY_MM_DD_HH_DD = "yyyy-MM-dd HH:mm";
+    public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
     public static final String YYYY_MM_DD_HH = "yyyy-MM-dd HH";
-    public static final String YYYY_MM_DD_HH_DD_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
     public static Date addMinute(Date date, int minute) {
         return addByDateType(date, minute, DateType.MINUTE);
@@ -89,7 +90,7 @@ public class DateUtil {
 
     public static Date strToDate(String dateStr) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_DD_SS);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
             return dateFormat.parse(dateStr);
         } catch (ParseException e) {
             throw new RuntimeException("时间格式转换错误");
@@ -108,7 +109,7 @@ public class DateUtil {
 
     public static String dateToStr(Date date) {
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_DD_SS);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
             return dateFormat.format(date);
         } catch (Exception e) {
             throw new RuntimeException("时间格式转换错误");
@@ -135,8 +136,43 @@ public class DateUtil {
         return date1.compareTo(date2) > 0;
     }
 
+    /**
+     *
+     * @param beginDateString
+     * @param endDateString
+     * @return
+     */
+    public static List<String> calculateDateRange(String beginDateString, String endDateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(YYYY_MM_DD_HH_MM_SS);
+        LocalDateTime beginDateTime = LocalDateTime.parse(beginDateString, formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(endDateString, formatter);
+
+        // 获取开始和结束的LocalDate（忽略时间部分）
+        LocalDate beginDate = beginDateTime.toLocalDate();
+        LocalDate endDate = endDateTime.toLocalDate();
+
+        List<String> dateList = new ArrayList<>();
+
+        // 包含开始和结束日期
+        for (LocalDate currentDate = beginDate; !currentDate.isAfter(endDate); currentDate = currentDate.plusDays(1)) {
+            dateList.add(currentDate.format(DateTimeFormatter.ofPattern(YYYY_MM_DD)));
+        }
+
+        return dateList;
+    }
+
 
     public static void main(String[] args) {
+        String beginDateString = "2024-02-01 00:11:11";
+        String endDateString = "2024-03-01 00:11:11";
+
+        List<String> dateRange = calculateDateRange(beginDateString, endDateString);
+
+        for (String date : dateRange) {
+            System.out.println(date);
+        }
+
+
         Date a1 = strToDate("2023-10-21 00:00:00");
         System.out.println(dateToStrSync(addMonth(a1, 3)));
         Date a2 = strToDate("2024-01-21 00:00:00");
