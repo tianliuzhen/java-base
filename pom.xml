@@ -230,6 +230,12 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.taobao.arthas</groupId>
+            <artifactId>arthas-spring-boot-starter</artifactId>
+            <version>3.7.2</version>
+        </dependency>
+
         <!-- spring-boot-loader-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->

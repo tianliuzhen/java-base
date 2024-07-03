@@ -77,6 +77,9 @@ public class InspectionSolverChooser implements ApplicationContextAware {
     }
 
 
+    /**
+     * trace com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser choose
+     */
     public InspectionSolver choose(InspectionEnum type) {
         return chooseMap.get(type);
     }
