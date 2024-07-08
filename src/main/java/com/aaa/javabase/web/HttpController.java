@@ -2,7 +2,9 @@ package com.aaa.javabase.web;
 
 import com.aaa.javabase.common.util.DateUtil;
 import com.aaa.javabase.domain.BaseEntity;
+import com.aaa.javabase.service.ArthasTestService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
@@ -20,6 +22,15 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping(value = "/httpController")
 public class HttpController {
+
+    @Autowired
+    private ArthasTestService arthasTestService;
+
+    @PostMapping("/arthasTestServiceSayHello")
+    public String arthasTestServiceSayHello() {
+        return arthasTestService.sayHello();
+    }
+
 
     /**
      * ==========================  springboot如何接收application/x-www-form-urlencoded类型的
@@ -63,7 +74,7 @@ public class HttpController {
         Thread.sleep(1000 * 3);
         System.err.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
         return new HashMap<String, String>() {{
-            put("result","true");
+            put("result", "true");
         }};
     }
 
@@ -73,7 +84,7 @@ public class HttpController {
         Thread.sleep(1000 * 1);
         System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
         return new HashMap<String, String>() {{
-            put("result","true");
+            put("result", "true");
         }};
 
     }
@@ -84,7 +95,7 @@ public class HttpController {
         Thread.sleep(1000 * 1);
         System.out.println(">>>:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS));
         return new HashMap<String, String>() {{
-            put("result","true");
+            put("result", "true");
         }};
 
     }

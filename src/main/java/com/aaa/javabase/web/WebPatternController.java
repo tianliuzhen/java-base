@@ -131,7 +131,7 @@ public class WebPatternController {
     }
 
 
-    /**
+    /** trace com.aaa.javabase.web* * -m 2
      * 状态机
      */
     @GetMapping(value = "/requireStateMachine")

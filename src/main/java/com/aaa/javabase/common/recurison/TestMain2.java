@@ -12,6 +12,9 @@ public class TestMain2 {
 
 
     public static void main(String[] args) {
+        // idea 里面 \ 和 / 都可以加载到加载文件
+        // F:/WorkSpace/MyGithub/java-base/src/main/java/com/aaa/javabase/common/recurison/file/TestNodeList.json
+        // F:\WorkSpace\MyGithub\java-base\src\main\java\com\aaa\javabase\common\recurison\file\TestNodeList.json
         String path = "F:\\WorkSpace\\MyGithub\\java-base\\src\\main\\java\\com\\aaa\\javabase\\common\\recurison\\file\\TestNodeList.json";
 
         // mock 数据库存的数据
