@@ -30,14 +30,17 @@ public class HttpClientUtilTest {
 
     private static void testRequestTimeout() {
         // 连接请求配置
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(1000 * 60) // 服务器响应时间设置：某个外部接口长时间未响应直接中断
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setSocketTimeout(1000 * 60) // 服务器响应时间设置：某个外部接口长时间未响应直接中断
                 /*
                  * 连接等待时间：
                  * 假设：MaxConnTotal=6，MaxConnPerRoute=2，设置 connectionRequestTimeout=4s
-                 * 条件：当并发10个线程请求时，假设每个接口的执行时间=3s，，
+                 * 条件：当并发10个线程请求时，假设每个接口的执行时间=3s，
                  * 结果：因为 MaxConnPerRoute=2，所以每次只能并发俩个去，当第二批执行结束，已经是6s了，
                  *      因为此时还有6个线程未执行，当第三次执行时，就会直接异常抛出（ Timeout waiting for connection from pool）
-                 */.setConnectionRequestTimeout(1000 * 4).setConnectTimeout(1000 * 60) // 连接某个服务器的时间，譬如：http连接前的“握手沟通”等前置等待时间
+                 */
+                .setConnectionRequestTimeout(1000 * 4)
+                .setConnectTimeout(1000 * 60) // 连接某个服务器的时间，譬如：http连接前的“握手沟通”等前置等待时间
                 .build();
 
         // 创建连接池并设置最大连接数和每个路由的最大连接数
@@ -47,18 +50,14 @@ public class HttpClientUtilTest {
 
         // 模拟并发10个线程
         for (int i = 0; i < 10; i++) {
-            try {
-                new Thread(() -> {
-                    try {
-                        JSONObject jsonObject = doGetWithPool("http://localhost:8080/httpController/sleep_3s");
-                        System.out.println(">>>8080:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), com.aaa.javabase.common.util.DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            new Thread(() -> {
+                try {
+                    JSONObject jsonObject = doGetWithPool("http://localhost:8080/httpController/sleep_3s");
+                    System.out.println(">>>8080:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), com.aaa.javabase.common.util.DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         }
 
         /**
@@ -71,39 +70,42 @@ public class HttpClientUtilTest {
 
     private static void testMaxConnTotal() {
         // 连接请求配置
-        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(1000 * 60) // 服务器响应时间设置：某个外部接口长时间未响应直接中断
-                .setConnectionRequestTimeout(1000 * 40).setConnectTimeout(1000 * 60) // 连接某个服务器的时间，譬如：http连接前的“握手沟通”等前置等待时间
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setSocketTimeout(1000 * 60) // 服务器响应时间设置：某个外部接口长时间未响应直接中断
+                .setConnectionRequestTimeout(1000 * 40) // 连接等待时间
+                .setConnectTimeout(1000 * 60) // 连接某个服务器的时间，譬如：http连接前的“握手沟通”等前置等待时间
                 .build();
 
         // 创建连接池并设置最大连接数和每个路由的最大连接数
-        client = HttpClientBuilder.create().setMaxConnTotal(3) // 一次最多接收MaxTotal次请求
+        client = HttpClientBuilder.create()
+                .setMaxConnTotal(4) // 一次最多接收MaxTotal次请求
                 .setMaxConnPerRoute(2) // 一个服务每次能并行接收的请求数量
-                .setDefaultRequestConfig(requestConfig).setConnectionTimeToLive(1, TimeUnit.MINUTES).build();
+                .setDefaultRequestConfig(requestConfig)
+                .setConnectionTimeToLive(1, TimeUnit.MINUTES)
+                .build();
 
         // 模拟并发10个线程
         for (int i = 0; i < 8; i++) {
-            try {
-                new Thread(() -> {
-                    try {
-                        JSONObject jsonObject = doGetWithPool("http://localhost:8080/httpController/sleep_1s");
-                        System.out.println(">>>8080:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), com.aaa.javabase.common.util.DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-                new Thread(() -> {
-                    try {
-                        // 局域网ip，也算单独的区别于127.0.0.1的ip
-                        // JSONObject jsonObject = doGetWithPool("http://192.168.10.101:8080/httpController/sleep_1s");
-                        JSONObject jsonObject = doGetWithPool("http://localhost:8081/httpController/sleep_1s_1");
-                        System.out.println(">>>8081:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            new Thread(() -> {
+                try {
+                    JSONObject jsonObject = doGetWithPool("http://localhost:8080/crud/toSleep?sleep=1000");
+                    System.out.println(">>>8080:" + com.aaa.javabase.common.util.DateUtil.transferToTarget(new Date(), com.aaa.javabase.common.util.DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
+                } catch (Exception e) {
+                    //  ignore
+                }
+            }).start();
+            new Thread(() -> {
+                try {
+                    // 1. 域名和ip不区分，算同一个服务【127.0.0.1:8080 等同于 localhost:8080】
+                    // 2. 同ip不同端口，也不算同一服务，【127.0.0.1:8081，不同于 127.0.0.1:8080】
+                    // 3. 局域网ip，【127.0.0.1:8080 不同于 192.168.9.107:8080】
+                    // JSONObject jsonObject = doGetWithPool("http://192.168.10.101:8080/httpController/sleep_1s");
+                    JSONObject jsonObject = doGetWithPool("http://127.0.0.1:8081/crud/toSleep?sleep=1000");
+                    System.out.println(">>>8081:" + DateUtil.transferToTarget(new Date(), DateUtil.YYYY_MM_DD_HH_DD_SS) + ":" + jsonObject.toString());
+                } catch (Exception e) {
+                    //  ignore
+                }
+            }).start();
         }
     }
 
