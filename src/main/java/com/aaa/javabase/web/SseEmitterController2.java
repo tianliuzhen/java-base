@@ -1,4 +1,4 @@
-package com.aaa.javabase.web.sse;
+package com.aaa.javabase.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
