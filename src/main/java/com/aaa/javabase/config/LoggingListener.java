@@ -10,7 +10,14 @@ import org.springframework.core.Ordered;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
+ * <title>
  * 通过 spring 的 监听器(Listener)功能，设置读取到的 application.yml 属性到系统属性。
+ * </title>
+ * <p>
+ * log4j2.xml 是不归 spring 管理的，所以也就没法读取到 application.yml 里面的配置了。
+ * 解决方式： 通过 spring 的 监听器(Listener)功能，将我们读取到的 application.yml 的日志路径设置到系统属性，
+ * 然后在日志文件里面读取对应的系统属性就行了。
+ * <p/>
  *
  * @author liuzhen.tian
  * @version 1.0 LoggingListener.java  2021/9/28 20:33
@@ -61,10 +68,10 @@ public class LoggingListener implements ApplicationListener, Ordered {
             // 设置上下文变量 - 日志级别
             String fileLevel = environment.getProperty(SPRING_LOG_LEVEL);
             if (StringUtils.isNotBlank(fileLevel)) {
-                // 若采用 System.setProperty方法，则在 log4j2-spring.xml 中用 ${sys:log.path} 获取 yml属性值
+                // 若采用 System.setProperty方法，则在 log4j2-spring.xml 中用 ${sys:log.level} 获取 yml属性值
                 System.setProperty(LOG_LEVEL, fileLevel);
 
-                // 若采用 MDC.put           方法，则在 log4j2-spring.xml 中用 ${ctx:log.path} 获取 yml属性值
+                // 若采用 MDC.put           方法，则在 log4j2-spring.xml 中用 ${ctx:log.level} 获取 yml属性值
                 MDC.put(LOG_LEVEL, fileLevel);
             }
         }
