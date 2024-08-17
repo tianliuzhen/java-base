@@ -42,6 +42,8 @@ mybatis:
 app:
   level: debug
 # 通用的日志级别，指定某些包的级别 （优先级高）
+# 如果 app.level 设置 info
+# 而 logging.level.com.aaa.javabase.h2.mapper 设置 debug，那么此时debug依然会生效
 logging:
   level:
     com.aaa.javabase.h2.mapper: debug
