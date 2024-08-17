@@ -137,7 +137,6 @@ public class DateUtil {
     }
 
     /**
-     *
      * @param beginDateString
      * @param endDateString
      * @return
@@ -161,31 +160,55 @@ public class DateUtil {
         return dateList;
     }
 
+    /**
+     * 分钟差别
+     *
+     * @param date1
+     * @param date2
+     * @return 分钟 61s 也算 2分钟，只要超过1s就算一分钟
+     */
+    public static long difMinute(Date date1, Date date2) {
+        if (date1 == null || date2 == null) {
+            return 0;
+        }
+        long time1 = date1.getTime();
+        long time2 = date2.getTime();
+        long time = Math.abs(time1 - time2);
+
+        // 余数，不足一分钟补一分钟
+        long yuShu = time % (1000 * 60);
+
+        return time / (1000 * 60) + (yuShu > 0 ? 1 : 0);
+    }
+
 
     public static void main(String[] args) {
-        String beginDateString = "2024-02-01 00:11:11";
-        String endDateString = "2024-03-01 00:11:11";
+        // String beginDateString = "2024-02-01 00:11:11";
+        // String endDateString = "2024-03-01 00:11:11";
+        //
+        // List<String> dateRange = calculateDateRange(beginDateString, endDateString);
+        //
+        // for (String date : dateRange) {
+        //     System.out.println(date);
+        // }
+        //
+        //
+        // Date a1 = strToDate("2023-10-21 00:00:00");
+        // System.out.println(dateToStrSync(addMonth(a1, 3)));
+        // Date a2 = strToDate("2024-01-21 00:00:00");
+        // System.out.println(dateToStrSync(addMonth(a2, 3)));
+        //
+        // System.out.println("----------");
+        //
+        //
+        // Date b1 = strToDate("2023-10-21 00:00:00");
+        // for (int i = 0; i < 4; i++) {
+        //     b1 = addMonth(b1, 3);
+        //     System.out.println(dateToStrSync(b1));
+        // }
 
-        List<String> dateRange = calculateDateRange(beginDateString, endDateString);
-
-        for (String date : dateRange) {
-            System.out.println(date);
-        }
-
-
-        Date a1 = strToDate("2023-10-21 00:00:00");
-        System.out.println(dateToStrSync(addMonth(a1, 3)));
-        Date a2 = strToDate("2024-01-21 00:00:00");
-        System.out.println(dateToStrSync(addMonth(a2, 3)));
-
-        System.out.println("----------");
-
-
-        Date b1 = strToDate("2023-10-21 00:00:00");
-        for (int i = 0; i < 4; i++) {
-            b1 = addMonth(b1, 3);
-            System.out.println(dateToStrSync(b1));
-        }
-
+        Date a3 = strToDate("2024-08-17 01:10:00");
+        Date a4 = strToDate("2024-08-17 01:12:01");
+        System.out.println(difMinute(a3, a4));
     }
 }
