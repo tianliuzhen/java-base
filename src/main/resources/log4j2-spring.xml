@@ -127,6 +127,11 @@
             <appender-ref ref="COM_DAL"/>
             <appender-ref ref="CONSOLE"/>
         </Logger>
+        <!-- 当访问sql时，把日志也打到 COM_DAL    -->
+        <Logger name="com.aaa.javabase.h2.mapper" level="${FILE_LEVEL}" additivity="false">
+            <appender-ref ref="COM_DAL"/>
+            <appender-ref ref="CONSOLE"/>
+        </Logger>
 
 
         <!-- web日志 (拦截指定具体的包路径)  -->
