@@ -20,18 +20,18 @@ public class PriorityDemo {
     public static void main(String[] args) throws Exception {
 
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-                2,
+                1,
                 2,
                 Long.MAX_VALUE, /* timeout */
                 TimeUnit.NANOSECONDS,
                 new PriorityBlockingQueue<Runnable>(),
                 new ThreadPoolExecutor.DiscardOldestPolicy());
 
-        PrioritizedRunnable p1 = new PrioritizedRunnable(1234, "name1-1");
-        PrioritizedRunnable p2 = new PrioritizedRunnable(1500, "name4-2");
-        PrioritizedRunnable p3 = new PrioritizedRunnable(1590, "name5-3");
-        PrioritizedRunnable p4 = new PrioritizedRunnable(1490, "name3-4");
-        PrioritizedRunnable p5 = new PrioritizedRunnable(1290, "name2-5");
+        PrioritizedRunnable p1 = new PrioritizedRunnable(1, "name1-1");
+        PrioritizedRunnable p2 = new PrioritizedRunnable(6, "name4-2");
+        PrioritizedRunnable p3 = new PrioritizedRunnable(999, "name5-3");
+        PrioritizedRunnable p4 = new PrioritizedRunnable(9, "name3-4");
+        PrioritizedRunnable p5 = new PrioritizedRunnable(89, "name2-5");
 
         executor.execute(p4);
         executor.execute(p1);
@@ -39,7 +39,7 @@ public class PriorityDemo {
         executor.execute(p3);
         executor.execute(p5);
         log.info("submit 5 Runnable");
-        Thread.sleep(30*1000);
+        // Thread.sleep(30*1000);
         executor.shutdown();
         log.info("done!");
     }

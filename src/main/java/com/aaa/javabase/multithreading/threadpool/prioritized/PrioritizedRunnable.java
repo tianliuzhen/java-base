@@ -45,6 +45,7 @@ public class PrioritizedRunnable implements Runnable, Comparable<PrioritizedRunn
     @Override
     public void run() {
         Random random = new Random();
+        System.out.println("rts=" + rts + ", name=" + name + "");
         log.info("rts={}, name={}", rts, name);
         try {
             int sleepRandom = random.nextInt(200);
