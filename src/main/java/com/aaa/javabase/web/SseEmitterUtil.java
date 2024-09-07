@@ -24,7 +24,7 @@ public class SseEmitterUtil {
             return sseEmitter;
         } else {
             // 设置连接超时时间，需要配合配置项 spring.mvc.async.request-timeout: 600000 一起使用
-            final SseEmitter emitter = new SseEmitter(600_000L);
+            final SseEmitter emitter = new SseEmitter(10_000L);
             // 注册超时回调，超时后触发
             emitter.onTimeout(() -> {
                 log.info("连接已超时，正准备关闭，clientId = {}", clientId);

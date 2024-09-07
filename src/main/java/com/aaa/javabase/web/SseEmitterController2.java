@@ -22,10 +22,14 @@ import java.util.concurrent.CompletableFuture;
 public class SseEmitterController2 {
     @GetMapping("/stream")
     public SseEmitter stream() {
-        SseEmitterUtil.getConn(null);
+        /*
+         * 默认是 30S超时源码在这里:
+         * org.springframework.web.context.request.async.StandardServletAsyncWebRequest.startAsync
+         * org.apache.catalina.core.AsyncContextImpl.setTimeout
+         */
 
-        // 30S超时
-        SseEmitter emitter = new SseEmitter(1000L * 30);
+        // 一般30s是不够的，这里设置10分钟
+        SseEmitter emitter = new SseEmitter(1000L * 60 * 10);
 
         // 注册回调函数，处理服务器向客户端推送的消息
         emitter.onCompletion(() -> {
@@ -42,7 +46,7 @@ public class SseEmitterController2 {
         // 在后台线程中模拟实时数据
         new Thread(() -> {
             try {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 35; i++) {
                     emitter.send(SseEmitter.event().name("message").data("[" + new Date() + "] Data #" + i));
                     Thread.sleep(1000);
                 }
@@ -62,7 +66,7 @@ public class SseEmitterController2 {
         CompletableFuture.runAsync(() -> {
             try {
                 for (int i = 0; i < 100; i++) {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                     SseEmitterUtil.send(clientId);
                 }
 
