@@ -8,3 +8,9 @@ server:
     maxThreads: 200
     # 工作线程的最小数量，初始化时创建的线程数
     minSpareThreads: 10
+---
+spring:
+  batch:
+    job:
+      enabled: false #是否自动执行任务
+    initialize-schema: always  #自动为我们创建数据库脚本

@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/master?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    #配置JDBC Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #配置数据库用户名
+    username: root
+    #配置数据库密码
+    password: 123456
+mybatis:
+#mybatis-plus:
+  #  type-aliases-package: com.aaa.h2.model
+  mapper-locations: classpath:/mapper/*/*.xml,classpath:/mapper-h2/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    # 默认是开启二级缓存的
+    cache-enabled: true
+    #开启懒加载
+    lazy-loading-enabled: true
+    # 默认是false 表示按需加载
+    aggressive-lazy-loading: false
+#    configuration-factory: com.aaa.javabase.h2.UserMapperTest$ConfigurationFactory
+
+# 自定义日志级别 （优先级低）
+app:
+  level: debug
+# 通用的日志级别，指定某些包的级别 （优先级高）
+# 如果 app.level 设置 info
+# 而 logging.level.com.aaa.javabase.h2.mapper 设置 debug，那么此时debug依然会生效
+logging:
+  level:
+    com.aaa.javabase.h2.mapper: debug

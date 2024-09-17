@@ -71,4 +71,8 @@ public class User implements Serializable {
     }
 
 
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
