@@ -86,6 +86,15 @@ public class WebController {
         return "str";
     }
 
+    @PutMapping(path = "putTest")
+    public Object putTest() {
+        return weiXinConfig;
+    }
+    @PostMapping(path = "postTest")
+    public Object postTest() {
+        return weiXinConfig;
+    }
+
 
     @GetMapping(value = "/getGoodsServiceGoodsNames")
     public void getGoodsServiceGoodsNames() {
