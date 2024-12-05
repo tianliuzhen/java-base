@@ -27,15 +27,21 @@ public class ObjectProviderBean {
 
     @Bean
     @Qualifier
+    @MyQualifier
     public MyDataSource myOpQuartzDataSource() {
         return new MyDataSource("myOpQuartzDataSource");
     }
 
 
     /**
-     * myOpQuartzDataSource参数里面带有 @Qualifier, 必须满足 quartzDataSource  @Bean 声明时，也带@Qualifier ，否则无法注入
+     * 思考 @QuartzDataSource 注解原理
+     * see org.springframework.boot.autoconfigure.quartz.QuartzAutoConfiguration.JdbcStoreTypeConfiguration#quartzDataSourceInitializer(javax.sql.DataSource, org.springframework.beans.factory.ObjectProvider, org.springframework.core.io.ResourceLoader, org.springframework.boot.autoconfigure.quartz.QuartzProperties)
      * <p>
-     * myOpQuartzDataSource 参数不带@Qualifier，并且 quartzDataSource  @Bean 声明时，也不带@Qualifier ，也能注入
+     * 这里 @MyQualifier 覆盖了 @Qualifier
+     * <p>
+     * myOpQuartzDataSource参数里面带有 @MyQualifier, 必须满足 quartzDataSource  @Bean 声明时，也带@MyQualifier ，否则无法注入
+     * <p>
+     * myOpQuartzDataSource 参数不带@MyQualifier，并且 quartzDataSource  @Bean 声明时，也不带@MyQualifier ，也能注入
      *
      * @param myOpDataSource
      * @param myOpQuartzDataSource
@@ -43,8 +49,9 @@ public class ObjectProviderBean {
      */
     @Bean
     public MyDataSource myOpQuartzDataSourceInitializer(MyDataSource myOpDataSource,
-                                                        @Qualifier ObjectProvider<MyDataSource> myOpQuartzDataSource) {
-        myOpQuartzDataSource.getIfAvailable(); // 此时才会注入bean，使用时才会注入
+                                                        @MyQualifier ObjectProvider<MyDataSource> myOpQuartzDataSource) {
+        // 此时才会注入bean，使用时才会注入
+        MyDataSource ifAvailable = myOpQuartzDataSource.getIfAvailable();
         return new MyDataSource("quartzDataSourceInitializer");
     }
 
