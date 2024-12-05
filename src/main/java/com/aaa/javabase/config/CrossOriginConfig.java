@@ -1,35 +1,62 @@
 package com.aaa.javabase.config;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author liuzhen.tian
  * @version 1.0 CrossOriginConfig.java  2024/9/26 21:36
  */
-@Configuration
+// @Configuration
 public class CrossOriginConfig {
-
     /**
-     * 允许跨域调用的过滤器
+     * 跨域设置
      */
     @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        // 明确指定允许的域，或者使用allowedOriginPatterns指定域名模式
-        // 例如: config.addAllowedOrigin("https://example.com");
-        // 使用allowedOriginPatterns允许多个域名
-        config.addAllowedOrigin("*"); // 或者具体的域名模式，如"https://*.example.com"
-        config.setAllowCredentials(true); // 允许跨域发送cookie
-        config.addAllowedHeader("*"); // 放行全部原始头信息
-        config.addAllowedMethod("*"); // 允许所有请求方法跨域调用
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+    public FilterRegistrationBean corsFilter() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new CorsFilter());
+        registration.addUrlPatterns("/*");
+        return registration;
     }
 
+    public class CorsFilter implements Filter {
+
+        @Override
+        public void init(FilterConfig filterConfig) throws ServletException {
+        }
+
+        @Override
+        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+            HttpServletResponse httpResponse = (HttpServletResponse) response;
+            HttpServletRequest httpRequest = (HttpServletRequest) request;
+            String originHeader = httpRequest.getHeader("Origin");
+            //允许某个域名发起跨域请求
+            httpResponse.addHeader("Access-Control-Allow-Origin", StringUtils.isEmpty(originHeader)?"*":originHeader);
+            //设置允许Cookie
+            httpResponse.addHeader("Access-Control-Allow-Credentials", "true");
+            //设置允许跨域请求的方法
+            httpResponse.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            //允许跨域请求包含content-type
+            httpResponse.addHeader("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,X-Token");
+            //表示可以缓存时长，单位秒，表示隔30分钟才发起预检请求
+            httpResponse.addHeader("Access-Control-Max-Age", "3600");
+            //跨域的预检请求直接返回
+            if ("OPTIONS".equals(httpRequest.getMethod())) {
+                response.getWriter().println("ok");
+                return;
+            }
+            chain.doFilter(request, response);
+        }
+
+        @Override
+        public void destroy() {
+        }
+    }
 }

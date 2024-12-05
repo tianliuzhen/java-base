@@ -10,6 +10,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -60,16 +61,46 @@ public class HttpClientUtil {
                 .build();
     }
 
+    public static JSONObject doPostWithNoPool(String url, Map<String, String> requestParam, Object requestBody) {
+
+        List<NameValuePair> params = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(requestParam)) {
+            for (Map.Entry<String, String> entry : requestParam.entrySet()) {
+                params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+            }
+        }
+
+        CloseableHttpResponse response = null;
+        String result = null;
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        try {
+            HttpPost httpPost = new HttpPost(url);
+            httpPost.setHeader("Content-type", "application/json");
+            httpPost.setEntity(new StringEntity(JSONObject.toJSONString(requestBody)));
+            response = httpClient.execute(httpPost);
+            HttpEntity httpEntity = response.getEntity();
+
+            // result = EntityUtils.toString(httpEntity, StandardCharsets.UTF_8);
+            result = toString(httpEntity, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            doClose(response, httpClient);
+        }
+        System.out.println("输出参数为：" + result);
+        return JSONObject.parseObject(result);
+    }
+
     /**
      * 描述：POST提交，采用x-www-form-urlencoded 构建参数，即将表单内的数据转换为键值对，如：name=java&age=23
      *
      * @param url
-     * @param map
+     * @param requestParam
      */
-    public static String doPostWithNoPool(String url, Map<String, String> map) {
+    public static String doPostWithNoPool(String url, Map<String, String> requestParam) {
         List<NameValuePair> params = new ArrayList<>();
-        if (!CollectionUtils.isEmpty(map)) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
+        if (!CollectionUtils.isEmpty(requestParam)) {
+            for (Map.Entry<String, String> entry : requestParam.entrySet()) {
                 params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
             }
         }
@@ -144,7 +175,7 @@ public class HttpClientUtil {
         }
     }
 
-    public static JSONObject doGetWithPool(String url,Map<String,String> header) throws Exception {
+    public static JSONObject doGetWithPool(String url, Map<String, String> header) throws Exception {
         // 构造HttpGet请求对象
         HttpGet request = new HttpGet(url);
         if (!CollectionUtils.isEmpty(header)) {
@@ -158,13 +189,13 @@ public class HttpClientUtil {
                 throw new RuntimeException("Http响应结果为空");
             }
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                throw new RuntimeException("Http请求失败:"+response.getStatusLine().getStatusCode());
+                throw new RuntimeException("Http请求失败:" + response.getStatusLine().getStatusCode());
             }
             // String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String body = toString(response.getEntity(), StandardCharsets.UTF_8);
             return JSONObject.parseObject(body);
         } catch (Exception e) {
-            throw new Exception("HttpClient调用异常:"+e.getMessage(), e);
+            throw new Exception("HttpClient调用异常:" + e.getMessage(), e);
         } finally {
             if (response != null) {
                 response.close();
@@ -215,7 +246,7 @@ public class HttpClientUtil {
         try {
             Args.check(entity.getContentLength() <= Integer.MAX_VALUE,
                     "HTTP entity too large to be buffered in memory");
-            int capacity = (int)entity.getContentLength();
+            int capacity = (int) entity.getContentLength();
             if (capacity < 0) {
                 capacity = 4096;
             }
@@ -234,7 +265,7 @@ public class HttpClientUtil {
             final CharArrayBuffer buffer = new CharArrayBuffer(capacity);
             final char[] tmp = new char[1024];
             int l;
-            while((l = reader.read(tmp)) != -1) {
+            while ((l = reader.read(tmp)) != -1) {
                 buffer.append(tmp, 0, l);
             }
             return buffer.toString();

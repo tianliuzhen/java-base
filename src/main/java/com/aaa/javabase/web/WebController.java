@@ -49,6 +49,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @RestController
 @EnableConfigurationProperties(TestProperties.class)
+@CrossOrigin(origins = "*")
 public class WebController {
 
 
@@ -69,6 +70,10 @@ public class WebController {
      */
     @Value("#{${wei_xin_config}}")
     private Map<String, String> weiXinConfig;
+
+    public WebController() {
+        System.out.println("WebController");
+    }
 
     @GetMapping(value = "weiXinConfig")
     public Object weiXinConfig() {
@@ -91,8 +96,8 @@ public class WebController {
         return weiXinConfig;
     }
     @PostMapping(path = "postTest")
-    public Object postTest() {
-        return weiXinConfig;
+    public Object postTest(@RequestBody Map map,@RequestParam String name) {
+        return map;
     }
 
 

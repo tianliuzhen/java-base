@@ -1,8 +1,12 @@
 package com.aaa.javabase.spring.injection.beanfactory;
 
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+
+import javax.sql.DataSource;
 
 /**
  * @author liuzhen.tian
@@ -10,18 +14,27 @@ import org.springframework.context.annotation.Lazy;
  */
 @Configuration
 public class BeanAppConfig {
+    @Bean
+    public AppleBean appleBean(AppleBean appleBean1, ObjectProvider<AppleBean> appleBean2) {
+        AppleBean ifUnique = appleBean2.getIfAvailable();
+        return new AppleBean();
+    }
+
 
     @Bean
-    public AppleBean appleBean1(@Lazy AppleBean appleBean2) {
-       return new AppleBean();
+    public AppleBean appleBean1() {
+        return new AppleBean();
     }
 
     @Bean
-    public AppleBean appleBean2(AppleBean appleBean1) {
-        return  new AppleBean();
+    public AppleBean appleBean2() {
+        return new AppleBean();
     }
+
 
     public class AppleBean {
     }
+
+
 
 }
