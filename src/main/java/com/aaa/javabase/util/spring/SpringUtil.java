@@ -52,7 +52,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
     }
 
 
-    public ListableBeanFactory getBeanFactory() {
+    public static ListableBeanFactory getBeanFactory() {
         return null == beanFactory ? applicationContext : beanFactory;
     }
 
@@ -70,7 +70,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 
 
     @SuppressWarnings("unchecked")
-    public <T> T getBean(String name) {
+    public static <T> T getBean(String name) {
         return (T) getBeanFactory().getBean(name);
     }
 
@@ -81,7 +81,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      * @param clazz Bean类
      * @return Bean对象
      */
-    public <T> T getBean(Class<T> clazz) {
+    public static <T> T getBean(Class<T> clazz) {
         return getBeanFactory().getBean(clazz);
     }
 
@@ -213,7 +213,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
      * @author shadow
      * @since 5.7.7
      */
-    public void unregisterBean(String beanName)  throws Exception {
+    public void unregisterBean(String beanName) throws Exception {
         ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
         if (factory instanceof DefaultSingletonBeanRegistry) {
             DefaultSingletonBeanRegistry registry = (DefaultSingletonBeanRegistry) factory;
