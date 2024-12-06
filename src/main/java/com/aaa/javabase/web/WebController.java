@@ -24,7 +24,7 @@ import com.aaa.javabase.util.spring.SpringUtil;
 import com.aaa.javabase.util.spring.SpringUtilV1;
 import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,8 @@ import java.util.concurrent.TimeUnit;
  * @version $ Id: WebTest.java, v 0.1 2020/6/18 11:02 liuzhen.tian Exp $
  */
 
-@Log4j2
+// @Log4j2
+@Slf4j
 @RestController
 @EnableConfigurationProperties(TestProperties.class)
 @CrossOrigin(origins = "*")
