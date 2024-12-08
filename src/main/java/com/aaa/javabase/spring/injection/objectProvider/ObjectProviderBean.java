@@ -2,11 +2,8 @@ package com.aaa.javabase.spring.injection.objectProvider;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * @author liuzhen.tian
@@ -15,42 +12,24 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class ObjectProviderBean {
 
-    /**
-     * 如果在 new AnnotationConfigApplicationContext(ObjectProviderBean.class); 加载的前提下
-     *
-     * 这里内部类声明的bean，如果没有使用 @Component(value="myObjectProviderInfo")
-     * 默认的bean名称时是："com.aaa.javabase.spring.injection.objectProvider.ObjectProviderBean$MyObjectProviderInfo"
-     *
-     * 源码分析：
-     * org.springframework.context.annotation.ConfigurationClassParser.SourceClass#asConfigClass(org.springframework.context.annotation.ConfigurationClass)
-     * org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator#buildDefaultBeanName(org.springframework.beans.factory.config.BeanDefinition)
-     */
-    @Component
-    public static class MyObjectProviderInfo {
-        MyObjectProviderInfo() {
-            System.out.println();
-        }
-
-    }
-
     @AllArgsConstructor
     @Data
     public class MyDataSource {
         private String name;
     }
 
-    @Bean
+    @AllArgsConstructor
+    @Data
+    public class MyDataSource2 {
+        private String name;
+    }
+
+
+    @Bean(autowireCandidate = false)
     public MyDataSource myOpDataSource() {
         return new MyDataSource("myOpDataSource");
     }
 
-
-    @Bean
-    @Qualifier
-    @MyQualifier
-    public MyDataSource myOpQuartzDataSource() {
-        return new MyDataSource("myOpQuartzDataSource");
-    }
 
 
     /**
@@ -68,10 +47,8 @@ public class ObjectProviderBean {
      * @return
      */
     @Bean
-    public MyDataSource myOpQuartzDataSourceInitializer(MyDataSource myOpDataSource,
-                                                        @MyQualifier ObjectProvider<MyDataSource> myOpQuartzDataSource) {
+    public MyDataSource myOpQuartzDataSourceInitializer(MyDataSource myOpDataSource) {
         // 此时才会注入bean，使用时才会注入
-        MyDataSource ifAvailable = myOpQuartzDataSource.getIfAvailable();
         return new MyDataSource("quartzDataSourceInitializer");
     }
 

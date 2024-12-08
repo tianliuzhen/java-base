@@ -14,13 +14,11 @@ import com.aaa.javabase.spring.conditionBean.service.People;
 import com.aaa.javabase.spring.factoryBean.AppleBean;
 import com.aaa.javabase.spring.factoryBean.OrangeBean;
 import com.aaa.javabase.spring.injection.construction.Abean;
-import com.aaa.javabase.spring.injection.objectProvider.ObjectProviderBean;
 import com.aaa.javabase.spring.springImport.ImportBean1;
 import com.aaa.javabase.spring.springImport.ImportBean2;
 import com.aaa.javabase.spring.springImport.ImportBean3;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
-import com.aaa.javabase.util.spring.SpringUtil;
 import com.aaa.javabase.util.spring.SpringUtilV1;
 import com.alibaba.fastjson.JSONObject;
 import lombok.SneakyThrows;
@@ -78,15 +76,15 @@ public class WebController {
         System.out.println("WebController");
     }
 
-    @Autowired
-    private ObjectProviderBean.MyObjectProviderInfo myObjectProviderInfo;
-
-    @GetMapping(value = "weiXinConfig")
-    public Object weiXinConfig() {
-        SpringUtil.getBean(ObjectProviderBean.MyObjectProviderInfo.class);
-        SpringUtil.getBean("objectProviderBean.MyObjectProviderInfo");
-        return weiXinConfig;
-    }
+    // @Autowired
+    // private ObjectProviderBean.MyObjectProviderInfo myObjectProviderInfo;
+    //
+    // @GetMapping(value = "weiXinConfig")
+    // public Object weiXinConfig() {
+    //     SpringUtil.getBean(ObjectProviderBean.MyObjectProviderInfo.class);
+    //     SpringUtil.getBean("objectProviderBean.MyObjectProviderInfo");
+    //     return weiXinConfig;
+    // }
 
 
     /**
