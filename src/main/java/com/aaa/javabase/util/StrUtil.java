@@ -51,6 +51,34 @@ public class StrUtil {
         return index;
     }
 
+    /**
+     * 去除字符串开头和结尾的指定字符
+     *
+     * @param str    待处理的字符串
+     * @param charToTrim 要去除的字符
+     * @return 处理后的字符串
+     */
+    public static String trimChar(String str, char charToTrim) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        int start = 0;
+        int end = str.length();
+
+        // 去除开头的指定字符
+        while (start < end && str.charAt(start) == charToTrim) {
+            start++;
+        }
+
+        // 去除结尾的指定字符
+        while (start < end && str.charAt(end - 1) == charToTrim) {
+            end--;
+        }
+
+        return str.substring(start, end);
+    }
+
     public static void main(String[] args) {
         String data = "aaa.bbb.ccc.dddd";
         System.out.println(getIndexOf(data, ".", 2));
