@@ -25,7 +25,7 @@ public class ObjectProviderBean {
     }
 
 
-    @Bean(autowireCandidate = false)
+    @Bean
     public MyDataSource myOpDataSource() {
         return new MyDataSource("myOpDataSource");
     }

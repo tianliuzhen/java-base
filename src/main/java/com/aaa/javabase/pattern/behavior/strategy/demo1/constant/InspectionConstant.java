@@ -1,4 +1,4 @@
-package com.aaa.javabase.pattern.behavior.strategy.constant;
+package com.aaa.javabase.pattern.behavior.strategy.demo1.constant;
 
 /**
  * @author liuzhen.tian

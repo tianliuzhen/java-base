@@ -9,12 +9,19 @@ import com.aaa.javabase.pattern.behavior.stateMachine.demo1.RequireStateMachine;
 import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.RequireActionEnum;
 import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.RequireStateEnum;
 import com.aaa.javabase.pattern.behavior.stateMachine.demo1.model.enums.TechTypeEnum;
-import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
-import com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser;
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.InspectionSolver;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.InspectionSolverChooser;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.ActuatorChooser;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.ToolActuator;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.model.ToolExecRequest;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.model.ToolExecWebRequest;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.model.ToolMeta;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.model.enums.ToolTypeEnum;
 import com.aaa.javabase.spring.serviceLocatorFactoryBean.RiskParser;
 import com.aaa.javabase.spring.serviceLocatorFactoryBean.RiskParserFactory;
 import com.aaa.javabase.spring.serviceLocatorFactoryBean.model.RiskParserEnum;
+import com.alibaba.fastjson.JSONObject;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -117,7 +124,7 @@ public class WebPatternController {
      */
     @GetMapping(value = "/inspectionSolver")
     public void inspectionSolver() {
-        //准备数据
+        // 准备数据
         InspectionEnum taskType = InspectionEnum.INSPECTION_TASK_TYPE_BATCH_REPLACE_ORDER_GOODS;
         Long orderId = 123L;
         Long userId = 1L;
@@ -131,7 +138,35 @@ public class WebPatternController {
     }
 
 
-    /** trace com.aaa.javabase.web* * -m 2
+    /**
+     * 策略模式 (泛型入参)
+     */
+    @GetMapping(value = "/actuatorRun")
+    public Object actuatorRun(ToolExecWebRequest request) {
+        //  mock 数据
+        request.setType("groovyScript");
+        request.setToolBaseMetaModelObj("{\"script\":\"xxx\",\"scriptParam\":\"yyy\"}\n");
+
+        // 解析类型
+        ToolTypeEnum toolTypeEnum = ToolTypeEnum.getByType(request.getType());
+
+        // 拿到工具执行器
+        ToolActuator toolActuator = ActuatorChooser.getToolActuator(toolTypeEnum);
+
+        // 转换内部请求
+        ToolExecRequest toolExecRequest = new ToolExecRequest();
+        toolExecRequest.setId(request.getId());
+        toolExecRequest.setDesc(request.getDesc());
+        ToolMeta toolMeta = JSONObject.parseObject(request.getToolBaseMetaModelObj(), toolTypeEnum.getMetaClass());
+        toolExecRequest.setToolBaseMetaModel(toolMeta);
+
+        // 发起调用
+        return toolActuator.execute(toolExecRequest);
+    }
+
+
+    /**
+     * trace com.aaa.javabase.web* * -m 2
      * 状态机
      */
     @GetMapping(value = "/requireStateMachine")

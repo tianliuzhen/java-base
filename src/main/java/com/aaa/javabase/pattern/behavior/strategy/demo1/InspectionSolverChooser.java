@@ -1,7 +1,7 @@
-package com.aaa.javabase.pattern.behavior.strategy;
+package com.aaa.javabase.pattern.behavior.strategy.demo1;
 
-import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.annotion.ChooserName;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.constant.InspectionEnum;
 import com.aaa.javabase.util.spring.SpringUtilV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -78,7 +78,7 @@ public class InspectionSolverChooser implements ApplicationContextAware {
 
 
     /**
-     * trace com.aaa.javabase.pattern.behavior.strategy.InspectionSolverChooser choose
+     * trace com.aaa.javabase.pattern.behavior.strategy.demo1.InspectionSolverChooser choose
      */
     public InspectionSolver choose(InspectionEnum type) {
         return chooseMap.get(type);

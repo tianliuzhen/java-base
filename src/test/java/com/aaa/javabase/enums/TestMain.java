@@ -1,6 +1,6 @@
 package com.aaa.javabase.enums;
 
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.constant.InspectionEnum;
 import com.aaa.javabase.util.EnumUtil;
 
 

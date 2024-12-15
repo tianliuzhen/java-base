@@ -1,8 +1,8 @@
-package com.aaa.javabase.pattern.behavior.strategy.handler;
+package com.aaa.javabase.pattern.behavior.strategy.demo1.handler;
 
-import com.aaa.javabase.pattern.behavior.strategy.InspectionSolver;
-import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.InspectionSolver;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.annotion.ChooserName;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.constant.InspectionEnum;
 import org.springframework.stereotype.Component;
 
 /**

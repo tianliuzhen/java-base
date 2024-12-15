@@ -1,6 +1,6 @@
-package com.aaa.javabase.pattern.behavior.strategy;
+package com.aaa.javabase.pattern.behavior.strategy.demo1;
 
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.constant.InspectionEnum;
 
 /**
  * @author liuzhen.tian

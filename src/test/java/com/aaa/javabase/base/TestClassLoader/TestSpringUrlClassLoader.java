@@ -1,7 +1,7 @@
 package com.aaa.javabase.base.TestClassLoader;
 
 import com.aaa.javabase.base.TestClassLoader.util.ClassLoaderBeanUtil;
-import com.aaa.javabase.pattern.behavior.strategy.annotion.ChooserName;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.annotion.ChooserName;
 import com.aaa.javabase.util.spring.SpringUtilV1;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;

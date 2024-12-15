@@ -1,6 +1,6 @@
-package com.aaa.javabase.pattern.behavior.strategy.annotion;
+package com.aaa.javabase.pattern.behavior.strategy.demo2;
 
-import com.aaa.javabase.pattern.behavior.strategy.constant.InspectionEnum;
+import com.aaa.javabase.pattern.behavior.strategy.demo2.model.enums.ToolTypeEnum;
 
 import java.lang.annotation.*;
 
@@ -11,6 +11,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE,ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ChooserName {
-    InspectionEnum value();
+public @interface ChooserActuator {
+    ToolTypeEnum value();
 }

@@ -1,6 +1,6 @@
 package com.aaa.javabase.base.类加载器.impl;
 
-import com.aaa.javabase.pattern.behavior.strategy.handler.ChangeShippingSolver;
+import com.aaa.javabase.pattern.behavior.strategy.demo1.handler.ChangeShippingSolver;
 
 /**
  * @author liuzhen.tian
