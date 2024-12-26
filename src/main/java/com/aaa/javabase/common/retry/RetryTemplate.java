@@ -36,7 +36,13 @@ public class RetryTemplate<T> {
 
     // 提供访问构建器的静态方法
     public static <T> RetryTemplate<T> builder() {
-        return new RetryTemplate<>();
+        /* 再次理解一下泛型T
+        在return new RetryTemplate<T>();这行代码中，T可以省略的原因是Java的“类型推断”（type inference）机制。
+        从Java 7开始，Java编译器已经足够智能，可以在大多数情况下推断出泛型实例化的具体类型。
+        当你写new RetryTemplate<T>()时，编译器知道T是builder()方法的泛型类型参数，并且这个类型参数将在方法调用时被实际类型替换。
+        由于编译器已经知道了T的类型（在方法调用时确定），它允许你省略泛型类型参数，并自动推断出正确的类型
+         */
+        return new RetryTemplate<T>();
     }
 
 
