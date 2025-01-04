@@ -1,6 +1,6 @@
 package com.aaa.javabase.multithreading.threadlocal.inheritableThreadLocal;
 
-import com.aaa.javabase.jdk8.stream.groupby.Stu;
+import com.aaa.javabase.base.jdk8.stream.groupby.Stu;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
