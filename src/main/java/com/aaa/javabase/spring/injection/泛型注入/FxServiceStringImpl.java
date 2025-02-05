@@ -1,4 +1,4 @@
-package com.aaa.javabase.spring.泛型注入;
+package com.aaa.javabase.spring.injection.泛型注入;
 
 import org.springframework.stereotype.Component;
 

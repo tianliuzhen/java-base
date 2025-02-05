@@ -1,4 +1,4 @@
-package com.aaa.javabase.spring.泛型注入;
+package com.aaa.javabase.spring.injection.泛型注入;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,7 +12,7 @@ public class TestMain {
      * 构造注入
      */
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext("com.aaa.javabase.spring.泛型注入");
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext("com.aaa.javabase.spring.injection.泛型注入");
         String[] beanNamesForType = ac.getBeanNamesForType(FxService.class);
         FxFactory bean = ac.getBean(FxFactory.class);
     }

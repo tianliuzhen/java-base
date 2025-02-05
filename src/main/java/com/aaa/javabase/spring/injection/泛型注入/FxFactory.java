@@ -1,4 +1,4 @@
-package com.aaa.javabase.spring.泛型注入;
+package com.aaa.javabase.spring.injection.泛型注入;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ public class FxFactory {
     private FxService<String> fxService2;
 
     // public FxFactory(FxService<Number> fxService) {
-    //     this.fxService = fxService;
+    //     this.fxService1 = fxService;
     // }
 
 }
