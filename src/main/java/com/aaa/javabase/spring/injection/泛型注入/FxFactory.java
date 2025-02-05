@@ -9,6 +9,27 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class FxFactory {
+    /**
+     * 代码定位到这里，拉到最后面，可以观察是如何根据泛型注入的
+     * org.springframework.core.ResolvableType#isAssignableFrom(org.springframework.core.ResolvableType, java.util.Map)
+     *
+     * 		if (checkGenerics) {
+     * 			// Recursively check each generic
+     * 			ResolvableType[] ourGenerics = getGenerics();
+     * 			ResolvableType[] typeGenerics = other.as(ourResolved).getGenerics();
+     * 			if (ourGenerics.length != typeGenerics.length) {
+     * 				return false;
+     *                        }
+     * 			if (matchedBefore == null) {
+     * 				matchedBefore = new IdentityHashMap<>(1);
+     *            }
+     * 			matchedBefore.put(this.type, other.type);
+     * 			for (int i = 0; i < ourGenerics.length; i++) {
+     * 				if (!ourGenerics[i].isAssignableFrom(typeGenerics[i], matchedBefore)) {
+     * 					return false;
+     *                }
+     *            }* 		}
+     */
     @Autowired
     private FxService<Number> fxService1;
 
