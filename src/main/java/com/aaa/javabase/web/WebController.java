@@ -17,6 +17,8 @@ import com.aaa.javabase.spring.injection.construction.Abean;
 import com.aaa.javabase.spring.springImport.ImportBean1;
 import com.aaa.javabase.spring.springImport.ImportBean2;
 import com.aaa.javabase.spring.springImport.ImportBean3;
+import com.aaa.javabase.spring.staticBean.WxPayConfig;
+import com.aaa.javabase.spring.staticBean.ZfbPayConfig;
 import com.aaa.javabase.util.LogUtil;
 import com.aaa.javabase.util.ThreadUtil;
 import com.aaa.javabase.util.spring.SpringUtilV1;
@@ -72,6 +74,11 @@ public class WebController {
     @Value("#{${wei_xin_config}}")
     private Map<String, String> weiXinConfig;
 
+    @Autowired
+    private WxPayConfig wxPayConfig;
+    @Autowired
+    private ZfbPayConfig zfbPayConfig;
+
     public WebController() {
         System.out.println("WebController");
     }
@@ -99,10 +106,13 @@ public class WebController {
 
     @PutMapping(path = "putTest")
     public Object putTest() {
+        ZfbPayConfig zfbPayConfig1 = ZfbPayConfig.zfbPayConfig;
+        WxPayConfig wxPayConfig1 = WxPayConfig.wxPayConfig;
         return weiXinConfig;
     }
+
     @PostMapping(path = "postTest")
-    public Object postTest(@RequestBody Map map,@RequestParam String name) {
+    public Object postTest(@RequestBody Map map, @RequestParam String name) {
         return map;
     }
 
@@ -283,7 +293,7 @@ public class WebController {
     }
 
     @GetMapping(value = "/charsetDefault")
-    public String charsetDefault()  {
+    public String charsetDefault() {
         return "你好，世界！";
     }
 }

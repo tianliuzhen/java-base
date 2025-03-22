@@ -17,11 +17,11 @@ public class Dbean {
         this.cbean = cbean;
     }
 
-    public void get(){
+    public void get() {
         cbean.print();
     }
 
-    public void print(){
+    public void print() {
         System.out.println("i am Dbean ...");
     }
 

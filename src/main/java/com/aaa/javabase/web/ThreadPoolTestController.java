@@ -1,5 +1,7 @@
 package com.aaa.javabase.web;
 
+import com.aaa.javabase.util.ThreadPoolUtil;
+import com.aaa.javabase.util.UserContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ public class ThreadPoolTestController {
     private static final int requestSize = 1000;
 
     // 模型tomcat线程池
-    final static ThreadPoolExecutor pool = new ThreadPoolExecutor(500, 500,
+    final static ThreadPoolExecutor pool = new ThreadPoolExecutor(3, 10,
             5, TimeUnit.MINUTES, new ArrayBlockingQueue<>(100000));
 
     // 模型每个请求创建的对象
@@ -73,5 +75,39 @@ public class ThreadPoolTestController {
     @GetMapping(value = "/gc")
     public void gc() {
         System.gc();
+    }
+
+    /**
+     * 测试setUserName
+     */
+    @GetMapping(value = "/setUserName")
+    public void setUserName() throws InterruptedException {
+        for (int i = 0; i < 20; ++i) {
+            int finalI = i;
+            ThreadPoolUtil.common_pool.execute(() -> {
+                UserContextHolder.setUserName("name:" + finalI);
+
+                ThreadPoolUtil.starmap_pool.execute(() -> {
+                    System.out.println(UserContextHolder.getUserName());
+                });
+
+            });
+            Thread.sleep(100);
+        }
+    }
+
+
+    /**
+     * 测试没有set的情况
+     */
+    @GetMapping(value = "/getUserName")
+    public void getUserName() throws InterruptedException {
+        for (int i = 0; i < 20; ++i) {
+            int finalI = i;
+            ThreadPoolUtil.common_pool.execute(() -> {
+                System.out.println(UserContextHolder.getUserName());
+            });
+            Thread.sleep(100);
+        }
     }
 }

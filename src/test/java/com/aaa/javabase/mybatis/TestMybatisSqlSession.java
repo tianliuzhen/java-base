@@ -42,6 +42,18 @@ public class TestMybatisSqlSession {
         sqlSession.close();
     }
 
+    public static void main(String[] args) {
+        SqlSessionFactory sqlSessionFactory = SqlSessionUtil.getSqlSessionFactory();
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        mapper.insert(new User(26));
+
+        // 如果不设置 openSession(true);需要收到commit
+        sqlSession.commit();
+        sqlSession.close();
+    }
 
 
 
