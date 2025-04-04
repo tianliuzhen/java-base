@@ -1,7 +1,7 @@
-package com.aaa.javabase.base;
+package com.aaa.javabase.base.线程交替打印;
 
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author liuzhen.tian
@@ -14,8 +14,8 @@ public class PrintOddEvenV2 {
 
     public static void main(String[] args) {
         // 创建信号量：奇数初始可获取，偶数初始不可获取
-        ReentrantLock oddSemaphore = new ReentrantLock();
-        ReentrantLock evenSemaphore = new ReentrantLock();
+        Semaphore oddSemaphore = new Semaphore(1);
+        Semaphore evenSemaphore = new Semaphore(1);
 
         AtomicInteger counter = new AtomicInteger(1);
 
@@ -23,14 +23,17 @@ public class PrintOddEvenV2 {
         Thread oddThread = new Thread(() -> {
             try {
                 while (true) {
-                    oddSemaphore.lock(); // 获取奇数信号量
+                    oddSemaphore.acquire(); // 获取奇数信号量
                     if (counter.get() > 100) break;
 
-                    System.out.println("奇数: " + counter.getAndIncrement());
-                    evenSemaphore.unlock(); // 释放偶数信号量
+                    if (counter.get() % 2 == 1) {
+                        System.out.println("奇数: " + counter.getAndIncrement());
+                        evenSemaphore.release(); // 释放偶数信号量
+                    }
+
                 }
             } catch (Exception e) {
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
         }, "奇数");
         oddThread.start();
@@ -38,14 +41,20 @@ public class PrintOddEvenV2 {
         Thread even = new Thread(() -> {
             try {
                 while (true) {
-                    evenSemaphore.lock(); // 获取偶数信号量
+                    evenSemaphore.acquire(); // 获取偶数信号量
                     if (counter.get() > 100) break;
 
-                    System.out.println("偶数: " + counter.getAndIncrement());
-                    oddSemaphore.unlock(); // 释放奇数信号量
+
+
+                    if (counter.get() % 2 == 0) {
+                        System.out.println("偶数: " + counter.getAndIncrement());
+                        oddSemaphore.release(); // 释放奇数信号量
+
+                    }
+
                 }
             } catch (Exception e) {
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
 
         }, "偶数");

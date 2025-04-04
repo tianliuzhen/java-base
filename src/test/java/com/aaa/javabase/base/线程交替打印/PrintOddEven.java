@@ -1,4 +1,4 @@
-package com.aaa.javabase.base;
+package com.aaa.javabase.base.线程交替打印;
 
 /**
  * @author liuzhen.tian
