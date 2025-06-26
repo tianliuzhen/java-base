@@ -4,10 +4,10 @@
 
     <select id="getOne" resultType="com.aaa.javabase.h2.Model.Dept">
         select * from  `dept` where 1=1
-        <if test="id!=null || id2!=null">
-            and id=#{id} or id=#{id2}
+        <if test="id!=null">
+            and id=${ id }
         </if>
-      order by id desc   limit 1
+        limit 1
     </select>
 
     <select id="getDeptById" resultType="com.aaa.javabase.h2.Model.Dept">

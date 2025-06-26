@@ -21,7 +21,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author liuzhen.tian
@@ -88,18 +87,6 @@ public class H2MybatisController {
 
     @GetMapping(value = "/findAll")
     public void findAll() {
-        myCglibBeanService.test();
-        for (int i = 0; i < 2000; i++) {
-            new Thread(() -> {
-                try {
-                    // 1MB=1024KB=1024x1024=1048576bytes
-                    // Byte[] bytes = new Byte[1024 * 1024 * 1];
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        }
 
         // for (int i = 0; i < 10; i++) {
         //     mapper.insert(new User(null, "name" + 1, 1, ""));
