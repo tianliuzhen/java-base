@@ -35,5 +35,7 @@ public class TestSortReversed {
 
         // 显式指定类型参数
         List<Student> collect4 = list.stream().sorted(Comparator.<Student, Integer>comparing(e -> e.getAge()).reversed()).collect(Collectors.toList());
+        // 强制转型（不推荐，但可行）
+        List<Student> collect5 = list.stream().sorted(Comparator.comparing((Student e) -> e.getAge()).reversed()).collect(Collectors.toList());
     }
 }
