@@ -1,4 +1,4 @@
-package com.aaa.javabase.excel.excel1;
+package com.aaa.javabase.util;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;

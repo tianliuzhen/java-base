@@ -6,7 +6,7 @@ import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import cn.afterturn.easypoi.excel.entity.result.ExcelImportResult;
-import com.aaa.javabase.excel.excel1.BeanCopyUtil;
+import com.aaa.javabase.util.BeanCopyUtil;
 import com.aaa.javabase.excel.excel1.EasyPoiUtils;
 import com.aaa.javabase.excel.excel1.FullData;
 import com.aaa.javabase.excel.excel1.FullDataExportDTO;
