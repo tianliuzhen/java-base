@@ -2,6 +2,7 @@ package com.aaa.javabase.util;
 
 
 import com.aaa.javabase.common.MyFun;
+import com.aaa.javabase.domain.Student;
 
 import java.beans.Introspector;
 import java.lang.invoke.SerializedLambda;
@@ -12,11 +13,11 @@ import java.util.regex.Pattern;
  * @author liuzhen.tian
  * @version 1.0 FunUtil.java  2023/7/30 18:10
  */
-public class MyFunUtil {
+public class ProperUtil {
     private static final Pattern GET_PATTERN = Pattern.compile("^get[A-Z].*");
     private static final Pattern IS_PATTERN = Pattern.compile("^is[A-Z].*");
 
-    private MyFunUtil() {
+    private ProperUtil() {
     }
 
     public static <T, R> String getFieldName(MyFun<T, R> fn) {
@@ -34,5 +35,10 @@ public class MyFunUtil {
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("解析serializedLambda失败:" + e);
         }
+    }
+
+    public static void main(String[] args) {
+        String fieldName = ProperUtil.<Student,String>getFieldName(Student::getName);
+        System.out.println(fieldName);
     }
 }
