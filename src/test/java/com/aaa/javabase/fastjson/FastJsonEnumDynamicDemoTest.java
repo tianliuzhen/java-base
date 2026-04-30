@@ -104,13 +104,13 @@ public class FastJsonEnumDynamicDemoTest {
          * @param type
          * @return
          */
-        @Override
-        public ObjectDeserializer getDeserializer(Class<?> clazz, Type type) {
-            if (clazz != null && clazz.isEnum()) {
-                return enumDeserializer;
-            }
-            return super.getDeserializer(clazz, type);
-        }
+        // @Override
+        // public ObjectDeserializer getDeserializer(Class<?> clazz, Type type) {
+        //     if (clazz != null && clazz.isEnum()) {
+        //         return enumDeserializer;
+        //     }
+        //     return super.getDeserializer(clazz, type);
+        // }
     }
 
     public static void main(String[] args) throws IOException {

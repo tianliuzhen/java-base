@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Agent-Class: com.aaa.javabase.arthas.RetransformAgent
+Can-Retransform-Classes: true
+Can-Redefine-Classes: true

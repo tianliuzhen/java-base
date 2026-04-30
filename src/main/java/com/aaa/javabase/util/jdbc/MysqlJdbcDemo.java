@@ -18,11 +18,11 @@ public class MysqlJdbcDemo {
     public static void mysqlJdbc() {
         // String url = "jdbc:h2:mem:test"; // 内存模式
         // String url = "jdbc:mysql://127.0.0.1:3301/master?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true"; // tcp远程连接
-        String url = "jdbc:mysql://127.0.0.1:3301/master?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true"; // tcp远程连接
+        String url = "jdbc:mysql://127.0.0.1:3301/slave?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true"; // tcp远程连接
         String user = "root"; // 默认用户名
         String password = "123456"; // 默认密码为空
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement stmt = null;
         ResultSet rs = null;
 
         try {
@@ -35,17 +35,20 @@ public class MysqlJdbcDemo {
             conn = DriverManager.getConnection(url, user, password);
 
             // 创建表格（如果尚不存在）
-            stmt = conn.createStatement();
+            stmt = conn.prepareStatement("SELECT * FROM emp WHERE user_name <> ?");
+            stmt.setString(1, "");  // 设置第一个 ? 的值为 userName
+            System.out.println("SQL: " + stmt.toString());
 
             // 查询数据
-            rs = stmt.executeQuery("SELECT * FROM user");
+            rs = stmt.executeQuery();
+
             while (rs.next()) {
-                String id  = rs.getString("ID");
-                String name = rs.getString("NAME");
-                int age = rs.getInt("AGE");
-                System.out.print("ID: " + id);
-                System.out.print(", Name: " + name);
-                System.out.println(", Age: " + age);
+                String id  = rs.getString("user_name");
+                String name = rs.getString("deptno");
+                int age = rs.getInt("manager_id");
+                System.out.print("user_name: " + id);
+                System.out.print(", deptno: " + name);
+                System.out.println(", manager_id: " + age);
             }
 
             // 关闭资源
