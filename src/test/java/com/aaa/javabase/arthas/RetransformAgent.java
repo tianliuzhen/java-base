@@ -2,22 +2,28 @@ package com.aaa.javabase.arthas;
 
 /**
  * <pre>
- * ==================== Java Agent 五步走 ====================
+ * ==================== Java Agent 完整操作流程 ====================
  *
- * 【步骤1：编译】
- * cd F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas
- * javac -encoding UTF-8 RetransformAgent.java
+ * 【步骤1：编译 RetransformAgent】
+ * cd F:\WorkSpace\MyGithub\java-base\src\test\java
+ * & "C:\Program Files\Java\jdk1.8.0_251\bin\javac.exe" -encoding UTF-8 F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas\RetransformAgent.java
  *
- * 【步骤2：打包】
- * jar cvfm agent.jar MANIFEST.MF RetransformAgent*.class
+ * 【步骤2：打包 agent.jar】
+ * cd F:\WorkSpace\MyGithub\java-base\src\test\java
+ * jar cvfm F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas\agent.jar com/aaa/javabase/arthas/MANIFEST.MF com/aaa/javabase/arthas/RetransformAgent.class 'com/aaa/javabase/arthas/RetransformAgent$MyTransformer.class'
+ *
+ * 【步骤3：编译 AttachMain】
+ *  & "C:\Program Files\Java\jdk1.8.0_251\bin\javac.exe" -encoding UTF-8 -cp "C:\Program Files\Java\jdk1.8.0_251\lib\tools.jar" F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas\AttachMain.java
  *
  * 【步骤4：确保目标类已加载】
  * 先访问一次目标方法，让类加载到JVM：
  * http://localhost:8080/httpController/arthasTestServiceSayHello
  *
- * 【步骤5：Attach】
- * & "C:\Program Files\Java\jdk1.8.0_251\bin\javac.exe" -encoding UTF-8 -cp "C:\Program Files\Java\jdk1.8.0_251\lib\tools.jar" AttachMain.java
- * & "C:\Program Files\Java\jdk1.8.0_251\bin\java.exe" -cp ".;C:\Program Files\Java\jdk1.8.0_251\lib\tools.jar" AttachMain 20400 "F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas\agent.jar" "F:/DevlopSoftware/arthas/tempData/com/aaa/javabase/service/ArthasTestService.class"
+ * 【步骤5：Attach 到目标进程】
+ * 注意：类名需要使用完整路径 com.aaa.javabase.arthas.AttachMain
+ *
+ *  cd F:\WorkSpace\MyGithub\java-base\src\test\java; & "C:\Program Files\Java\jdk1.8.0_251\bin\java.exe" -cp ".;C:\Program Files\Java\jdk1.8.0_251\lib\tools.jar" com.aaa.javabase.arthas.AttachMain 10064 "F:\WorkSpace\MyGithub\java-base\src\test\java\com\aaa\javabase\arthas\agent.jar" "F:\WorkSpace\MyGithub\java-base\target\classes\com\aaa\javabase\service\ArthasTestService.class"
+ *
  *
  * </pre>
  * 这就是 Arthas 的核心原理
@@ -25,12 +31,12 @@ package com.aaa.javabase.arthas;
  * 打包一个 Agent Jar
  * Attach 到目标 Java 进程
  * 在目标进程中执行字节码增强/重定义
- * </pre>
  *
  * @author liuzhen.tian
  * @version 1.0 RetransformAgent.java  2026/4/30 23:57
  */
 
+import java.lang.instrument.ClassDefinition;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 import java.nio.file.Files;
@@ -89,13 +95,18 @@ public class RetransformAgent {
             }
 
             // 4. 执行 retransform（触发 Transformer 返回新字节码）
-            System.out.println("开始执行 retransformClasses...");
-            inst.retransformClasses(targetClass);
+            // System.out.println("开始执行 retransformClasses...");
+            // inst.retransformClasses(targetClass);
+
+            // 4. 执行 redefineClasses（直接替换类定义）
+            System.out.println("开始执行 redefineClasses...");
+            ClassDefinition classDef = new ClassDefinition(targetClass, newBytecode);
+            inst.redefineClasses(classDef);
 
             System.out.println("✅ retransformClasses 执行成功！");
 
-        } catch (Exception e) {
-            System.err.println("❌ Agent 执行失败:");
+        } catch (Throwable e) {
+            System.err.println("❌ Agent 执行失败 (" + e.getClass().getSimpleName() + "):");
             e.printStackTrace();
             // 不要抛出异常，避免 AgentInitializationException
         }

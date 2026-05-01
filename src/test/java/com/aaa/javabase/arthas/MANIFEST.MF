@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Premain-Class: com.aaa.javabase.arthas.RetransformAgent
 Agent-Class: com.aaa.javabase.arthas.RetransformAgent
 Can-Retransform-Classes: true
 Can-Redefine-Classes: true

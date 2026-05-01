@@ -1,6 +1,5 @@
 package com.aaa.javabase.service;
 
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * @author liuzhen.tian
@@ -8,6 +7,6 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface ArthasTestService {
     default String sayHello(){
-        return JSONObject.toJSONString("{\"name\":\"你好\"}\n");
+        return "{\\\"name\\\":\\\"你好\\\"}\\n\"";
     }
 }

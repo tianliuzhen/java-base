@@ -27,7 +27,7 @@ public class HttpController {
     @Autowired
     private ArthasTestService arthasTestService;
 
-    @PostMapping("/arthasTestServiceSayHello")
+    @GetMapping("/arthasTestServiceSayHello")
     public String arthasTestServiceSayHello() {
         return arthasTestService.sayHello();
     }
